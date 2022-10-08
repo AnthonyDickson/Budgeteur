@@ -14,6 +14,10 @@
 		927B91EC28F220320013B404 /* BudgeteurTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91EB28F220320013B404 /* BudgeteurTests.swift */; };
 		927B91F628F220320013B404 /* BudgeteurUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91F528F220320013B404 /* BudgeteurUITests.swift */; };
 		927B91F828F220320013B404 /* BudgeteurUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91F728F220320013B404 /* BudgeteurUITestsLaunchTests.swift */; };
+		927B920528F220670013B404 /* TransactionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920428F220670013B404 /* TransactionRow.swift */; };
+		927B920728F227890013B404 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920628F227890013B404 /* Transaction.swift */; };
+		927B920928F22A2F0013B404 /* TransactionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920828F22A2F0013B404 /* TransactionList.swift */; };
+		927B920B28F22AEA0013B404 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920A28F22AEA0013B404 /* DataModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +48,10 @@
 		927B91F128F220320013B404 /* BudgeteurUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BudgeteurUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		927B91F528F220320013B404 /* BudgeteurUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgeteurUITests.swift; sourceTree = "<group>"; };
 		927B91F728F220320013B404 /* BudgeteurUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgeteurUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		927B920428F220670013B404 /* TransactionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRow.swift; sourceTree = "<group>"; };
+		927B920628F227890013B404 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
+		927B920828F22A2F0013B404 /* TransactionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionList.swift; sourceTree = "<group>"; };
+		927B920A28F22AEA0013B404 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,7 +103,8 @@
 			isa = PBXGroup;
 			children = (
 				927B91DA28F220310013B404 /* BudgeteurApp.swift */,
-				927B91DC28F220310013B404 /* ContentView.swift */,
+				927B920C28F22CA60013B404 /* Views */,
+				927B920D28F22CAE0013B404 /* Model */,
 				927B91DE28F220320013B404 /* Assets.xcassets */,
 				927B91E028F220320013B404 /* Preview Content */,
 			);
@@ -125,6 +134,25 @@
 				927B91F728F220320013B404 /* BudgeteurUITestsLaunchTests.swift */,
 			);
 			path = BudgeteurUITests;
+			sourceTree = "<group>";
+		};
+		927B920C28F22CA60013B404 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				927B91DC28F220310013B404 /* ContentView.swift */,
+				927B920428F220670013B404 /* TransactionRow.swift */,
+				927B920828F22A2F0013B404 /* TransactionList.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		927B920D28F22CAE0013B404 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				927B920628F227890013B404 /* Transaction.swift */,
+				927B920A28F22AEA0013B404 /* DataModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,8 +285,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				927B920528F220670013B404 /* TransactionRow.swift in Sources */,
+				927B920928F22A2F0013B404 /* TransactionList.swift in Sources */,
 				927B91DD28F220310013B404 /* ContentView.swift in Sources */,
+				927B920728F227890013B404 /* Transaction.swift in Sources */,
 				927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */,
+				927B920B28F22AEA0013B404 /* DataModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
