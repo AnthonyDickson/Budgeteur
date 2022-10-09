@@ -20,6 +20,7 @@ final class DataModel: ObservableObject {
             "Fizz",
             "Pop"
         ]
+        let startDate = ISO8601DateFormatter().date(from: "2022-10-09")
         
         for index in 0...25 {
             let description = descriptions[rng.nextInt(upperBound: descriptions.count)]
