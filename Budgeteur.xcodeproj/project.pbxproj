@@ -18,6 +18,7 @@
 		927B920728F227890013B404 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920628F227890013B404 /* Transaction.swift */; };
 		927B920928F22A2F0013B404 /* TransactionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920828F22A2F0013B404 /* TransactionList.swift */; };
 		927B920B28F22AEA0013B404 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920A28F22AEA0013B404 /* DataModel.swift */; };
+		927B921328F241270013B404 /* TransactionEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921228F241270013B404 /* TransactionEditor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		927B920628F227890013B404 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		927B920828F22A2F0013B404 /* TransactionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionList.swift; sourceTree = "<group>"; };
 		927B920A28F22AEA0013B404 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		927B921228F241270013B404 /* TransactionEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionEditor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,8 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				927B91DC28F220310013B404 /* ContentView.swift */,
-				927B920428F220670013B404 /* TransactionRow.swift */,
-				927B920828F22A2F0013B404 /* TransactionList.swift */,
+				927B921628F27AFD0013B404 /* Transaction */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -153,6 +154,16 @@
 				927B920A28F22AEA0013B404 /* DataModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		927B921628F27AFD0013B404 /* Transaction */ = {
+			isa = PBXGroup;
+			children = (
+				927B920828F22A2F0013B404 /* TransactionList.swift */,
+				927B920428F220670013B404 /* TransactionRow.swift */,
+				927B921228F241270013B404 /* TransactionEditor.swift */,
+			);
+			path = Transaction;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,6 +298,7 @@
 			files = (
 				927B920528F220670013B404 /* TransactionRow.swift in Sources */,
 				927B920928F22A2F0013B404 /* TransactionList.swift in Sources */,
+				927B921328F241270013B404 /* TransactionEditor.swift in Sources */,
 				927B91DD28F220310013B404 /* ContentView.swift in Sources */,
 				927B920728F227890013B404 /* Transaction.swift in Sources */,
 				927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */,

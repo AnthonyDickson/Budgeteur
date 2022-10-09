@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct TransactionRow: View {
-    static let dateFormat = Date.FormatStyle.dateTime.day().month(.abbreviated)
-    
     var transaction: Transaction
     
     var body: some View {
@@ -17,9 +15,11 @@ struct TransactionRow: View {
             VStack(alignment: .leading) {
                 Text(transaction.formattedAmount)
                 Text(transaction.description)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
             }
             Spacer()
-            Text(transaction.date.formatted(TransactionRow.dateFormat))
+            Text(transaction.shortDate)
         }
     }
 }

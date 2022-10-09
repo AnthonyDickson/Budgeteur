@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Binding var dataModel: DataModel
+    @ObservedObject var data: DataModel
     
     var body: some View {
-        TransactionList(transactions: dataModel.transactions)
+        TransactionList(data: data)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(dataModel: .constant(DataModel()))
+        ContentView(data: DataModel())
     }
 }

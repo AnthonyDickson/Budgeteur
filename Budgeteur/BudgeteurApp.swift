@@ -9,11 +9,11 @@ import SwiftUI
 
 @main
 struct BudgeteurApp: App {
-    @StateObject var dataModel = DataModel()
+    @StateObject private var data = DataModel()
 
     var body: some Scene {
         WindowGroup {
-            ContentView(dataModel: .constant(DataModel()))
+            ContentView(data: data)
         }
     }
 }

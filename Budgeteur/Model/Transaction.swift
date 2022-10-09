@@ -8,14 +8,20 @@
 import Foundation
 
 struct Transaction: Identifiable {
-    var id = UUID()
-    var amount: Double
-    var date: Date
+    let id = UUID()
+    var amount: Double {
+        didSet {
+            if amount < 0 {
+                amount = oldValue
+            }
+        }
+    }
+    var date = Date.now
     var description: String = ""
     
     static let currencyFormatter = {
         let formatter = NumberFormatter()
-
+        
         formatter.numberStyle = .currency
         formatter.usesGroupingSeparator = true
         formatter.locale = NSLocale.current
@@ -27,5 +33,11 @@ struct Transaction: Identifiable {
         Transaction.currencyFormatter.string(from: amount as NSNumber) ?? "NaN"
     }
     
-    static let sample = Transaction(amount: 10000, date: Date.now, description: "A huge diamond")
+    var shortDate: String {
+        date.formatted(.dateTime.day().month(.abbreviated))
+    }
+    
+    static var sample: Transaction {
+        Transaction(amount: 10000, description: "A huge diamond")
+    }
 }
