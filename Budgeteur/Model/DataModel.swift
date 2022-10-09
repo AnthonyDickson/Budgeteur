@@ -22,7 +22,7 @@ final class DataModel: ObservableObject {
         ]
         
         for index in 0...25 {
-            let description = descriptions.randomElement()!
+            let description = descriptions[rng.nextInt(upperBound: descriptions.count)]
             let amount = 100.0 * Double(rng.nextUniform())
             let date = Calendar.current.date(
                 byAdding: Calendar.Component.day,

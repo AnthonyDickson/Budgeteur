@@ -12,8 +12,28 @@ struct TransactionEditor: View {
     @Binding var transaction: Transaction
     @Binding var isEditing: Bool
     
-    var transactionIndex: Int {
-        transactions.firstIndex(where: { $0.id == transaction.id })!
+    static let numberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.alwaysShowsDecimalSeparator = true
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 2
+        
+        return formatter
+    }()
+    
+    var transactionIndex: Int? {
+        transactions.firstIndex(where: { $0.id == transaction.id })
+    }
+    
+    private func delete() {
+        transactions.remove(at: transactionIndex!)
+    }
+    
+    private func save() {
+        delete()
+        
+        let insertionIndex = transactions.firstIndex(where: { transaction.date >= $0.date })
+        transactions.insert(transaction, at: insertionIndex ?? transactions.count)
     }
     
     var body: some View {
@@ -32,7 +52,7 @@ struct TransactionEditor: View {
                 Spacer()
                 
                 Button("Save") {
-                    transactions[transactionIndex] = transaction
+                    save()
                     isEditing = false
                 }
             }
@@ -45,7 +65,7 @@ struct TransactionEditor: View {
                 }
                 
                 Section("Amount") {
-                    TextField("Amount", value: $transaction.amount, formatter: Transaction.currencyFormatter)
+                    TextField("Amount", value: $transaction.amount, formatter: TransactionEditor.numberFormatter)
                         .keyboardType(.decimalPad)
                 }
                 
@@ -55,7 +75,7 @@ struct TransactionEditor: View {
                 }
                 
                 Button("Delete", role:.destructive) {
-                    transactions.remove(at: transactionIndex)
+                    delete()
                     isEditing = false
                 }
                 
