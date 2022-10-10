@@ -19,6 +19,10 @@
 		927B920928F22A2F0013B404 /* TransactionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920828F22A2F0013B404 /* TransactionList.swift */; };
 		927B920B28F22AEA0013B404 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920A28F22AEA0013B404 /* DataModel.swift */; };
 		927B921328F241270013B404 /* TransactionEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921228F241270013B404 /* TransactionEditor.swift */; };
+		927B921828F3AFEB0013B404 /* TransactionForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921728F3AFEB0013B404 /* TransactionForm.swift */; };
+		927B921A28F3B87E0013B404 /* Keypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921928F3B87E0013B404 /* Keypad.swift */; };
+		927B921C28F3CCE50013B404 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921B28F3CCE50013B404 /* Currency.swift */; };
+		927B921E28F3D6C20013B404 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921D28F3D6C20013B404 /* Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +58,10 @@
 		927B920828F22A2F0013B404 /* TransactionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionList.swift; sourceTree = "<group>"; };
 		927B920A28F22AEA0013B404 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		927B921228F241270013B404 /* TransactionEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionEditor.swift; sourceTree = "<group>"; };
+		927B921728F3AFEB0013B404 /* TransactionForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionForm.swift; sourceTree = "<group>"; };
+		927B921928F3B87E0013B404 /* Keypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keypad.swift; sourceTree = "<group>"; };
+		927B921B28F3CCE50013B404 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
+		927B921D28F3D6C20013B404 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +151,7 @@
 			children = (
 				927B91DC28F220310013B404 /* ContentView.swift */,
 				927B921628F27AFD0013B404 /* Transaction */,
+				927B921D28F3D6C20013B404 /* Utils.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -152,6 +161,7 @@
 			children = (
 				927B920628F227890013B404 /* Transaction.swift */,
 				927B920A28F22AEA0013B404 /* DataModel.swift */,
+				927B921B28F3CCE50013B404 /* Currency.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -162,6 +172,8 @@
 				927B920828F22A2F0013B404 /* TransactionList.swift */,
 				927B920428F220670013B404 /* TransactionRow.swift */,
 				927B921228F241270013B404 /* TransactionEditor.swift */,
+				927B921728F3AFEB0013B404 /* TransactionForm.swift */,
+				927B921928F3B87E0013B404 /* Keypad.swift */,
 			);
 			path = Transaction;
 			sourceTree = "<group>";
@@ -298,8 +310,12 @@
 			files = (
 				927B920528F220670013B404 /* TransactionRow.swift in Sources */,
 				927B920928F22A2F0013B404 /* TransactionList.swift in Sources */,
+				927B921A28F3B87E0013B404 /* Keypad.swift in Sources */,
+				927B921828F3AFEB0013B404 /* TransactionForm.swift in Sources */,
 				927B921328F241270013B404 /* TransactionEditor.swift in Sources */,
 				927B91DD28F220310013B404 /* ContentView.swift in Sources */,
+				927B921C28F3CCE50013B404 /* Currency.swift in Sources */,
+				927B921E28F3D6C20013B404 /* Utils.swift in Sources */,
 				927B920728F227890013B404 /* Transaction.swift in Sources */,
 				927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */,
 				927B920B28F22AEA0013B404 /* DataModel.swift in Sources */,

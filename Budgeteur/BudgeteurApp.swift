@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+/// An app for tracking your expenses and income, and assisting with your budgeting efforts!
 @main
 struct BudgeteurApp: App {
     @StateObject private var data = DataModel()

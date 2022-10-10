@@ -7,34 +7,23 @@
 
 import SwiftUI
 
+/// Form for editing an existing transaction, or deleting it.
 struct TransactionEditor: View {
-    @Binding var transactions: [Transaction]
+    @ObservedObject var data: DataModel
+    
     @Binding var transaction: Transaction
+    /// This view will set ``isEditing`` to `false` when the user taps either the cancel or save buttons.
     @Binding var isEditing: Bool
     
-    static let numberFormatter = {
+    static private let numberFormatter = {
         let formatter = NumberFormatter()
+        formatter.locale = Locale.current
         formatter.alwaysShowsDecimalSeparator = true
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 2
         
         return formatter
     }()
-    
-    var transactionIndex: Int? {
-        transactions.firstIndex(where: { $0.id == transaction.id })
-    }
-    
-    private func delete() {
-        transactions.remove(at: transactionIndex!)
-    }
-    
-    private func save() {
-        delete()
-        
-        let insertionIndex = transactions.firstIndex(where: { transaction.date >= $0.date })
-        transactions.insert(transaction, at: insertionIndex ?? transactions.count)
-    }
     
     var body: some View {
         VStack(spacing: .zero) {
@@ -52,7 +41,7 @@ struct TransactionEditor: View {
                 Spacer()
                 
                 Button("Save") {
-                    save()
+                    data.updateTransaction(transaction)
                     isEditing = false
                 }
             }
@@ -75,7 +64,7 @@ struct TransactionEditor: View {
                 }
                 
                 Button("Delete", role:.destructive) {
-                    delete()
+                    data.removeTransaction(transaction)
                     isEditing = false
                 }
                 
@@ -90,7 +79,7 @@ struct TransactionEditor_Previews: PreviewProvider {
     static var data = DataModel()
     
     static var previews: some View {
-        TransactionEditor(transactions: .constant(data.transactions),
+        TransactionEditor(data: data,
                           transaction: .constant(data.transactions[0]),
                           isEditing: .constant(true))
     }

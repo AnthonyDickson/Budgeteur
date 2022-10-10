@@ -8,10 +8,34 @@
 import SwiftUI
 
 struct ContentView: View {
+    /// The container for the app's data.
     @ObservedObject var data: DataModel
+    /// The tab that is currently displayed.
+    @State private var selectedTab: Tab = .new
+    
+    enum Tab {
+        case new
+        case list
+    }
     
     var body: some View {
-        TransactionList(data: data)
+        TabView(selection: $selectedTab) {
+            NavigationStack {
+                TransactionForm(data: data)
+            }
+            .tabItem {
+                Label("New Transaction", systemImage: "creditcard")
+            }
+            .tag(Tab.new)
+            
+            NavigationStack {
+                TransactionList(data: data)
+            }
+            .tabItem {
+                Label("Transactions", systemImage: "list.bullet")
+            }
+            .tag(Tab.list)
+        }
     }
 }
 
