@@ -20,7 +20,7 @@ final class DataModel: ObservableObject {
             "Fizz",
             "Pop"
         ]
-        let startDate = ISO8601DateFormatter().date(from: "2022-10-09")
+        let startDate = ISO8601DateFormatter().date(from: "2022-10-09T00:00:00Z")!
         
         for index in 0...25 {
             let description = descriptions[rng.nextInt(upperBound: descriptions.count)]
@@ -28,7 +28,7 @@ final class DataModel: ObservableObject {
             let date = Calendar.current.date(
                 byAdding: Calendar.Component.day,
                 value: -index * rng.nextInt(upperBound: 5),
-                to: Date.now)!
+                to: startDate)!
             
             sampleTransactions.append(Transaction(
                 amount: amount,
