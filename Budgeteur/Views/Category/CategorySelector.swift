@@ -66,6 +66,20 @@ struct CategorySelector: View {
         }
     }
     
+    /// Scrolls the scroll view to a category's button.
+    ///
+    /// If the user has not selected a category, this function has no effect.
+    /// - Parameters:
+    ///   - category: The category the user selected, can be nil.
+    ///   - proxy: The `ScrollViewProxy` object to use for scrolling.
+    private func scrollTo(_ category: UserCategory?, using proxy: ScrollViewProxy) {
+        if let categoryId = selectedCategory?.id {
+            withAnimation {
+                proxy.scrollTo(categoryId, anchor: .trailing)
+            }
+        }
+    }
+    
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
@@ -103,30 +117,27 @@ struct CategorySelector: View {
                 .onAppear {
                     // The async call is needed here so the animation happens after the view is rendered.
                     DispatchQueue.main.async {
-                        if let categoryId = selectedCategory?.id {
-                            withAnimation {
-                                proxy.scrollTo(categoryId, anchor: .trailing)
-                            }
-                        }
+                        scrollTo(selectedCategory, using: proxy)
                     }
                 }
             }
-        }
-        .sheet(isPresented: $showCategoryEditor) {
-            // Even though the parent views are generally embeded in a navigation stack,
-            // we have to add another one here to ensure the toolbar shows. Why?
-            NavigationStack {
-                CategoryEditor(categories: $categories)
-                    .environment(\.editMode, .constant(EditMode.active))
-                    .navigationTitle("Edit Categories")
-                    .navigationBarTitleDisplayMode(.inline)
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarTrailing){
-                            Button("Done") {
-                                showCategoryEditor = false
+            .sheet(isPresented: $showCategoryEditor) {
+                // Even though the parent views are generally embeded in a navigation stack,
+                // we have to add another one here to ensure the toolbar shows. Why?
+                NavigationStack {
+                    CategoryEditor(categories: $categories)
+                        .environment(\.editMode, .constant(EditMode.active))
+                        .navigationTitle("Edit Categories")
+                        .navigationBarTitleDisplayMode(.inline)
+                        .toolbar {
+                            ToolbarItem(placement: .navigationBarTrailing){
+                                Button("Done") {
+                                    showCategoryEditor = false
+                                    scrollTo(selectedCategory, using: proxy)
+                                }
                             }
                         }
-                    }
+                }
             }
         }
     }
