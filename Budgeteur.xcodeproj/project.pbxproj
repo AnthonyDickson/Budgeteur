@@ -25,6 +25,7 @@
 		927B921E28F3D6C20013B404 /* Stateful.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921D28F3D6C20013B404 /* Stateful.swift */; };
 		927B922028F4C1CE0013B404 /* UserCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921F28F4C1CE0013B404 /* UserCategory.swift */; };
 		927B922228F4DF7E0013B404 /* CategorySelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B922128F4DF7E0013B404 /* CategorySelector.swift */; };
+		92B2A0CF28F5514D00B81F0D /* CategoryEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B2A0CE28F5514D00B81F0D /* CategoryEditor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,7 @@
 		927B921D28F3D6C20013B404 /* Stateful.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stateful.swift; sourceTree = "<group>"; };
 		927B921F28F4C1CE0013B404 /* UserCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCategory.swift; sourceTree = "<group>"; };
 		927B922128F4DF7E0013B404 /* CategorySelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelector.swift; sourceTree = "<group>"; };
+		92B2A0CE28F5514D00B81F0D /* CategoryEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryEditor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				927B922128F4DF7E0013B404 /* CategorySelector.swift */,
+				92B2A0CE28F5514D00B81F0D /* CategoryEditor.swift */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -334,6 +337,7 @@
 				927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */,
 				927B922228F4DF7E0013B404 /* CategorySelector.swift in Sources */,
 				927B920B28F22AEA0013B404 /* DataModel.swift in Sources */,
+				92B2A0CF28F5514D00B81F0D /* CategoryEditor.swift in Sources */,
 				927B922028F4C1CE0013B404 /* UserCategory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

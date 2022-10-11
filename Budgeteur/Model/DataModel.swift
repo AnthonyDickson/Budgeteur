@@ -62,7 +62,7 @@ final class DataModel: ObservableObject {
     /// This method ensures the transactions stays sorted by date in descending order.
     func addTransaction(_ transaction: Transaction) {
         // TODO: Use binary search to make this faster.
-        let insertionIndex = transactions.firstIndex(where: { transaction.date > $0.date }) ?? transactions.count
+        let insertionIndex = transactions.firstIndex(where: { transaction.date >= $0.date }) ?? transactions.count
         transactions.insert(transaction, at: insertionIndex)
     }
     

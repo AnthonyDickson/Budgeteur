@@ -28,12 +28,30 @@ struct TransactionList: View {
                 data.transactions.remove(atOffsets: indexSet)
             }
         }
-        .sheet(isPresented: $isEditing) {
-            TransactionEditor(data: data,
-                              transaction: $selectedTransaction,
-                              isEditing: $isEditing)
-        }
         .navigationTitle("History")
+        .sheet(isPresented: $isEditing) {
+            NavigationStack {
+                TransactionEditor(categories: $data.categories,
+                                  transaction: $selectedTransaction)
+                .navigationTitle("Edit Transaction")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading){
+                        Button("Cancel", role: .cancel) {
+                            isEditing = false
+                        }
+                        .foregroundColor(.red)
+                    }
+                    
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button("Save") {
+                            data.updateTransaction(selectedTransaction)
+                            isEditing = false
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

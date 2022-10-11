@@ -85,7 +85,7 @@ struct TransactionForm: View {
                 .labelsHidden()
                 .padding(.bottom)
         
-            CategorySelector(data: data, selectedCategory: $category)
+            CategorySelector(categories: $data.categories, selectedCategory: $category)
             
             Spacer()
             

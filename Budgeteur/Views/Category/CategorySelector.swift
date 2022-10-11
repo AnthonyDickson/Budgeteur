@@ -10,8 +10,7 @@ import SwiftUI
 
 /// Displays categories as a scrollable, horizontal list of categories and an edit button.
 struct CategorySelector: View {
-    /// The app data.
-    @ObservedObject var data: DataModel
+    @Binding var categories: [UserCategory]
     /// The category the user has tapped on.
     @Binding var selectedCategory: UserCategory?
     
@@ -23,6 +22,9 @@ struct CategorySelector: View {
     
     /// The dash style for the edit category button.
     var dashStyle: [CGFloat] = [5.0, 3.0]
+    
+    /// Whether to display the sheet with the form to add, edit and delete categories.
+    @State private var showCategoryEditor: Bool = false
     
     /// Get the color for the category label.
     ///
@@ -65,38 +67,67 @@ struct CategorySelector: View {
     }
     
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack {
-                ForEach(data.categories) { category in
+        ScrollViewReader { proxy in
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(categories) { category in
+                        Button {
+                            updateSelectedTag(with: category)
+                        } label: {
+                            Text(category.name)
+                                .foregroundColor(getColor(for: category))
+                                .saturation(getSaturation(for: category))
+                                .padding()
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: cornerRadius)
+                                        .strokeBorder(getColor(for: category), lineWidth: lineWidth)
+                                }
+                        }
+                        .id(category.id)
+                    }
+                    
                     Button {
-                        updateSelectedTag(with: category)
+                        showCategoryEditor = true
                     } label: {
-                        Text(category.name)
-                            .foregroundColor(getColor(for: category))
-                            .saturation(getSaturation(for: category))
+                        Text("Edit Tags")
+                            .foregroundColor(.primary)
                             .padding()
                             .overlay {
                                 RoundedRectangle(cornerRadius: cornerRadius)
-                                    .strokeBorder(getColor(for: category), lineWidth: lineWidth)
+                                    .strokeBorder(style: StrokeStyle(lineWidth: lineWidth, dash: dashStyle))
+                                    .foregroundColor(.primary)
                             }
                     }
                 }
-                
-                Button {
-                    // TODO: Show sheet with list of categories and controls to add a new category(s).
-                } label: {
-                    Text("Edit Tags")
-                        .foregroundColor(.primary)
-                        .padding()
-                        .overlay {
-                            RoundedRectangle(cornerRadius: cornerRadius)
-                                .strokeBorder(style: StrokeStyle(lineWidth: lineWidth, dash: dashStyle))
-                                .foregroundColor(.primary)
+                .padding(.horizontal)
+                .onAppear {
+                    // The async call is needed here so the animation happens after the view is rendered.
+                    DispatchQueue.main.async {
+                        if let categoryId = selectedCategory?.id {
+                            withAnimation {
+                                proxy.scrollTo(categoryId, anchor: .trailing)
+                            }
                         }
+                    }
                 }
-                .disabled(true)
             }
-            .padding(.horizontal)
+        }
+        .sheet(isPresented: $showCategoryEditor) {
+            // Even though the parent views are generally embeded in a navigation stack,
+            // we have to add another one here to ensure the toolbar shows. Why?
+            NavigationStack {
+                CategoryEditor(categories: $categories)
+                    .environment(\.editMode, .constant(EditMode.active))
+                    .navigationTitle("Edit Categories")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing){
+                            Button("Done") {
+                                showCategoryEditor = false
+                            }
+                        }
+                    }
+            }
         }
     }
 }
@@ -105,7 +136,8 @@ struct CategorySelector: View {
 struct CategorySelector_Previews: PreviewProvider {
     static var previews: some View {
         Stateful(initialState: nil) { $userTag in
-            CategorySelector(data: DataModel(), selectedCategory: $userTag)
+            CategorySelector(categories: .constant(DataModel().categories),
+                             selectedCategory: $userTag)
         }
     }
 }

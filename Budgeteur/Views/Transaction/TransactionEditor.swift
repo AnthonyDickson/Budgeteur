@@ -9,11 +9,8 @@ import SwiftUI
 
 /// Form for editing an existing transaction, or deleting it.
 struct TransactionEditor: View {
-    @ObservedObject var data: DataModel
-    
+    @Binding var categories: [UserCategory]
     @Binding var transaction: Transaction
-    /// This view will set ``isEditing`` to `false` when the user taps either the cancel or save buttons.
-    @Binding var isEditing: Bool
     
     static private let numberFormatter = {
         let formatter = NumberFormatter()
@@ -26,56 +23,27 @@ struct TransactionEditor: View {
     }()
     
     var body: some View {
-        VStack(spacing: .zero) {
-            HStack {
-                Button("Cancel", role: .cancel) {
-                    isEditing = false
-                }
-                .foregroundColor(.red)
-                
-                Spacer()
-                
-                Text("Edit Transaction")
-                    .font(.headline)
-                
-                Spacer()
-                
-                Button("Save") {
-                    data.updateTransaction(transaction)
-                    isEditing = false
-                }
+        List {
+            Section("Description"){
+                TextField("Description", text: $transaction.description, axis: .vertical)
             }
-            .padding()
-            .background(Color(UIColor.secondarySystemBackground))
             
-            List {
-                Section("Description"){
-                    TextField("Description", text: $transaction.description, axis: .vertical)
-                }
-                
-                Section("Tag") {
-                    CategorySelector(data: data, selectedCategory: $transaction.category)
-                }
-                
-                Section("Amount") {
-                    TextField("Amount", value: $transaction.amount, formatter: TransactionEditor.numberFormatter)
-                        .keyboardType(.decimalPad)
-                }
-                
-                Section("Date") {
-                    DatePicker("Date", selection: $transaction.date, displayedComponents: [.date])
-                        .labelsHidden()
-                }
-                
-                Button("Delete", role:.destructive) {
-                    data.removeTransaction(transaction)
-                    isEditing = false
-                }
-                
-                .frame(maxWidth: .infinity)
+            Section("Tag") {
+                CategorySelector(categories: $categories, selectedCategory: $transaction.category)
+                    .padding(.horizontal, -20)
             }
-            .listStyle(.grouped)
+            
+            Section("Amount") {
+                TextField("Amount", value: $transaction.amount, formatter: TransactionEditor.numberFormatter)
+                    .keyboardType(.decimalPad)
+            }
+            
+            Section("Date") {
+                DatePicker("Date", selection: $transaction.date, displayedComponents: [.date])
+                    .labelsHidden()
+            }
         }
+        .listStyle(.grouped)
     }
 }
 
@@ -83,8 +51,7 @@ struct TransactionEditor_Previews: PreviewProvider {
     static var data = DataModel()
     
     static var previews: some View {
-        TransactionEditor(data: data,
-                          transaction: .constant(data.transactions[0]),
-                          isEditing: .constant(true))
+        TransactionEditor(categories: .constant(data.categories),
+                          transaction: .constant(data.transactions[0]))
     }
 }
