@@ -10,6 +10,7 @@ import Foundation
 /// Represents an expenditure or income.
 struct Transaction: Identifiable {
     let id = UUID()
+    /// How much money was spent/earned.
     var amount: Double {
         didSet {
             if amount < 0 {
@@ -17,8 +18,12 @@ struct Transaction: Identifiable {
             }
         }
     }
+    /// A description of the cash flow.
     var description: String = ""
+    /// When the transaction occured.
     var date = Date.now
+    /// The category that the transaction fits into (e.g., home expenses vs. entertainment).
+    var category: UserCategory?
     
     /// The day and month in an abbreviated format, e.g. `2022-10-09` -> `Oct 9`
     var shortDate: String {

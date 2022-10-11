@@ -14,15 +14,22 @@ extension Color {
 
 /// A form for creating a new transaction. Features a big keypad.
 struct TransactionForm: View {
+    /// The app data.
     @ObservedObject var data: DataModel
     
+    /// A description of the transaction.
     @State var description = ""
+    /// The amount of money spent.
     @State var amount = 0.0
+    /// When the transaction occured.
     @State var date = Date.now
+    /// The category the transaction fits into (e.g., groceries vs. entertainment).
+    @State var category: UserCategory? = nil
     
     /// Whether the user's device has light or dark mode enabled.
-    @Environment(\.colorScheme) var colorScheme: ColorScheme
+    @Environment(\.colorScheme) private var colorScheme: ColorScheme
     
+    /// Is the current amount invalid?
     private var invalidAmount: Bool {
         amount <= 0
     }
@@ -34,7 +41,7 @@ struct TransactionForm: View {
     
     /// Add the transaction to the app's data.
     private func save() {
-        let transaction = Transaction(amount: amount, description: description, date: date)
+        let transaction = Transaction(amount: amount, description: description, date: date, category: category)
         data.addTransaction(transaction)
         reset()
     }
@@ -44,6 +51,7 @@ struct TransactionForm: View {
         description = ""
         amount = 0.0
         date = Date.now
+        category = nil
         focusedField = nil
     }
     
@@ -56,30 +64,30 @@ struct TransactionForm: View {
     @FocusState private var focusedField: Field?
     
     var body: some View {
-        VStack(spacing: .zero) {
+        VStack(alignment: .center) {
             Text(Currency.format(amount))
                 .font(.title)
-                .padding()
+                .bold()
+                .padding(25)
+                .padding(.horizontal)
                 .background(amountBackground)
                 .cornerRadius(10)
-                // Extra padding is needed so we have space between the background and top of the list below.
-                .padding(.bottom, 10)
             
-            List {
-                Section("Description"){
-                    TextField("What did you pay for?", text: $description)
-                        // Focused helps ensure the keyboard will be dismissed if the save button is pressed.
-                        .focused($focusedField, equals: .description)
-                        .submitLabel(.done)
-                }
-                
-                Section("Date") {
-                    DatePicker("Date", selection: $date, displayedComponents: [.date])
-                        .focused($focusedField, equals: .date)
-                        .labelsHidden()
-                }
-            }
-            .listStyle(.grouped)
+            TextField("What did you pay for?", text: $description)
+                // Focused helps ensure the keyboard will be dismissed if the save button is pressed.
+                .focused($focusedField, equals: .description)
+                .submitLabel(.done)
+                .multilineTextAlignment(.center)
+                .padding()
+            
+            DatePicker("Date", selection: $date, displayedComponents: [.date])
+                .focused($focusedField, equals: .date)
+                .labelsHidden()
+                .padding(.bottom)
+        
+            CategorySelector(data: data, selectedCategory: $category)
+            
+            Spacer()
             
             Keypad(amount: $amount, onSave: save)
         }

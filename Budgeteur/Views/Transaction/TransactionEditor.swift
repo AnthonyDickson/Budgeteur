@@ -53,6 +53,10 @@ struct TransactionEditor: View {
                     TextField("Description", text: $transaction.description, axis: .vertical)
                 }
                 
+                Section("Tag") {
+                    CategorySelector(data: data, selectedCategory: $transaction.category)
+                }
+                
                 Section("Amount") {
                     TextField("Amount", value: $transaction.amount, formatter: TransactionEditor.numberFormatter)
                         .keyboardType(.decimalPad)

@@ -22,7 +22,9 @@
 		927B921828F3AFEB0013B404 /* TransactionForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921728F3AFEB0013B404 /* TransactionForm.swift */; };
 		927B921A28F3B87E0013B404 /* Keypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921928F3B87E0013B404 /* Keypad.swift */; };
 		927B921C28F3CCE50013B404 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921B28F3CCE50013B404 /* Currency.swift */; };
-		927B921E28F3D6C20013B404 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921D28F3D6C20013B404 /* Utils.swift */; };
+		927B921E28F3D6C20013B404 /* Stateful.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921D28F3D6C20013B404 /* Stateful.swift */; };
+		927B922028F4C1CE0013B404 /* UserCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921F28F4C1CE0013B404 /* UserCategory.swift */; };
+		927B922228F4DF7E0013B404 /* CategorySelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B922128F4DF7E0013B404 /* CategorySelector.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,7 +63,9 @@
 		927B921728F3AFEB0013B404 /* TransactionForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionForm.swift; sourceTree = "<group>"; };
 		927B921928F3B87E0013B404 /* Keypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keypad.swift; sourceTree = "<group>"; };
 		927B921B28F3CCE50013B404 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
-		927B921D28F3D6C20013B404 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		927B921D28F3D6C20013B404 /* Stateful.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stateful.swift; sourceTree = "<group>"; };
+		927B921F28F4C1CE0013B404 /* UserCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCategory.swift; sourceTree = "<group>"; };
+		927B922128F4DF7E0013B404 /* CategorySelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelector.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,8 +154,9 @@
 			isa = PBXGroup;
 			children = (
 				927B91DC28F220310013B404 /* ContentView.swift */,
+				927B922328F4E9120013B404 /* Category */,
 				927B921628F27AFD0013B404 /* Transaction */,
-				927B921D28F3D6C20013B404 /* Utils.swift */,
+				927B921D28F3D6C20013B404 /* Stateful.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -162,6 +167,7 @@
 				927B920628F227890013B404 /* Transaction.swift */,
 				927B920A28F22AEA0013B404 /* DataModel.swift */,
 				927B921B28F3CCE50013B404 /* Currency.swift */,
+				927B921F28F4C1CE0013B404 /* UserCategory.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -176,6 +182,14 @@
 				927B921928F3B87E0013B404 /* Keypad.swift */,
 			);
 			path = Transaction;
+			sourceTree = "<group>";
+		};
+		927B922328F4E9120013B404 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				927B922128F4DF7E0013B404 /* CategorySelector.swift */,
+			);
+			path = Category;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -315,10 +329,12 @@
 				927B921328F241270013B404 /* TransactionEditor.swift in Sources */,
 				927B91DD28F220310013B404 /* ContentView.swift in Sources */,
 				927B921C28F3CCE50013B404 /* Currency.swift in Sources */,
-				927B921E28F3D6C20013B404 /* Utils.swift in Sources */,
+				927B921E28F3D6C20013B404 /* Stateful.swift in Sources */,
 				927B920728F227890013B404 /* Transaction.swift in Sources */,
 				927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */,
+				927B922228F4DF7E0013B404 /* CategorySelector.swift in Sources */,
 				927B920B28F22AEA0013B404 /* DataModel.swift in Sources */,
+				927B922028F4C1CE0013B404 /* UserCategory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,8 +499,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -512,8 +528,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

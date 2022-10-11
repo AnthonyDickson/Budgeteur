@@ -10,6 +10,18 @@ import GameplayKit
 
 /// A container for the app's data.
 final class DataModel: ObservableObject {
+    // MARK: - User Categories
+    /// User defined categories for expenses.
+    @Published var categories: [UserCategory] = [
+        UserCategory(name: "Groceries 🍎"),
+        UserCategory(name: "Eating Out 🍔"),
+        UserCategory(name: "Home Expenses 🏡"),
+        UserCategory(name: "Entertainment 🎶"),
+        UserCategory(name: "Donation ❤️")
+    ]
+
+    // MARK: - Transactions
+
     /// A collection of transactions
     ///
     /// Transactions are sorted by date in descending order, however this is not guaranteed if the transactions collection is modified directly.
