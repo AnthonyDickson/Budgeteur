@@ -28,7 +28,16 @@ struct TransactionList: View {
                 data.transactions.remove(atOffsets: indexSet)
             }
         }
+        .listStyle(.inset)
         .navigationTitle("History")
+        .navigationBarTitleDisplayMode(.large)
+        .toolbar {
+            ToolbarItem(placement: .bottomBar) {
+                PeriodPicker(selectedPeriod: $data.period)
+                    .padding(.horizontal)
+                    .padding(.bottom)
+            }
+        }
         .sheet(isPresented: $isEditing) {
             NavigationStack {
                 TransactionEditor(categories: $data.categories,
