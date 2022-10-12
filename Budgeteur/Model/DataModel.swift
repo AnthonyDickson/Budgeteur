@@ -10,6 +10,9 @@ import GameplayKit
 
 /// A container for the app's data.
 final class DataModel: ObservableObject {
+    /// The period to aggregate expenses/income into.
+    @Published var period: Period = .oneWeek
+
     // MARK: - User Categories
     /// User defined categories for expenses.
     @Published var categories: [UserCategory] = [
