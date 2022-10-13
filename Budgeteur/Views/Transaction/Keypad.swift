@@ -85,6 +85,7 @@ struct Keypad: View {
                         default:
                             Button {
                                 addDigit(digit: value)
+                                dismissKeyboard()
                             } label: {
                                 Text(value)
                             }

@@ -12,6 +12,13 @@ extension Color {
     static let moneyGreenDarker = Color(red: 0.38, green: 0.72, blue: 0.38)
 }
 
+extension View {
+    func dismissKeyboard() {
+        let resign = #selector(UIResponder.resignFirstResponder)
+        UIApplication.shared.sendAction(resign, to: nil, from: nil, for: nil)
+    }
+}
+
 /// A form for creating a new transaction. Features a big keypad.
 struct TransactionForm: View {
     /// The app data.
@@ -48,73 +55,94 @@ struct TransactionForm: View {
     
     /// Reset the inputs to their default values.
     private func reset() {
-        description = ""
-        amount = 0.0
-        date = Date.now
-        category = nil
-        focusedField = nil
+        withAnimation {
+            description = ""
+            amount = 0.0
+            date = Date.now
+            category = nil
+        }
     }
     
-    /// Enumerates the selectable fields in the view.
-    private enum Field: Hashable {
-        case description
-        case date
+    /// Get the total amount of all transactions in the current time period (e.g. this week, this month).
+    private func getTotalSpendingForTimePeriod() -> Double {
+        let dateInterval = data.period.getDateInterval(for: Date.now)
+        
+        var sum = 0.0
+        
+        for transaction in data.transactions {
+            if transaction.date > dateInterval.end {
+                continue
+            } else if transaction.date < dateInterval.start {
+                break
+            }
+            sum += transaction.amount
+        }
+        
+        return sum
     }
     
-    @FocusState private var focusedField: Field?
+    /// Convert a time period to a context-aware label.
+    private func getTimePeriodLabel() -> String {
+        switch(data.period) {
+        case .oneDay:
+            return "today"
+        case .oneWeek:
+            return "this week"
+        case .twoWeeks:
+            return "this fortnight"
+        case .oneMonth:
+            return "this month"
+        case .threeMonths:
+            return "this quarter"
+        case .oneYear:
+            return "this year"
+        }
+    }
+    
+    /// A label with the total amount spent and the aggregation period.
+    private func getSpendingSummary() -> String {
+        "Spent \(Currency.format(getTotalSpendingForTimePeriod())) \(getTimePeriodLabel())"
+    }
     
     var body: some View {
-        VStack(alignment: .center) {
-            // TODO: Add summary of how much has been spent for the selected time period (data.period).
-            Text(Currency.format(amount))
-                .font(.title)
-                .bold()
-                .padding(25)
-                .padding(.horizontal)
-                .background(amountBackground)
-                .cornerRadius(10)
-            
-            TextField("What did you pay for?", text: $description)
-                // Focused helps ensure the keyboard will be dismissed if the save button is pressed.
-                .focused($focusedField, equals: .description)
-                .submitLabel(.done)
-                .multilineTextAlignment(.center)
-                .padding()
-            
-            DatePicker("Date", selection: $date, displayedComponents: [.date])
-                .focused($focusedField, equals: .date)
-                .labelsHidden()
-                .padding(.bottom)
-        
-            CategorySelector(categories: $data.categories, selectedCategory: $category)
-            
-            Spacer()
-            
-            Keypad(amount: $amount, onSave: save)
-        }
-        .navigationTitle("Add Transaction")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button("Clear", role: .cancel) {
-                    reset()
-                }
-                .foregroundColor(.red)
-            }
-            
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("Save") {
-                    save()
-                }
-                .disabled(invalidAmount)
+        // Need GeometryReader here to prevent the keyboard from moving the views (keyboard avoidance).
+        GeometryReader { _ in
+            VStack(alignment: .center) {
+                Text(getSpendingSummary())
+                
+                Spacer()
+                
+                // TODO: Handle case where text overflows. Make text smaller?
+                Text(Currency.format(amount))
+                    .font(.title)
+                    .bold()
+                    .frame(maxWidth: 180, maxHeight: 110)
+                    .padding()
+                    .background(amountBackground)
+                    .cornerRadius(10)
+                
+                Spacer()
+                
+                TextField("What did you pay for?", text: $description)
+                    .submitLabel(.done)
+                    .multilineTextAlignment(.center)
+                    .padding()
+                
+                DatePicker("Date", selection: $date, displayedComponents: [.date])
+                    .labelsHidden()
+                    .padding(.bottom)
+                
+                CategorySelector(categories: $data.categories, selectedCategory: $category)
+                
+                Keypad(amount: $amount, onSave: save)
             }
         }
         // Tapping on anything other than the description textfield will dismiss the keyboard.
         .onTapGesture {
-            focusedField = nil
+            dismissKeyboard()
         }
         // This stops the keyboard from pushing up the keypad view
-        .ignoresSafeArea(.keyboard)
+        .ignoresSafeArea(.keyboard, edges: .all)
     }
 }
 

@@ -17,7 +17,6 @@ struct TransactionRow: View {
     private var amountText: String {
         let amountString = Currency.format(transaction.amount)
         
-        
         if let name = transaction.category?.name, displayCategory {
             return "\(amountString) on \(name)"
         } else {

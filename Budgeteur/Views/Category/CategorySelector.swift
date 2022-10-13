@@ -87,6 +87,7 @@ struct CategorySelector: View {
                     ForEach(categories) { category in
                         Button {
                             updateSelectedTag(with: category)
+                            dismissKeyboard()
                         } label: {
                             Text(category.name)
                                 .foregroundColor(getColor(for: category))

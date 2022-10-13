@@ -7,6 +7,46 @@
 
 import SwiftUI
 
+extension Period {
+    /// Format a date for section headers.
+    /// - Parameters:
+    ///   - date: A date.
+    ///   - withYear: Whether to include the year.
+    /// - Returns: The formatted date string.
+    fileprivate func formatDateForHeader(_ date: Date, withYear: Bool = false) -> String {
+        let style = Date.FormatStyle.dateTime.day().month(.abbreviated)
+        
+        if withYear {
+            return "\(date.formatted(style)) '\(date.formatted(.dateTime.year(.twoDigits)))"
+        }
+        
+        return date.formatted(style)
+    }
+    
+    /// Get a formatted string for a given date interval and user selected time period.
+    /// - Parameters:
+    ///   - dateInterval: A date interval.
+    /// - Returns: A formatted string for the date interval.
+    fileprivate func getDateLabel(for dateInterval: DateInterval) -> String {
+        switch(self) {
+        case .oneDay:
+            return formatDateForHeader(dateInterval.start, withYear: true)
+        case .oneWeek, .twoWeeks, .threeMonths:
+            let start = formatDateForHeader(dateInterval.start)
+            let end = formatDateForHeader(dateInterval.end, withYear: true)
+            
+            return "\(start) - \(end)"
+        case .oneMonth:
+            let month = dateInterval.start.formatted(.dateTime.month())
+            let year = dateInterval.start.formatted(.dateTime.year(.twoDigits))
+            
+            return "\(month) '\(year)"
+        case .oneYear:
+            return dateInterval.start.formatted(.dateTime.year())
+        }
+    }
+}
+
 /// Shows transctions grouped by a category in a collapsable view.
 struct TransactionGroup: View {
     /// The category that the transactions belong to.
@@ -52,9 +92,11 @@ struct TransactionGroup: View {
             HStack {
                 Text("Spent \(totalAmount) on \(categoryName)")
                 Spacer()
-                Text("\(transactions.count) items")
-                Label("Expand Grouped Transactions", systemImage: showTransactions ? "chevron.down" : "chevron.right")
+                Text("\(transactions.count) item\(transactions.count > 1 ? "s" : "")")
+                Label("Expand Grouped Transactions", systemImage: "chevron.right")
                     .labelStyle(.iconOnly)
+                    .rotationEffect(showTransactions ? Angle(degrees: 90) : Angle(degrees: 0))
+                    .animation(.easeInOut.speed(2), value: showTransactions)
             }
             .frame(maxWidth: .infinity)
             .font(.subheadline)
@@ -80,112 +122,8 @@ struct TransactionList: View {
     private var transactionsByDate: Dictionary<DateInterval, [Transaction]> {
         Dictionary(
             grouping: data.transactions,
-            by: { getDateInterval(for: $0.date, period: data.period) }
+            by: { data.period.getDateInterval(for: $0.date) }
         )
-    }
-    
-    /// Find the calendar quarter for a date, and return the start of the quarter.
-    /// - Parameter date: A date.
-    /// - Returns: The date of the first day of the calendar quarter that the given date belongs to.
-    private func getQuarterStart(for date: Date) throws -> Date {
-        let calendar = Calendar.current
-        // Months are one-indexed so we subtract one.
-        let quarter = (calendar.component(.month, from: date) - 1) / 3
-        let quarterStart = quarter * 3 + 1
-        
-        return calendar.date(from: DateComponents(
-            year: calendar.component(.year, from: date),
-            month: quarterStart
-        ))!
-    }
-    
-    /// Get the date interval for the user selected time period.
-    /// - Parameter date: A date.
-    /// - Parameter period: The time period the user has selected in the GUI.
-    /// - Returns: A date interval corresponding to the date and selected time period.
-    private func getDateInterval(for date: Date, period: Period) -> DateInterval {
-        // Use ISO8601 calendar to ensure weeks start from monday
-        let calendar = Calendar(identifier: .iso8601)
-        var startDate: Date
-        var endDate: Date
-        
-        switch(period) {
-        case .oneDay:
-            startDate = date
-            endDate = Calendar.current.date(byAdding: .day, value: 1, to: startDate)!
-        case .oneWeek:
-            startDate = calendar.date(
-                from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: date)
-            )!
-            endDate = calendar.date(byAdding: .day, value: 6, to: startDate)!
-        case .twoWeeks:
-            let day = calendar.component(.day, from: date)
-            let month = calendar.component(.month, from: date)
-            let year = calendar.component(.year, from: date)
-            
-            if day < 15 {
-                startDate = calendar.date(from: DateComponents(year: year, month: month, day: 1))!
-                endDate = calendar.date(from: DateComponents(year: year, month: month, day: 14))!
-            } else {
-                startDate = calendar.date(from: DateComponents(year: year, month: month, day: 15))!
-                let monthStart = calendar.date(from: calendar.dateComponents([.year, .month], from: date))!
-                endDate = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: monthStart)!
-            }
-        case .oneMonth:
-            startDate = calendar.date(
-                from: calendar.dateComponents([.year, .month], from: date)
-            )!
-            endDate = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startDate)!
-        case .threeMonths:
-            startDate = try! getQuarterStart(for: date)
-            endDate = calendar.date(byAdding: DateComponents(month: 3, day: -1), to: startDate)!
-        case .oneYear:
-            startDate = calendar.date(
-                from: calendar.dateComponents([.year], from: date)
-            )!
-            endDate = calendar.date(byAdding: DateComponents(year: 1, day: -1), to: startDate)!
-        }
-        
-        return DateInterval(start: startDate, end: endDate)
-    }
-    
-    /// Format a date for section headers.
-    /// - Parameters:
-    ///   - date: A date.
-    ///   - withYear: Whether to include the year.
-    /// - Returns: The formatted date string.
-    private func formatDateForHeader(_ date: Date, withYear: Bool = false) -> String {
-        let style = Date.FormatStyle.dateTime.day().month(.abbreviated)
-        
-        if withYear {
-            return "\(date.formatted(style)) '\(date.formatted(.dateTime.year(.twoDigits)))"
-        }
-        
-        return date.formatted(style)
-    }
-    
-    /// Get a formatted string for a given date interval and user selected time period.
-    /// - Parameters:
-    ///   - dateInterval: A date interval.
-    ///   - period: The time period the user has selected in the GUI.
-    /// - Returns: A formatted string for the date interval.
-    private func getDateLabel(for dateInterval: DateInterval, period: Period) -> String {
-        switch(data.period) {
-        case .oneDay:
-            return formatDateForHeader(dateInterval.start, withYear: true)
-        case .oneWeek, .twoWeeks, .threeMonths:
-            let start = formatDateForHeader(dateInterval.start)
-            let end = formatDateForHeader(dateInterval.end, withYear: true)
-            
-            return "\(start) - \(end)"
-        case .oneMonth:
-            let month = dateInterval.start.formatted(.dateTime.month())
-            let year = dateInterval.start.formatted(.dateTime.year(.twoDigits))
-            
-            return "\(month) '\(year)"
-        case .oneYear:
-            return dateInterval.start.formatted(.dateTime.year())
-        }
     }
     
     /// Group transactions by category.
@@ -234,7 +172,7 @@ struct TransactionList: View {
                     HStack {
                         Text("Spent \(Currency.format(transactions.reduce(0) { $0 + $1.amount}))")
                         Spacer()
-                        Text(getDateLabel(for: dateInterval, period: data.period))
+                        Text(data.period.getDateLabel(for: dateInterval))
                     }
                     .frame(maxWidth: .infinity)
                     .font(.headline)
