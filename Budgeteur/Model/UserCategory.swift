@@ -8,7 +8,9 @@
 import Foundation
 
 /// A user defined category for expenses.
-struct UserCategory: Identifiable, Equatable {
+struct UserCategory: Identifiable, Equatable, Hashable {
     var id = UUID()
     var name: String
+    
+    static let defaultName = "Untagged"
 }

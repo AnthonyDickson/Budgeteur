@@ -7,6 +7,67 @@
 
 import SwiftUI
 
+/// Shows transctions grouped by a category in a collapsable view.
+struct TransactionGroup: View {
+    /// The category that the transactions belong to.
+    var category: UserCategory?
+    /// The transaction data.
+    var transactions: [Transaction]
+    /// What to do when a user taps on a transaction row.
+    var onRowTap: (_ transaction: Transaction) -> ()
+    /// What to do when a user deletes a transaction.
+    var onRowDelete: (_ indexSet: IndexSet) -> ()
+    
+    /// Whether to display the individual transactions.
+    @State private var showTransactions  = false
+    
+    /// A formatted string containing the sum of the transaction amounts.
+    private var totalAmount: String {
+        let total = transactions.reduce(0) { $0 + $1.amount}
+        
+        return Currency.format(total)
+    }
+    
+    /// The category name, or a suitable default.
+    private var categoryName: String {
+        category?.name ?? UserCategory.defaultName
+    }
+
+    var body: some View {
+        Section {
+            // TODO: Animate the group being expanded with a sliding animation.
+            if showTransactions {
+                ForEach(transactions) { transaction in
+                    TransactionRow(transaction: transaction, displayCategory: false)
+                        .padding(.leading)
+                        .onTapGesture {
+                            onRowTap(transaction)
+                        }
+                }
+                .onDelete { indexSet in
+                    onRowDelete(indexSet)
+                }
+            }
+        } header: {
+            HStack {
+                Text("Spent \(totalAmount) on \(categoryName)")
+                Spacer()
+                Text("\(transactions.count) items")
+                Label("Expand Grouped Transactions", systemImage: showTransactions ? "chevron.down" : "chevron.right")
+                    .labelStyle(.iconOnly)
+            }
+            .frame(maxWidth: .infinity)
+            .font(.subheadline)
+            .foregroundColor(.primary)
+            .onTapGesture {
+                withAnimation {
+                    showTransactions.toggle()
+                }
+            }
+        }
+    }
+}
+
 /// Displays the details of transactions in a vertical list.
 struct TransactionList: View {
     /// The app's data model.
@@ -16,7 +77,7 @@ struct TransactionList: View {
     @State private var selectedTransaction = Transaction.sample
     
     /// The transactions grouped by the user selected time period.
-    private var groupedTransactions: Dictionary<DateInterval, [Transaction]> {
+    private var transactionsByDate: Dictionary<DateInterval, [Transaction]> {
         Dictionary(
             grouping: data.transactions,
             by: { getDateInterval(for: $0.date, period: data.period) }
@@ -127,19 +188,47 @@ struct TransactionList: View {
         }
     }
     
+    /// Group transactions by category.
+    /// - Parameter transactions: Transaction data.
+    /// - Returns: An array of dictionary elements mapping categories to lists of transactions.
+    private func groupTransactionsByCategory(_ transactions: [Transaction]) -> [Dictionary<UserCategory?, [Transaction]>.Element] {
+        let result = Dictionary(grouping: transactions, by: { $0.category })
+        let sortedResults = result.sorted(by: {
+            ($0.key?.name ?? UserCategory.defaultName) < ($1.key?.name ?? UserCategory.defaultName)
+        })
+
+        return sortedResults
+    }
+    
     var body: some View {
         List {
-            ForEach(groupedTransactions.sorted(by: { $0.key > $1.key}), id: \.key) { dateInterval, transactions in
+            ForEach(transactionsByDate.sorted(by: { $0.key > $1.key}), id: \.key) { dateInterval, transactions in
                 Section {
-                    ForEach(transactions) { transaction in
-                        TransactionRow(transaction: transaction)
-                            .onTapGesture {
-                                selectedTransaction = transaction
-                                isEditing = true
-                            }
-                    }
-                    .onDelete { indexSet in
-                        data.transactions.remove(atOffsets: indexSet)
+                    if data.groupByCategory {
+                        ForEach(groupTransactionsByCategory(transactions), id: \.key) { category, subTransactions in
+                            TransactionGroup(
+                                category: category,
+                                transactions: subTransactions,
+                                onRowTap: { transaction in
+                                    selectedTransaction = transaction
+                                    isEditing = true
+                                },
+                                onRowDelete: { indexSet in
+                                    data.transactions.remove(atOffsets: indexSet)
+                                }
+                            )
+                        }
+                    } else {
+                        ForEach(transactions) { transaction in
+                            TransactionRow(transaction: transaction)
+                                .onTapGesture {
+                                    selectedTransaction = transaction
+                                    isEditing = true
+                                }
+                        }
+                        .onDelete { indexSet in
+                            data.transactions.remove(atOffsets: indexSet)
+                        }
                     }
                 } header: {
                     HStack {
@@ -158,6 +247,13 @@ struct TransactionList: View {
         .navigationTitle("History")
         .navigationBarTitleDisplayMode(.large)
         .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    data.groupByCategory.toggle()
+                } label: {
+                    Label("Group by Category", systemImage: data.groupByCategory ? "tag.fill" : "tag")
+                }
+            }
             ToolbarItem(placement: .bottomBar) {
                 PeriodPicker(selectedPeriod: $data.period)
                     .padding(.horizontal)

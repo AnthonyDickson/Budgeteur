@@ -122,6 +122,7 @@ struct CategorySelector: View {
                 }
             }
             .sheet(isPresented: $showCategoryEditor) {
+                // TODO: When a tag is updated, update all transactions that use new tag.
                 // Even though the parent views are generally embeded in a navigation stack,
                 // we have to add another one here to ensure the toolbar shows. Why?
                 NavigationStack {

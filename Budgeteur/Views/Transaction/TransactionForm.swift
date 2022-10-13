@@ -65,6 +65,7 @@ struct TransactionForm: View {
     
     var body: some View {
         VStack(alignment: .center) {
+            // TODO: Add summary of how much has been spent for the selected time period (data.period).
             Text(Currency.format(amount))
                 .font(.title)
                 .bold()
