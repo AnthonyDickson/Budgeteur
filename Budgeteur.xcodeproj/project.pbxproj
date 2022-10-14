@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		923B7D2C28F921CE000E46BD /* RepeatPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D2B28F921CE000E46BD /* RepeatPeriod.swift */; };
 		927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91DA28F220310013B404 /* BudgeteurApp.swift */; };
 		927B91DD28F220310013B404 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91DC28F220310013B404 /* ContentView.swift */; };
 		927B91DF28F220320013B404 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 927B91DE28F220320013B404 /* Assets.xcassets */; };
@@ -48,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		923B7D2B28F921CE000E46BD /* RepeatPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatPeriod.swift; sourceTree = "<group>"; };
 		927B91D728F220310013B404 /* Budgeteur.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Budgeteur.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		927B91DA28F220310013B404 /* BudgeteurApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgeteurApp.swift; sourceTree = "<group>"; };
 		927B91DC28F220310013B404 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -159,11 +161,11 @@
 		927B920C28F22CA60013B404 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				92B2A0D028F667E900B81F0D /* Period */,
 				927B91DC28F220310013B404 /* ContentView.swift */,
-				927B922328F4E9120013B404 /* Category */,
-				927B921628F27AFD0013B404 /* Transaction */,
 				927B921D28F3D6C20013B404 /* Stateful.swift */,
+				927B922328F4E9120013B404 /* Category */,
+				92B2A0D028F667E900B81F0D /* Period */,
+				927B921628F27AFD0013B404 /* Transaction */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -176,6 +178,7 @@
 				927B921B28F3CCE50013B404 /* Currency.swift */,
 				927B921F28F4C1CE0013B404 /* UserCategory.swift */,
 				92B2A0D328F66BCA00B81F0D /* Period.swift */,
+				923B7D2B28F921CE000E46BD /* RepeatPeriod.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -183,11 +186,11 @@
 		927B921628F27AFD0013B404 /* Transaction */ = {
 			isa = PBXGroup;
 			children = (
+				927B921728F3AFEB0013B404 /* TransactionForm.swift */,
+				927B921928F3B87E0013B404 /* Keypad.swift */,
 				927B920828F22A2F0013B404 /* TransactionList.swift */,
 				927B920428F220670013B404 /* TransactionRow.swift */,
 				927B921228F241270013B404 /* TransactionEditor.swift */,
-				927B921728F3AFEB0013B404 /* TransactionForm.swift */,
-				927B921928F3B87E0013B404 /* Keypad.swift */,
 			);
 			path = Transaction;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 				927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */,
 				927B922228F4DF7E0013B404 /* CategorySelector.swift in Sources */,
 				927B920B28F22AEA0013B404 /* DataModel.swift in Sources */,
+				923B7D2C28F921CE000E46BD /* RepeatPeriod.swift in Sources */,
 				92B2A0CF28F5514D00B81F0D /* CategoryEditor.swift in Sources */,
 				927B922028F4C1CE0013B404 /* UserCategory.swift in Sources */,
 			);

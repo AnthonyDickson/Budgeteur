@@ -24,7 +24,7 @@ struct ContentView: View {
                 TransactionForm(data: data)
             }
             .tabItem {
-                Label("New Transaction", systemImage: "creditcard")
+                Label("Record", systemImage: "creditcard")
             }
             .tag(Tab.new)
             
@@ -32,7 +32,7 @@ struct ContentView: View {
                 TransactionList(data: data)
             }
             .tabItem {
-                Label("Transactions", systemImage: "list.bullet")
+                Label("History", systemImage: "list.bullet")
             }
             .tag(Tab.list)
         }

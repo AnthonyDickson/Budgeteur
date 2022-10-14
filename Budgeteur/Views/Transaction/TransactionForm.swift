@@ -36,6 +36,10 @@ struct TransactionForm: View {
     /// Whether the user's device has light or dark mode enabled.
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
     
+    /// Whether to show the date/repitition controls.
+    @State private var showDateControls = false
+    @State private var repeatPeriod = RepeatPeriod.never
+    
     /// Is the current amount invalid?
     private var invalidAmount: Bool {
         amount <= 0
@@ -60,6 +64,7 @@ struct TransactionForm: View {
             amount = 0.0
             date = Date.now
             categoryID = nil
+            repeatPeriod = .never
         }
     }
     
@@ -108,7 +113,43 @@ struct TransactionForm: View {
         // Need GeometryReader here to prevent the keyboard from moving the views (keyboard avoidance).
         GeometryReader { _ in
             VStack(alignment: .center) {
-                Text(getSpendingSummary())
+                ZStack {
+                    Text(getSpendingSummary())
+                    
+                    HStack {
+                        Spacer()
+                        
+                        Button {
+                            showDateControls = true
+                        } label: {
+                            Label("Change date and repetition.", systemImage: "ellipsis")
+                                .labelStyle(.iconOnly)
+                                .foregroundColor(.primary)
+                        }
+                        .sheet(isPresented: $showDateControls) {
+                            Grid {
+                                GridRow {
+                                    Label("Date", systemImage: "calendar")
+                                    Label("Repeat", systemImage: "repeat")
+                                }
+                                GridRow {
+                                    DatePicker("Date", selection: $date, displayedComponents: [.date])
+                                        .labelsHidden()
+                                        .padding(.bottom)
+                                    Picker("Repeat", selection: $repeatPeriod) {
+                                        ForEach(RepeatPeriod.allCases, id: \.rawValue) { period in
+                                            Text(period.rawValue)
+                                        }
+                                    }
+                                    .pickerStyle(.menu)
+                                }
+                            }
+                            .padding(.top)
+                            .presentationDetents([.medium, .height(128)])
+                        }
+                    }
+                    .padding(.horizontal)
+                }
                 
                 Spacer()
                 
@@ -127,10 +168,6 @@ struct TransactionForm: View {
                     .submitLabel(.done)
                     .multilineTextAlignment(.center)
                     .padding()
-                
-                DatePicker("Date", selection: $date, displayedComponents: [.date])
-                    .labelsHidden()
-                    .padding(.bottom)
                 
                 CategorySelector(categories: $data.categories, selectedCategory: $categoryID)
                 
