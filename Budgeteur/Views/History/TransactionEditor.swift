@@ -75,7 +75,9 @@ struct TransactionEditor_Previews: PreviewProvider {
     static var data = DataModel()
     
     static var previews: some View {
-        TransactionEditor(categories: .constant(data.categories),
-                          transaction: .constant(data.transactions[0]))
+        NavigationStack {
+            TransactionEditor(categories: .constant(data.categories),
+                              transaction: .constant(data.transactions[0]))
+        }
     }
 }

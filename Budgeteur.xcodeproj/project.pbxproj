@@ -23,7 +23,7 @@
 		927B91F828F220320013B404 /* BudgeteurUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91F728F220320013B404 /* BudgeteurUITestsLaunchTests.swift */; };
 		927B920528F220670013B404 /* TransactionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920428F220670013B404 /* TransactionRow.swift */; };
 		927B920728F227890013B404 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920628F227890013B404 /* Transaction.swift */; };
-		927B920928F22A2F0013B404 /* TransactionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920828F22A2F0013B404 /* TransactionList.swift */; };
+		927B920928F22A2F0013B404 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920828F22A2F0013B404 /* History.swift */; };
 		927B920B28F22AEA0013B404 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920A28F22AEA0013B404 /* DataModel.swift */; };
 		927B921328F241270013B404 /* TransactionEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921228F241270013B404 /* TransactionEditor.swift */; };
 		927B921828F3AFEB0013B404 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921728F3AFEB0013B404 /* Record.swift */; };
@@ -74,7 +74,7 @@
 		927B91F728F220320013B404 /* BudgeteurUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgeteurUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		927B920428F220670013B404 /* TransactionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRow.swift; sourceTree = "<group>"; };
 		927B920628F227890013B404 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
-		927B920828F22A2F0013B404 /* TransactionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionList.swift; sourceTree = "<group>"; };
+		927B920828F22A2F0013B404 /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		927B920A28F22AEA0013B404 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		927B921228F241270013B404 /* TransactionEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionEditor.swift; sourceTree = "<group>"; };
 		927B921728F3AFEB0013B404 /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
@@ -191,7 +191,7 @@
 				927B922328F4E9120013B404 /* Category */,
 				92B2A0D028F667E900B81F0D /* Period */,
 				923B7D3328F9301E000E46BD /* Record */,
-				927B921628F27AFD0013B404 /* Transaction */,
+				927B921628F27AFD0013B404 /* History */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -209,15 +209,15 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		927B921628F27AFD0013B404 /* Transaction */ = {
+		927B921628F27AFD0013B404 /* History */ = {
 			isa = PBXGroup;
 			children = (
-				927B920828F22A2F0013B404 /* TransactionList.swift */,
+				927B920828F22A2F0013B404 /* History.swift */,
 				923B7D3428F933CF000E46BD /* TransactionGroup.swift */,
 				927B920428F220670013B404 /* TransactionRow.swift */,
 				927B921228F241270013B404 /* TransactionEditor.swift */,
 			);
-			path = Transaction;
+			path = History;
 			sourceTree = "<group>";
 		};
 		927B922328F4E9120013B404 /* Category */ = {
@@ -369,7 +369,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				927B920528F220670013B404 /* TransactionRow.swift in Sources */,
-				927B920928F22A2F0013B404 /* TransactionList.swift in Sources */,
+				927B920928F22A2F0013B404 /* History.swift in Sources */,
 				927B921A28F3B87E0013B404 /* Keypad.swift in Sources */,
 				927B921828F3AFEB0013B404 /* Record.swift in Sources */,
 				927B921328F241270013B404 /* TransactionEditor.swift in Sources */,

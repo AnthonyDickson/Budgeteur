@@ -29,7 +29,7 @@ struct ContentView: View {
             .tag(Tab.new)
             
             NavigationStack {
-                TransactionList(data: data)
+                History(data: data)
             }
             .tabItem {
                 Label("History", systemImage: "list.bullet")

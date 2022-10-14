@@ -66,12 +66,16 @@ struct TransactionGroup: View {
 
 struct TransactionGroup_Previews: PreviewProvider {
     static var data = DataModel()
+
     static var previews: some View {
-        TransactionGroup(
-            categoryName: data.categories[0].name,
-            transactions: data.transactions.filter({ $0.categoryID == data.categories[0].id }),
-            onRowTap: {_ in},
-            onRowDelete: {_ in}
-        )
+        List {
+            TransactionGroup(
+                categoryName: data.categories[0].name,
+                transactions: data.transactions.filter({ $0.categoryID == data.categories[0].id }),
+                onRowTap: {_ in},
+                onRowDelete: {_ in}
+            )
+        }
+        .listStyle(.inset)
     }
 }

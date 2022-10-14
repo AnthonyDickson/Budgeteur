@@ -49,7 +49,7 @@ extension Period {
 
 
 /// Displays the details of transactions in a vertical list.
-struct TransactionList: View {
+struct History: View {
     /// The app's data model.
     @ObservedObject var data: DataModel
     
@@ -158,10 +158,10 @@ struct TransactionList: View {
     }
 }
 
-struct TransactionList_Previews: PreviewProvider {
+struct History_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            TransactionList(data: DataModel())
+            History(data: DataModel())
         }
     }
 }

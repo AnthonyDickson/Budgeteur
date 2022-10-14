@@ -40,6 +40,9 @@ struct TransactionRow: View {
 
 struct TransactionRow_Previews: PreviewProvider {
     static var previews: some View {
-        TransactionRow(transaction: Transaction.sample)
+        List {
+            TransactionRow(transaction: Transaction.sample)
+        }
+        .listStyle(.inset)
     }
 }
