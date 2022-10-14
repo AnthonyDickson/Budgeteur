@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-extension Color {
-    static let moneyGreen = Color(red: 0.49, green: 0.96, blue: 0.49)
-    static let moneyGreenDarker = Color(red: 0.38, green: 0.72, blue: 0.38)
-}
 
 /// A form for creating a new transaction. Features a big keypad.
 struct Record: View {
@@ -28,20 +24,12 @@ struct Record: View {
     /// How often the transaction repeats, if ever.
     @State var repeatPeriod = RepeatPeriod.never
     
-    /// Whether the user's device has light or dark mode enabled.
-    @Environment(\.colorScheme) private var colorScheme: ColorScheme
-    
     /// Whether to show the date/repitition controls.
     @State private var showDateControls = false
     
     /// Is the current amount invalid?
     private var invalidAmount: Bool {
         amount <= 0
-    }
-    
-    /// The background color of the transaction amount. Reacts to whether dark mode is enabled.
-    private var amountBackground: Color {
-        colorScheme == .light ? Color.moneyGreen : Color.moneyGreenDarker
     }
     
     /// Add the transaction to the app's data.
@@ -68,53 +56,12 @@ struct Record: View {
         }
     }
     
-    /// Get the total amount of all transactions in the current time period (e.g. this week, this month).
-    private func getTotalSpendingForTimePeriod() -> Double {
-        let dateInterval = data.period.getDateInterval(for: Date.now)
-        
-        var sum = 0.0
-        
-        for transaction in data.transactions {
-            if transaction.date > dateInterval.end {
-                continue
-            } else if transaction.date < dateInterval.start {
-                break
-            }
-            sum += transaction.amount
-        }
-        
-        return sum
-    }
-    
-    /// Convert a time period to a context-aware label.
-    private func getTimePeriodLabel() -> String {
-        switch(data.period) {
-        case .oneDay:
-            return "today"
-        case .oneWeek:
-            return "this week"
-        case .twoWeeks:
-            return "this fortnight"
-        case .oneMonth:
-            return "this month"
-        case .threeMonths:
-            return "this quarter"
-        case .oneYear:
-            return "this year"
-        }
-    }
-    
-    /// A label with the total amount spent and the aggregation period.
-    private func getSpendingSummary() -> String {
-        "Spent \(Currency.format(getTotalSpendingForTimePeriod())) \(getTimePeriodLabel())"
-    }
-    
     var body: some View {
         // Need GeometryReader here to prevent the keyboard from moving the views (keyboard avoidance).
         GeometryReader { _ in
             VStack(alignment: .center) {
                 ZStack {
-                    Text(getSpendingSummary())
+                    BudgetOverview(period: data.period, transactions: data.transactions)
                     
                     HStack {
                         Spacer()
@@ -135,14 +82,7 @@ struct Record: View {
                 
                 Spacer()
                 
-                // TODO: Handle case where text overflows. Make text smaller?
-                Text(Currency.format(amount))
-                    .font(.title)
-                    .bold()
-                    .frame(maxWidth: 180, maxHeight: 110)
-                    .padding()
-                    .background(amountBackground)
-                    .cornerRadius(10)
+                AmountDisplay(amount: amount)
                 
                 Spacer()
                 

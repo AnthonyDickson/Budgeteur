@@ -10,7 +10,6 @@ import GameplayKit
 
 /// A container for the app's data.
 final class DataModel: ObservableObject {
-    @Published var groupByCategory: Bool = false
     /// The period to aggregate expenses/income into.
     @Published var period: Period = .oneWeek
 
@@ -98,7 +97,7 @@ final class DataModel: ObservableObject {
             "Fizz",
             "Pop"
         ]
-        let startDate = ISO8601DateFormatter().date(from: "2022-10-09T00:00:00Z")!
+        let startDate = Date.now
         
         for index in 0...25 {
             let description = descriptions[rng.nextInt(upperBound: descriptions.count)]

@@ -12,6 +12,8 @@
 		923B7D3028F92B15000E46BD /* RepeatPeriodPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D2F28F92B15000E46BD /* RepeatPeriodPicker.swift */; };
 		923B7D3228F92FA6000E46BD /* DateRepeatSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D3128F92FA6000E46BD /* DateRepeatSheet.swift */; };
 		923B7D3528F933CF000E46BD /* TransactionGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D3428F933CF000E46BD /* TransactionGroup.swift */; };
+		923B7D3728F937E6000E46BD /* AmountDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D3628F937E6000E46BD /* AmountDisplay.swift */; };
+		923B7D3928F9397E000E46BD /* BudgetOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D3828F9397E000E46BD /* BudgetOverview.swift */; };
 		927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91DA28F220310013B404 /* BudgeteurApp.swift */; };
 		927B91DD28F220310013B404 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91DC28F220310013B404 /* ContentView.swift */; };
 		927B91DF28F220320013B404 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 927B91DE28F220320013B404 /* Assets.xcassets */; };
@@ -58,6 +60,8 @@
 		923B7D2F28F92B15000E46BD /* RepeatPeriodPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatPeriodPicker.swift; sourceTree = "<group>"; };
 		923B7D3128F92FA6000E46BD /* DateRepeatSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRepeatSheet.swift; sourceTree = "<group>"; };
 		923B7D3428F933CF000E46BD /* TransactionGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionGroup.swift; sourceTree = "<group>"; };
+		923B7D3628F937E6000E46BD /* AmountDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountDisplay.swift; sourceTree = "<group>"; };
+		923B7D3828F9397E000E46BD /* BudgetOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetOverview.swift; sourceTree = "<group>"; };
 		927B91D728F220310013B404 /* Budgeteur.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Budgeteur.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		927B91DA28F220310013B404 /* BudgeteurApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgeteurApp.swift; sourceTree = "<group>"; };
 		927B91DC28F220310013B404 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -113,8 +117,10 @@
 			isa = PBXGroup;
 			children = (
 				927B921728F3AFEB0013B404 /* Record.swift */,
-				923B7D3128F92FA6000E46BD /* DateRepeatSheet.swift */,
+				923B7D3828F9397E000E46BD /* BudgetOverview.swift */,
+				923B7D3628F937E6000E46BD /* AmountDisplay.swift */,
 				927B921928F3B87E0013B404 /* Keypad.swift */,
+				923B7D3128F92FA6000E46BD /* DateRepeatSheet.swift */,
 			);
 			path = Record;
 			sourceTree = "<group>";
@@ -367,6 +373,7 @@
 				927B921A28F3B87E0013B404 /* Keypad.swift in Sources */,
 				927B921828F3AFEB0013B404 /* Record.swift in Sources */,
 				927B921328F241270013B404 /* TransactionEditor.swift in Sources */,
+				923B7D3928F9397E000E46BD /* BudgetOverview.swift in Sources */,
 				927B91DD28F220310013B404 /* ContentView.swift in Sources */,
 				927B921C28F3CCE50013B404 /* Currency.swift in Sources */,
 				923B7D2E28F923AC000E46BD /* DissmissKeyboard.swift in Sources */,
@@ -376,6 +383,7 @@
 				92B2A0D428F66BCA00B81F0D /* Period.swift in Sources */,
 				923B7D3228F92FA6000E46BD /* DateRepeatSheet.swift in Sources */,
 				927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */,
+				923B7D3728F937E6000E46BD /* AmountDisplay.swift in Sources */,
 				927B922228F4DF7E0013B404 /* CategorySelector.swift in Sources */,
 				927B920B28F22AEA0013B404 /* DataModel.swift in Sources */,
 				923B7D3528F933CF000E46BD /* TransactionGroup.swift in Sources */,

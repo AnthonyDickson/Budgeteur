@@ -11,6 +11,10 @@ import SwiftUI
 struct TransactionEditor: View {
     @Binding var categories: [UserCategory]
     @Binding var transaction: Transaction
+    /// A function to run if the user presses the cancel button in the toolbar.
+    var onCancel: (() -> ())? = nil
+    /// A function to run if the user presses the save button in the toolbar.
+    var onSave: (() -> ())? = nil
     
     static private let numberFormatter = {
         let formatter = NumberFormatter()
@@ -48,6 +52,22 @@ struct TransactionEditor: View {
             }
         }
         .listStyle(.grouped)
+        .navigationTitle("Edit Transaction")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading){
+                Button("Cancel", role: .cancel) {
+                    onCancel?()
+                }
+                .foregroundColor(.red)
+            }
+            
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Save") {
+                    onSave?()
+                }
+            }
+        }
     }
 }
 

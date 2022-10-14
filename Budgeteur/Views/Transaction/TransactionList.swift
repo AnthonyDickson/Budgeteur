@@ -55,6 +55,7 @@ struct TransactionList: View {
     
     @State private var isEditing = false
     @State private var selectedTransaction = Transaction.sample
+    @State private var groupByCategory: Bool = false
     
     /// The transactions grouped by the user selected time period.
     private var transactionsByDate: Dictionary<DateInterval, [Transaction]> {
@@ -80,7 +81,7 @@ struct TransactionList: View {
         List {
             ForEach(transactionsByDate.sorted(by: { $0.key > $1.key}), id: \.key) { dateInterval, transactions in
                 Section {
-                    if data.groupByCategory {
+                    if groupByCategory {
                         ForEach(groupTransactionsByCategory(transactions), id: \.key) { categoryID, subTransactions in
                             TransactionGroup(
                                 categoryName: data.getCategoryName(categoryID),
@@ -120,6 +121,21 @@ struct TransactionList: View {
                     .bold()
                     .foregroundColor(.primary)
                 }
+                .sheet(isPresented: $isEditing) {
+                    NavigationStack {
+                        TransactionEditor(
+                            categories: $data.categories,
+                            transaction: $selectedTransaction,
+                            onCancel: {
+                                isEditing = false
+                            },
+                            onSave: {
+                                data.updateTransaction(selectedTransaction)
+                                isEditing = false
+                            }
+                        )
+                    }
+                }
             }
         }
         .listStyle(.inset)
@@ -128,39 +144,15 @@ struct TransactionList: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    data.groupByCategory.toggle()
+                    groupByCategory.toggle()
                 } label: {
-                    Label("Group by Category", systemImage: data.groupByCategory ? "tag.fill" : "tag")
+                    Label("Group by Category", systemImage: groupByCategory ? "tag.fill" : "tag")
                 }
             }
             ToolbarItem(placement: .bottomBar) {
                 PeriodPicker(selectedPeriod: $data.period)
                     .padding(.horizontal)
                     .padding(.bottom)
-            }
-        }
-        .sheet(isPresented: $isEditing) {
-            NavigationStack {
-                TransactionEditor(categories: $data.categories,
-                                  transaction: $selectedTransaction)
-                // The navigation is defined here so we don't have to bind and pass in ``isEditing``.
-                .navigationTitle("Edit Transaction")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading){
-                        Button("Cancel", role: .cancel) {
-                            isEditing = false
-                        }
-                        .foregroundColor(.red)
-                    }
-                    
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button("Save") {
-                            data.updateTransaction(selectedTransaction)
-                            isEditing = false
-                        }
-                    }
-                }
             }
         }
     }
