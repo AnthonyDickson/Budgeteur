@@ -54,7 +54,6 @@ struct TransactionGroup: View {
                     .animation(.easeInOut.speed(2), value: showTransactions)
             }
             .frame(maxWidth: .infinity)
-            .font(.subheadline)
             .foregroundColor(.primary)
             .onTapGesture {
                 withAnimation {

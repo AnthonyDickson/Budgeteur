@@ -71,7 +71,7 @@ struct TransactionList: View {
     private func groupTransactionsByCategory(_ transactions: [Transaction]) -> [Dictionary<UUID?, [Transaction]>.Element] {
         let result = Dictionary(grouping: transactions, by: { $0.categoryID })
         let sortedResults = result.sorted(by: {
-            data.getCategoryName($0.key) < data.getCategoryName($1.key)
+            $0.value.reduce(0, { $0 + $1.amount}) > $1.value.reduce(0, { $0 + $1.amount})
         })
         
         return sortedResults
