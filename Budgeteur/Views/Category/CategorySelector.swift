@@ -26,6 +26,8 @@ struct CategorySelector: View {
     /// Whether to display the sheet with the form to add, edit and delete categories.
     @State private var showCategoryEditor: Bool = false
     
+    @State private var draftCategories: [UserCategory] = []
+    
     /// Get the color for the category label.
     ///
     /// If no category has been selected by the user, all categories are given the same color.
@@ -102,6 +104,7 @@ struct CategorySelector: View {
                     }
                     
                     Button {
+                        draftCategories = categories
                         showCategoryEditor = true
                     } label: {
                         Text("Edit Tags")
@@ -122,20 +125,28 @@ struct CategorySelector: View {
                     }
                 }
             }
-            .sheet(isPresented: $showCategoryEditor) {
+            .sheet(isPresented: $showCategoryEditor, onDismiss: {
+                scrollTo(selectedCategory, using: proxy)
+            }) {
                 // TODO: When a tag is updated, update all transactions that use new tag.
                 // Even though the parent views are generally embeded in a navigation stack,
                 // we have to add another one here to ensure the toolbar shows. Why?
                 NavigationStack {
-                    CategoryEditor(categories: $categories)
+                    CategoryEditor(categories: $draftCategories)
                         .environment(\.editMode, .constant(EditMode.active))
                         .navigationTitle("Edit Categories")
                         .navigationBarTitleDisplayMode(.inline)
                         .toolbar {
-                            ToolbarItem(placement: .navigationBarTrailing){
-                                Button("Done") {
+                            ToolbarItem(placement: .navigationBarLeading){
+                                Button("Cancel", role: .cancel) {
                                     showCategoryEditor = false
-                                    scrollTo(selectedCategory, using: proxy)
+                                }
+                                .foregroundColor(.red)
+                            }
+                            ToolbarItem(placement: .navigationBarTrailing){
+                                Button("Save") {
+                                    showCategoryEditor = false
+                                    categories = draftCategories
                                 }
                             }
                         }
