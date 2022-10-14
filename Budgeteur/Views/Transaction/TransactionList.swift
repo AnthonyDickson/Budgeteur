@@ -49,8 +49,8 @@ extension Period {
 
 /// Shows transctions grouped by a category in a collapsable view.
 struct TransactionGroup: View {
-    /// The category that the transactions belong to.
-    var category: UserCategory?
+    /// The name of the category that the transactions belong to.
+    var categoryName: String
     /// The transaction data.
     var transactions: [Transaction]
     /// What to do when a user taps on a transaction row.
@@ -68,17 +68,12 @@ struct TransactionGroup: View {
         return Currency.format(total)
     }
     
-    /// The category name, or a suitable default.
-    private var categoryName: String {
-        category?.name ?? UserCategory.defaultName
-    }
-
     var body: some View {
         Section {
             // TODO: Animate the group being expanded with a sliding animation.
             if showTransactions {
                 ForEach(transactions) { transaction in
-                    TransactionRow(transaction: transaction, displayCategory: false)
+                    TransactionRow(transaction: transaction)
                         .padding(.leading)
                         .onTapGesture {
                             onRowTap(transaction)
@@ -128,13 +123,13 @@ struct TransactionList: View {
     
     /// Group transactions by category.
     /// - Parameter transactions: Transaction data.
-    /// - Returns: An array of dictionary elements mapping categories to lists of transactions.
-    private func groupTransactionsByCategory(_ transactions: [Transaction]) -> [Dictionary<UserCategory?, [Transaction]>.Element] {
-        let result = Dictionary(grouping: transactions, by: { $0.category })
+    /// - Returns: An array of dictionary elements mapping category IDs to lists of transactions.
+    private func groupTransactionsByCategory(_ transactions: [Transaction]) -> [Dictionary<UUID?, [Transaction]>.Element] {
+        let result = Dictionary(grouping: transactions, by: { $0.categoryID })
         let sortedResults = result.sorted(by: {
-            ($0.key?.name ?? UserCategory.defaultName) < ($1.key?.name ?? UserCategory.defaultName)
+            data.getCategoryName($0.key) < data.getCategoryName($1.key)
         })
-
+        
         return sortedResults
     }
     
@@ -143,9 +138,9 @@ struct TransactionList: View {
             ForEach(transactionsByDate.sorted(by: { $0.key > $1.key}), id: \.key) { dateInterval, transactions in
                 Section {
                     if data.groupByCategory {
-                        ForEach(groupTransactionsByCategory(transactions), id: \.key) { category, subTransactions in
+                        ForEach(groupTransactionsByCategory(transactions), id: \.key) { categoryID, subTransactions in
                             TransactionGroup(
-                                category: category,
+                                categoryName: data.getCategoryName(categoryID),
                                 transactions: subTransactions,
                                 onRowTap: { transaction in
                                     selectedTransaction = transaction
@@ -158,11 +153,14 @@ struct TransactionList: View {
                         }
                     } else {
                         ForEach(transactions) { transaction in
-                            TransactionRow(transaction: transaction)
-                                .onTapGesture {
-                                    selectedTransaction = transaction
-                                    isEditing = true
-                                }
+                            TransactionRow(
+                                transaction: transaction,
+                                categoryName: data.getCategoryName(transaction.categoryID)
+                            )
+                            .onTapGesture {
+                                selectedTransaction = transaction
+                                isEditing = true
+                            }
                         }
                         .onDelete { indexSet in
                             data.transactions.remove(atOffsets: indexSet)

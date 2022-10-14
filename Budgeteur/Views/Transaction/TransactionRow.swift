@@ -10,15 +10,15 @@ import SwiftUI
 /// The details of a single transaction intended to be view inside of a List view.
 struct TransactionRow: View {
     var transaction: Transaction
-    /// Whether the category is displayed.
-    var displayCategory = true
+    /// The category that the transaction belongs to. Defaults to displaying nothing.
+    var categoryName: String? = nil
     
     /// Text describing how much was spent on what (category).
     private var amountText: String {
         let amountString = Currency.format(transaction.amount)
         
-        if let name = transaction.category?.name, displayCategory {
-            return "\(amountString) on \(name)"
+        if let categoryName = categoryName, categoryName != UserCategory.defaultName {
+            return "\(amountString) on \(categoryName)"
         } else {
             return amountString
         }

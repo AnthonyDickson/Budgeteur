@@ -29,7 +29,7 @@ struct TransactionEditor: View {
             }
             
             Section("Tag") {
-                CategorySelector(categories: $categories, selectedCategory: $transaction.category)
+                CategorySelector(categories: $categories, selectedCategory: $transaction.categoryID)
                     .padding(.horizontal, -20)
             }
             

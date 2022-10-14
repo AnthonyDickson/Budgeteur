@@ -30,8 +30,8 @@ struct TransactionForm: View {
     @State var amount = 0.0
     /// When the transaction occured.
     @State var date = Date.now
-    /// The category the transaction fits into (e.g., groceries vs. entertainment).
-    @State var category: UserCategory? = nil
+    /// The ID of the category the transaction fits into (e.g., groceries vs. entertainment).
+    @State var categoryID: UUID? = nil
     
     /// Whether the user's device has light or dark mode enabled.
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
@@ -48,7 +48,7 @@ struct TransactionForm: View {
     
     /// Add the transaction to the app's data.
     private func save() {
-        let transaction = Transaction(amount: amount, description: description, date: date, category: category)
+        let transaction = Transaction(amount: amount, description: description, date: date, categoryID: categoryID)
         data.addTransaction(transaction)
         reset()
     }
@@ -59,7 +59,7 @@ struct TransactionForm: View {
             description = ""
             amount = 0.0
             date = Date.now
-            category = nil
+            categoryID = nil
         }
     }
     
@@ -132,7 +132,7 @@ struct TransactionForm: View {
                     .labelsHidden()
                     .padding(.bottom)
                 
-                CategorySelector(categories: $data.categories, selectedCategory: $category)
+                CategorySelector(categories: $data.categories, selectedCategory: $categoryID)
                 
                 Keypad(amount: $amount, onSave: save)
             }

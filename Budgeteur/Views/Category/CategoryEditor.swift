@@ -30,6 +30,7 @@ struct CategoryEditor: View {
                 TextField(category.name, text: $category.name)
             }
             .onDelete { categoryIndices in
+                // TODO: For all transactions with deleted categories, set their categoryID to nil. This would prevent a potentially rare collision with the IDs of deleted categories and new categories.
                 categories.remove(atOffsets: categoryIndices)
             }
             .onMove { sourceIndices, destination in

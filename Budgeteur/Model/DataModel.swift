@@ -17,6 +17,15 @@ final class DataModel: ObservableObject {
     // MARK: - User Categories
     /// User defined categories for expenses.
     @Published var categories: [UserCategory]
+    
+    /// Retreive the name of a category it it exists, otherwise a suitable default value.
+    /// - Parameter categoryID: The ID of the category.
+    /// - Returns: The name of the category, or a suitable default value.
+    func getCategoryName(_ categoryID: UUID?) -> String {
+        guard let categoryID = categoryID else { return UserCategory.defaultName }
+        
+        return categories.first(where: { $0.id == categoryID })?.name ?? UserCategory.defaultName
+    }
 
     // MARK: - Transactions
 
@@ -104,7 +113,7 @@ final class DataModel: ObservableObject {
                 amount: amount,
                 description: description,
                 date: date,
-                category: category
+                categoryID: category.id
             ))
         }
         
