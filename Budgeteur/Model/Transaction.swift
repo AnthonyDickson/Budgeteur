@@ -24,6 +24,8 @@ struct Transaction: Identifiable {
     var date = Date.now
     /// The ID category that the transaction fits into (e.g., home expenses vs. entertainment).
     var categoryID: UUID?
+    /// How often the transaction repeats, if ever.
+    var repeatPeriod = RepeatPeriod.never
     
     /// The day and month in an abbreviated format, e.g. `2022-10-09` -> `Oct 9`
     var shortDate: String {

@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		923B7D2C28F921CE000E46BD /* RepeatPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D2B28F921CE000E46BD /* RepeatPeriod.swift */; };
+		923B7D2E28F923AC000E46BD /* DissmissKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D2D28F923AC000E46BD /* DissmissKeyboard.swift */; };
+		923B7D3028F92B15000E46BD /* RepeatPeriodPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D2F28F92B15000E46BD /* RepeatPeriodPicker.swift */; };
+		923B7D3228F92FA6000E46BD /* DateRepeatSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D3128F92FA6000E46BD /* DateRepeatSheet.swift */; };
+		923B7D3528F933CF000E46BD /* TransactionGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D3428F933CF000E46BD /* TransactionGroup.swift */; };
 		927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91DA28F220310013B404 /* BudgeteurApp.swift */; };
 		927B91DD28F220310013B404 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91DC28F220310013B404 /* ContentView.swift */; };
 		927B91DF28F220320013B404 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 927B91DE28F220320013B404 /* Assets.xcassets */; };
@@ -20,7 +24,7 @@
 		927B920928F22A2F0013B404 /* TransactionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920828F22A2F0013B404 /* TransactionList.swift */; };
 		927B920B28F22AEA0013B404 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920A28F22AEA0013B404 /* DataModel.swift */; };
 		927B921328F241270013B404 /* TransactionEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921228F241270013B404 /* TransactionEditor.swift */; };
-		927B921828F3AFEB0013B404 /* TransactionForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921728F3AFEB0013B404 /* TransactionForm.swift */; };
+		927B921828F3AFEB0013B404 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921728F3AFEB0013B404 /* Record.swift */; };
 		927B921A28F3B87E0013B404 /* Keypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921928F3B87E0013B404 /* Keypad.swift */; };
 		927B921C28F3CCE50013B404 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921B28F3CCE50013B404 /* Currency.swift */; };
 		927B921E28F3D6C20013B404 /* Stateful.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921D28F3D6C20013B404 /* Stateful.swift */; };
@@ -50,6 +54,10 @@
 
 /* Begin PBXFileReference section */
 		923B7D2B28F921CE000E46BD /* RepeatPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatPeriod.swift; sourceTree = "<group>"; };
+		923B7D2D28F923AC000E46BD /* DissmissKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DissmissKeyboard.swift; sourceTree = "<group>"; };
+		923B7D2F28F92B15000E46BD /* RepeatPeriodPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatPeriodPicker.swift; sourceTree = "<group>"; };
+		923B7D3128F92FA6000E46BD /* DateRepeatSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRepeatSheet.swift; sourceTree = "<group>"; };
+		923B7D3428F933CF000E46BD /* TransactionGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionGroup.swift; sourceTree = "<group>"; };
 		927B91D728F220310013B404 /* Budgeteur.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Budgeteur.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		927B91DA28F220310013B404 /* BudgeteurApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgeteurApp.swift; sourceTree = "<group>"; };
 		927B91DC28F220310013B404 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -65,7 +73,7 @@
 		927B920828F22A2F0013B404 /* TransactionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionList.swift; sourceTree = "<group>"; };
 		927B920A28F22AEA0013B404 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		927B921228F241270013B404 /* TransactionEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionEditor.swift; sourceTree = "<group>"; };
-		927B921728F3AFEB0013B404 /* TransactionForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionForm.swift; sourceTree = "<group>"; };
+		927B921728F3AFEB0013B404 /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		927B921928F3B87E0013B404 /* Keypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keypad.swift; sourceTree = "<group>"; };
 		927B921B28F3CCE50013B404 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		927B921D28F3D6C20013B404 /* Stateful.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stateful.swift; sourceTree = "<group>"; };
@@ -101,6 +109,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		923B7D3328F9301E000E46BD /* Record */ = {
+			isa = PBXGroup;
+			children = (
+				927B921728F3AFEB0013B404 /* Record.swift */,
+				923B7D3128F92FA6000E46BD /* DateRepeatSheet.swift */,
+				927B921928F3B87E0013B404 /* Keypad.swift */,
+			);
+			path = Record;
+			sourceTree = "<group>";
+		};
 		927B91CE28F220310013B404 = {
 			isa = PBXGroup;
 			children = (
@@ -162,9 +180,11 @@
 			isa = PBXGroup;
 			children = (
 				927B91DC28F220310013B404 /* ContentView.swift */,
+				923B7D2D28F923AC000E46BD /* DissmissKeyboard.swift */,
 				927B921D28F3D6C20013B404 /* Stateful.swift */,
 				927B922328F4E9120013B404 /* Category */,
 				92B2A0D028F667E900B81F0D /* Period */,
+				923B7D3328F9301E000E46BD /* Record */,
 				927B921628F27AFD0013B404 /* Transaction */,
 			);
 			path = Views;
@@ -186,9 +206,8 @@
 		927B921628F27AFD0013B404 /* Transaction */ = {
 			isa = PBXGroup;
 			children = (
-				927B921728F3AFEB0013B404 /* TransactionForm.swift */,
-				927B921928F3B87E0013B404 /* Keypad.swift */,
 				927B920828F22A2F0013B404 /* TransactionList.swift */,
+				923B7D3428F933CF000E46BD /* TransactionGroup.swift */,
 				927B920428F220670013B404 /* TransactionRow.swift */,
 				927B921228F241270013B404 /* TransactionEditor.swift */,
 			);
@@ -208,6 +227,7 @@
 			isa = PBXGroup;
 			children = (
 				92B2A0D128F667FB00B81F0D /* PeriodPicker.swift */,
+				923B7D2F28F92B15000E46BD /* RepeatPeriodPicker.swift */,
 			);
 			path = Period;
 			sourceTree = "<group>";
@@ -345,20 +365,24 @@
 				927B920528F220670013B404 /* TransactionRow.swift in Sources */,
 				927B920928F22A2F0013B404 /* TransactionList.swift in Sources */,
 				927B921A28F3B87E0013B404 /* Keypad.swift in Sources */,
-				927B921828F3AFEB0013B404 /* TransactionForm.swift in Sources */,
+				927B921828F3AFEB0013B404 /* Record.swift in Sources */,
 				927B921328F241270013B404 /* TransactionEditor.swift in Sources */,
 				927B91DD28F220310013B404 /* ContentView.swift in Sources */,
 				927B921C28F3CCE50013B404 /* Currency.swift in Sources */,
+				923B7D2E28F923AC000E46BD /* DissmissKeyboard.swift in Sources */,
 				927B921E28F3D6C20013B404 /* Stateful.swift in Sources */,
 				92B2A0D228F667FB00B81F0D /* PeriodPicker.swift in Sources */,
 				927B920728F227890013B404 /* Transaction.swift in Sources */,
 				92B2A0D428F66BCA00B81F0D /* Period.swift in Sources */,
+				923B7D3228F92FA6000E46BD /* DateRepeatSheet.swift in Sources */,
 				927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */,
 				927B922228F4DF7E0013B404 /* CategorySelector.swift in Sources */,
 				927B920B28F22AEA0013B404 /* DataModel.swift in Sources */,
+				923B7D3528F933CF000E46BD /* TransactionGroup.swift in Sources */,
 				923B7D2C28F921CE000E46BD /* RepeatPeriod.swift in Sources */,
 				92B2A0CF28F5514D00B81F0D /* CategoryEditor.swift in Sources */,
 				927B922028F4C1CE0013B404 /* UserCategory.swift in Sources */,
+				923B7D3028F92B15000E46BD /* RepeatPeriodPicker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

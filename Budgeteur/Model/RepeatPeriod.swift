@@ -16,4 +16,15 @@ enum RepeatPeriod: String, CaseIterable {
     case monthly = "Monthly"
     case quarterly = "Quarterly"
     case yearly = "Yearly"
+    
+    /// Get the next repeat period.
+    ///
+    /// Will cycle back to the start if called on the last item.
+    func getNext() -> RepeatPeriod {
+        let cases = Self.allCases
+        let index = cases.firstIndex(of: self)!
+        let nextIndex = (index + 1) % cases.count
+        
+        return cases[nextIndex]
+    }
 }

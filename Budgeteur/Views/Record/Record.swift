@@ -12,15 +12,8 @@ extension Color {
     static let moneyGreenDarker = Color(red: 0.38, green: 0.72, blue: 0.38)
 }
 
-extension View {
-    func dismissKeyboard() {
-        let resign = #selector(UIResponder.resignFirstResponder)
-        UIApplication.shared.sendAction(resign, to: nil, from: nil, for: nil)
-    }
-}
-
 /// A form for creating a new transaction. Features a big keypad.
-struct TransactionForm: View {
+struct Record: View {
     /// The app data.
     @ObservedObject var data: DataModel
     
@@ -32,13 +25,14 @@ struct TransactionForm: View {
     @State var date = Date.now
     /// The ID of the category the transaction fits into (e.g., groceries vs. entertainment).
     @State var categoryID: UUID? = nil
+    /// How often the transaction repeats, if ever.
+    @State var repeatPeriod = RepeatPeriod.never
     
     /// Whether the user's device has light or dark mode enabled.
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
     
     /// Whether to show the date/repitition controls.
     @State private var showDateControls = false
-    @State private var repeatPeriod = RepeatPeriod.never
     
     /// Is the current amount invalid?
     private var invalidAmount: Bool {
@@ -52,7 +46,13 @@ struct TransactionForm: View {
     
     /// Add the transaction to the app's data.
     private func save() {
-        let transaction = Transaction(amount: amount, description: description, date: date, categoryID: categoryID)
+        let transaction = Transaction(
+            amount: amount,
+            description: description,
+            date: date,
+            categoryID: categoryID,
+            repeatPeriod: repeatPeriod
+        )
         data.addTransaction(transaction)
         reset()
     }
@@ -127,25 +127,7 @@ struct TransactionForm: View {
                                 .foregroundColor(.primary)
                         }
                         .sheet(isPresented: $showDateControls) {
-                            Grid {
-                                GridRow {
-                                    Label("Date", systemImage: "calendar")
-                                    Label("Repeat", systemImage: "repeat")
-                                }
-                                GridRow {
-                                    DatePicker("Date", selection: $date, displayedComponents: [.date])
-                                        .labelsHidden()
-                                        .padding(.bottom)
-                                    Picker("Repeat", selection: $repeatPeriod) {
-                                        ForEach(RepeatPeriod.allCases, id: \.rawValue) { period in
-                                            Text(period.rawValue)
-                                        }
-                                    }
-                                    .pickerStyle(.menu)
-                                }
-                            }
-                            .padding(.top)
-                            .presentationDetents([.medium, .height(128)])
+                            DateRepeatSheet(date: $date, repeatPeriod: $repeatPeriod)
                         }
                     }
                     .padding(.horizontal)
@@ -183,8 +165,8 @@ struct TransactionForm: View {
     }
 }
 
-struct TransactionForm_Previews: PreviewProvider {
+struct Record_Previews: PreviewProvider {
     static var previews: some View {
-        TransactionForm(data: DataModel())
+        Record(data: DataModel())
     }
 }

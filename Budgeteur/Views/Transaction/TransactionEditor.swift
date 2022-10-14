@@ -42,6 +42,10 @@ struct TransactionEditor: View {
                 DatePicker("Date", selection: $transaction.date, displayedComponents: [.date])
                     .labelsHidden()
             }
+            
+            Section("Repeats") {
+                RepeatPeriodPicker(repeatPeriod: $transaction.repeatPeriod)
+            }
         }
         .listStyle(.grouped)
     }

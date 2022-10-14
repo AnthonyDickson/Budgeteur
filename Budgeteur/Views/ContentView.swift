@@ -21,7 +21,7 @@ struct ContentView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             NavigationStack {
-                TransactionForm(data: data)
+                Record(data: data)
             }
             .tabItem {
                 Label("Record", systemImage: "creditcard")
