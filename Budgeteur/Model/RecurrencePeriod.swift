@@ -8,7 +8,7 @@
 import Foundation
 
 /// The time period that a transaction may repeat over.
-enum RepeatPeriod: String, CaseIterable {
+enum RecurrencePeriod: String, CaseIterable {
     case never = "Never"
     case daily = "Daily"
     case weekly = "Weekly"
@@ -20,7 +20,7 @@ enum RepeatPeriod: String, CaseIterable {
     /// Get the next repeat period.
     ///
     /// Will cycle back to the start if called on the last item.
-    func getNext() -> RepeatPeriod {
+    func getNext() -> RecurrencePeriod {
         let cases = Self.allCases
         let index = cases.firstIndex(of: self)!
         let nextIndex = (index + 1) % cases.count

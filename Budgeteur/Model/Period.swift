@@ -43,11 +43,12 @@ enum Period: String, CaseIterable, Identifiable {
         let calendar = Calendar(identifier: .iso8601)
         var startDate: Date
         var endDate: Date
+        let date = calendar.startOfDay(for: date)
         
         switch(self) {
         case .oneDay:
             startDate = date
-            endDate = Calendar.current.date(byAdding: .day, value: 1, to: startDate)!
+            endDate = Calendar.current.date(byAdding: DateComponents(day: 1, second: -1), to: startDate)!
         case .oneWeek:
             startDate = calendar.date(
                 from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: date)

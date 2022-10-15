@@ -15,6 +15,7 @@ struct BudgetOverview: View {
     
     /// Get the total amount of all transactions in the current time period (e.g. this week, this month).
     private var totalSpending: Double {
+        // TODO: Add repeating transactions to sum.
         let dateInterval = period.getDateInterval(for: Date.now)
         
         var sum = 0.0

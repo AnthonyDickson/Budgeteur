@@ -47,7 +47,6 @@ extension Period {
     }
 }
 
-
 /// Displays the details of transactions in a vertical list.
 struct History: View {
     /// The app's data model.
@@ -60,7 +59,7 @@ struct History: View {
     /// The transactions grouped by the user selected time period.
     private var transactionsByDate: Dictionary<DateInterval, [Transaction]> {
         Dictionary(
-            grouping: data.transactions,
+            grouping: data.oneOffTransactions,
             by: { data.period.getDateInterval(for: $0.date) }
         )
     }
@@ -109,6 +108,18 @@ struct History: View {
                         .onDelete { indexSet in
                             data.transactions.remove(atOffsets: indexSet)
                         }
+                    }
+                    
+                    // TODO: If ``groupByCategory`` is `true`, insert the repeated transactions into their respective categories. Otherwise, put inside own section titled 'recurring'.
+                    ForEach(data.getRecurringTransactions(for: dateInterval)) { recurringTransaction in
+                        RecurringTransactionRow(transaction: recurringTransaction, categoryName: data.getCategoryName(recurringTransaction.categoryID))
+                            .onTapGesture {
+                                // TODO: Show original transaction.
+                                // TODO: In editor view, add option to stop transaction recurring. This would need to either add an end date which is checked when calculating recurring transactions, or replace the recurring transaction with regular transactions for the period the recurring transaction was active.
+                            }
+                    }
+                    .onDelete { indexSet in
+                        // TODO: Delete original transaction. Should Probably show an confirmation dialog.
                     }
                 } header: {
                     HStack {

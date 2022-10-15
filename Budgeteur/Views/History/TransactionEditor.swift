@@ -48,7 +48,7 @@ struct TransactionEditor: View {
             }
             
             Section("Repeats") {
-                RepeatPeriodPicker(repeatPeriod: $transaction.repeatPeriod)
+                RecurrencePeriodPicker(recurrencePeriod: $transaction.recurrencePeriod)
             }
         }
         .listStyle(.grouped)

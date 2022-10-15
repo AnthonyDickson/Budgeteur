@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DateRepeatSheet: View {
     @Binding var date: Date
-    @Binding var repeatPeriod: RepeatPeriod
+    @Binding var recurrencePeriod: RecurrencePeriod
     
     var body: some View {
         // TODO: Stop longer repeat period names from moving date column.
@@ -24,7 +24,7 @@ struct DateRepeatSheet: View {
                 DatePicker("Date", selection: $date, displayedComponents: [.date])
                     .labelsHidden()
                     .padding(.trailing)
-                RepeatPeriodPicker(repeatPeriod: $repeatPeriod)
+                RecurrencePeriodPicker(recurrencePeriod: $recurrencePeriod)
             }
         }
         .padding(.top)
@@ -34,6 +34,6 @@ struct DateRepeatSheet: View {
 
 struct DateRepeatSheet_Previews: PreviewProvider {
     static var previews: some View {
-        DateRepeatSheet(date: .constant(Date.now), repeatPeriod: .constant(.never))
+        DateRepeatSheet(date: .constant(Date.now), recurrencePeriod: .constant(.never))
     }
 }

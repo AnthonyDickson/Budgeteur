@@ -34,6 +34,9 @@ final class DataModel: ObservableObject {
     /// The methods ``addTransaction(_:)``, ``removeTransaction(_:)`` and ``updateTransaction(_:)`` should be used to modify this collection.
     @Published var transactions: [Transaction] = []
     
+    var oneOffTransactions: [Transaction] { transactions.filter({ $0.recurrencePeriod == .never }) }
+    var repeatTransactions: [Transaction] { transactions.filter({ $0.recurrencePeriod != .never }) }
+    
     /// Add a transaction to the collection of transactions.
     ///
     /// This method ensures the transactions stays sorted by date in descending order.
@@ -67,6 +70,55 @@ final class DataModel: ObservableObject {
         removeTransaction(transaction)
         addTransaction(transaction)
     }
+    
+    // MARK: - Recurring Transactions
+    
+    /// Get the contribution to expenses/income that recurring transaction for a given time period.
+    /// - Parameter dateInterval: The time period to consider.
+    /// - Returns: A list of proxy transactions.
+    func getRecurringTransactions(for dateInterval: DateInterval) -> [RecurringTransaction] {
+        let multipliers = [
+            RecurrencePeriod.daily: 1.0,
+            RecurrencePeriod.weekly: 52.1785/365.25,
+            RecurrencePeriod.fortnighly: 26.0892/365.25,
+            RecurrencePeriod.monthly: 12/365.25,
+            RecurrencePeriod.quarterly: 3/365.25,
+            RecurrencePeriod.yearly: 1/365.25
+        ]
+        
+        var repeatTransactions: [RecurringTransaction] = []
+        
+        for transaction in transactions {
+            guard transaction.recurrencePeriod != .never else {
+                continue
+            }
+            
+            let transactionDate = Calendar.current.startOfDay(for: transaction.date)
+            let repeatStartedAfterInterval = transactionDate > dateInterval.start
+            let startDate = repeatStartedAfterInterval ? transactionDate : dateInterval.start
+            let startDateBeforeEnd = startDate < dateInterval.end
+            
+            guard startDateBeforeEnd else {
+                continue
+            }
+            
+            // The date intervals are closed intervals, but the .day component returns the length of the open interval so we need to add one to the result.
+            let numDays = Calendar.current.dateComponents([.day], from: startDate, to: dateInterval.end).day! + 1
+            let dailyAmount = transaction.amount * multipliers[transaction.recurrencePeriod]!
+            let amountForPeriod = dailyAmount * Double(numDays)
+            
+            repeatTransactions.append(RecurringTransaction(
+                amount: amountForPeriod,
+                description: transaction.description,
+                categoryID: transaction.categoryID,
+                recurrencePeriod: transaction.recurrencePeriod
+            ))
+        }
+        
+        return repeatTransactions
+    }
+    
+    // MARK: - Initialisers
     
     /// Create the data model with the supplied data.
     /// - Parameters:
@@ -115,6 +167,14 @@ final class DataModel: ObservableObject {
                 categoryID: category.id
             ))
         }
+        
+        sampleTransactions.append(Transaction(
+            amount: 255.0,
+            description: "Rent",
+            date: Calendar.current.date(byAdding: .month, value: -3, to: startDate)!,
+            categoryID: categories[2].id,
+            recurrencePeriod: .weekly
+        ))
         
         let transactions = sampleTransactions.sorted(by: { $0.date > $1.date })
         

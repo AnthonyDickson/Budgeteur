@@ -7,6 +7,15 @@
 
 import Foundation
 
+
+struct RecurringTransaction: Identifiable {
+    let id = UUID()
+    let amount: Double
+    let description: String
+    let categoryID: UUID?
+    let recurrencePeriod: RecurrencePeriod
+}
+
 /// Represents an expenditure or income.
 struct Transaction: Identifiable {
     let id = UUID()
@@ -25,7 +34,7 @@ struct Transaction: Identifiable {
     /// The ID category that the transaction fits into (e.g., home expenses vs. entertainment).
     var categoryID: UUID?
     /// How often the transaction repeats, if ever.
-    var repeatPeriod = RepeatPeriod.never
+    var recurrencePeriod = RecurrencePeriod.never
     
     /// The day and month in an abbreviated format, e.g. `2022-10-09` -> `Oct 9`
     var shortDate: String {

@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct RepeatPeriodPicker: View {
-    @Binding var repeatPeriod: RepeatPeriod
+struct RecurrencePeriodPicker: View {
+    @Binding var recurrencePeriod: RecurrencePeriod
     
     var body: some View {
         Button {
-            repeatPeriod = repeatPeriod.getNext()
+            recurrencePeriod = recurrencePeriod.getNext()
         } label: {
-            Text(repeatPeriod.rawValue)
+            Text(recurrencePeriod.rawValue)
                 .foregroundColor(.primary)
                 .padding(.vertical, 8)
                 .padding(.horizontal, 12)
@@ -25,10 +25,10 @@ struct RepeatPeriodPicker: View {
     }
 }
 
-struct RepeatPeriodPicker_Previews: PreviewProvider {
+struct RecurrencePeriodPicker_Previews: PreviewProvider {
     static var previews: some View {
-        Stateful(initialState: RepeatPeriod.never) { $repeatPeriod in
-            RepeatPeriodPicker(repeatPeriod: $repeatPeriod)
+        Stateful(initialState: RecurrencePeriod.never) { $recurrencePeriod in
+            RecurrencePeriodPicker(recurrencePeriod: $recurrencePeriod)
         }
     }
 }

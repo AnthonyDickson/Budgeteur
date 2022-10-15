@@ -22,7 +22,7 @@ struct Record: View {
     /// The ID of the category the transaction fits into (e.g., groceries vs. entertainment).
     @State var categoryID: UUID? = nil
     /// How often the transaction repeats, if ever.
-    @State var repeatPeriod = RepeatPeriod.never
+    @State var recurrencePeriod = RecurrencePeriod.never
     
     /// Whether to show the date/repitition controls.
     @State private var showDateControls = false
@@ -39,7 +39,7 @@ struct Record: View {
             description: description,
             date: date,
             categoryID: categoryID,
-            repeatPeriod: repeatPeriod
+            recurrencePeriod: recurrencePeriod
         )
         data.addTransaction(transaction)
         reset()
@@ -52,7 +52,7 @@ struct Record: View {
             amount = 0.0
             date = Date.now
             categoryID = nil
-            repeatPeriod = .never
+            recurrencePeriod = .never
         }
     }
     
@@ -74,7 +74,7 @@ struct Record: View {
                                 .foregroundColor(.primary)
                         }
                         .sheet(isPresented: $showDateControls) {
-                            DateRepeatSheet(date: $date, repeatPeriod: $repeatPeriod)
+                            DateRepeatSheet(date: $date, recurrencePeriod: $recurrencePeriod)
                         }
                     }
                     .padding(.horizontal)
