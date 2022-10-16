@@ -48,7 +48,8 @@ struct RecurringTransactionRow_Previews: PreviewProvider {
         amount: 123.45,
         description: "Gottem",
         categoryID: UUID(),
-        recurrencePeriod: .weekly
+        recurrencePeriod: .weekly,
+        parentID: UUID()
     )
     static var previews: some View {
         RecurringTransactionRow(transaction: recurringTransaction, categoryName: "Dee Z Nütz 🥜")

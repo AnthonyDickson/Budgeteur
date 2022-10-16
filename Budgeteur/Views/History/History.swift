@@ -114,7 +114,10 @@ struct History: View {
                     ForEach(data.getRecurringTransactions(for: dateInterval)) { recurringTransaction in
                         RecurringTransactionRow(transaction: recurringTransaction, categoryName: data.getCategoryName(recurringTransaction.categoryID))
                             .onTapGesture {
-                                // TODO: Show original transaction.
+                                if let transaction = data.getTransaction(by: recurringTransaction.parentID) {
+                                    selectedTransaction = transaction
+                                    isEditing = true
+                                }
                                 // TODO: In editor view, add option to stop transaction recurring. This would need to either add an end date which is checked when calculating recurring transactions, or replace the recurring transaction with regular transactions for the period the recurring transaction was active.
                             }
                     }

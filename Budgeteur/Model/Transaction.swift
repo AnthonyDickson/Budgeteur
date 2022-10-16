@@ -8,12 +8,21 @@
 import Foundation
 
 
+/// A expense or income that repeats on a regular basis, e.g. rent.
+///
+/// Used for auto-generated transcation rows.
 struct RecurringTransaction: Identifiable {
     let id = UUID()
+    /// How much money was spent/earned.
     let amount: Double
+    /// A description of the cash flow.
     let description: String
+    /// The ID category that the transaction fits into (e.g., home expenses vs. entertainment).
     let categoryID: UUID?
+    /// How often the transaction repeats, if ever.
     let recurrencePeriod: RecurrencePeriod
+    /// The ID of the ``Transaction`` this recurring transaction was generated from.
+    let parentID: UUID
 }
 
 /// Represents an expenditure or income.

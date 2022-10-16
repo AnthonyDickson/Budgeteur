@@ -46,6 +46,18 @@ final class DataModel: ObservableObject {
         transactions.insert(transaction, at: insertionIndex)
     }
     
+    /// Get a transaction by ID.
+    /// - Parameter uuid: The ID to search for.
+    /// - Returns: A transction whose ID matches the given ID.
+    func getTransaction(by uuid: UUID) -> Transaction? {
+        // TODO: Use binary search to make this faster.
+        if let transaction = transactions.first(where: { $0.id == uuid }) {
+            return transaction
+        }
+        
+        return nil
+    }
+    
     /// Find the index of a transaction.
     fileprivate func indexOf(_ transaction: Transaction) -> Array<Transaction>.Index? {
         // TODO: Use binary search to make this faster.
@@ -111,7 +123,8 @@ final class DataModel: ObservableObject {
                 amount: amountForPeriod,
                 description: transaction.description,
                 categoryID: transaction.categoryID,
-                recurrencePeriod: transaction.recurrencePeriod
+                recurrencePeriod: transaction.recurrencePeriod,
+                parentID: transaction.id
             ))
         }
         
