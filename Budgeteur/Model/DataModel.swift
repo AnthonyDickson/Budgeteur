@@ -123,6 +123,7 @@ final class DataModel: ObservableObject {
                 amount: amountForPeriod,
                 description: transaction.description,
                 categoryID: transaction.categoryID,
+                date: Date.now,
                 recurrencePeriod: transaction.recurrencePeriod,
                 parentID: transaction.id
             ))

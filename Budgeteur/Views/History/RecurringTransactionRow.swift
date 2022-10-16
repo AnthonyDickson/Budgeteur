@@ -10,14 +10,14 @@ import SwiftUI
 /// The details of a repeat transaction intended to be view inside of a List view.
 struct RecurringTransactionRow: View {
     var transaction: RecurringTransaction
-    /// The category that the transaction belongs to. Defaults to displaying nothing.
-    var categoryName: String? = nil
+    var getCategoryName: (_ categoryID: UUID?) -> String
     
     /// Text describing how much was spent on what (category).
     private var amountText: String {
         let amountString = Currency.format(transaction.amount)
+        let categoryName = getCategoryName(transaction.categoryID)
         
-        if let categoryName = categoryName, categoryName != UserCategory.defaultName {
+        if categoryName != UserCategory.defaultName {
             return "\(amountString) on \(categoryName)"
         } else {
             return amountString
@@ -44,14 +44,19 @@ struct RecurringTransactionRow: View {
 }
 
 struct RecurringTransactionRow_Previews: PreviewProvider {
-    static var recurringTransaction = RecurringTransaction(
-        amount: 123.45,
-        description: "Gottem",
-        categoryID: UUID(),
-        recurrencePeriod: .weekly,
-        parentID: UUID()
-    )
+    static var data = DataModel()
+    
     static var previews: some View {
-        RecurringTransactionRow(transaction: recurringTransaction, categoryName: "Dee Z Nütz 🥜")
+        let transaction = data.transactions[0]
+        let recurringTransaction = RecurringTransaction(
+            amount: transaction.amount,
+            description: transaction.description,
+            categoryID: transaction.categoryID,
+            date: transaction.date,
+            recurrencePeriod: transaction.recurrencePeriod,
+            parentID: transaction.id
+        )
+        
+        RecurringTransactionRow(transaction: recurringTransaction, getCategoryName: data.getCategoryName)
     }
 }

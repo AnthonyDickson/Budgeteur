@@ -81,10 +81,12 @@ struct History: View {
             ForEach(transactionsByDate.sorted(by: { $0.key > $1.key}), id: \.key) { dateInterval, transactions in
                 Section {
                     if groupByCategory {
+                        // TODO: Insert recurring transactions for period into transaction groups
                         ForEach(groupTransactionsByCategory(transactions), id: \.key) { categoryID, subTransactions in
                             TransactionGroup(
                                 categoryName: data.getCategoryName(categoryID),
                                 transactions: subTransactions,
+                                // TODO: For recurring transactions, the ``onRowTap`` callback in ``TransactionGroup`` should find and send the parent transaction.
                                 onRowTap: { transaction in
                                     selectedTransaction = transaction
                                     isEditing = true
@@ -110,20 +112,20 @@ struct History: View {
                         }
                     }
                     
-                    // TODO: If ``groupByCategory`` is `true`, insert the repeated transactions into their respective categories. Otherwise, put inside own section titled 'recurring'.
-                    ForEach(data.getRecurringTransactions(for: dateInterval)) { recurringTransaction in
-                        RecurringTransactionRow(transaction: recurringTransaction, categoryName: data.getCategoryName(recurringTransaction.categoryID))
-                            .onTapGesture {
-                                if let transaction = data.getTransaction(by: recurringTransaction.parentID) {
-                                    selectedTransaction = transaction
-                                    isEditing = true
-                                }
-                                // TODO: In editor view, add option to stop transaction recurring. This would need to either add an end date which is checked when calculating recurring transactions, or replace the recurring transaction with regular transactions for the period the recurring transaction was active.
+                    // TODO: If ``groupByCategory`` is `true`, insert the repeated transactions into their respective categories.
+                    ReccuringTransactionGroup(
+                        transactions: data.getRecurringTransactions(for: dateInterval),
+                        getCategoryName: data.getCategoryName,
+                        onRowTap: { recurringTransaction in
+                            if let transaction = data.getTransaction(by: recurringTransaction.parentID) {
+                                selectedTransaction = transaction
+                                isEditing = true
                             }
-                    }
-                    .onDelete { indexSet in
-                        // TODO: Delete original transaction. Should Probably show an confirmation dialog.
-                    }
+                            // TODO: In editor view, add option to stop transaction recurring. This would need to either add an end date which is checked when calculating recurring transactions, or replace the recurring transaction with regular transactions for the period the recurring transaction was active.
+                        }, onRowDelete: { indexSet in
+                            // TODO: Delete original transaction. Should Probably show an confirmation dialog.
+                            return
+                        })
                 } header: {
                     HStack {
                         Text("Spent \(Currency.format(transactions.reduce(0) { $0 + $1.amount}))")
