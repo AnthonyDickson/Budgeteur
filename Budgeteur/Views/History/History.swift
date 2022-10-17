@@ -82,6 +82,7 @@ struct History: View {
                 Section {
                     if groupByCategory {
                         // TODO: Insert recurring transactions for period into transaction groups
+                        // TODO: For each group, add text displaying what percent of total spending/income the group contributes.
                         ForEach(groupTransactionsByCategory(transactions), id: \.key) { categoryID, subTransactions in
                             TransactionGroup(
                                 categoryName: data.getCategoryName(categoryID),

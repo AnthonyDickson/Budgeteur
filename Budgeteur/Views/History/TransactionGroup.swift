@@ -45,7 +45,7 @@ struct TransactionGroup: View {
             }
         } header: {
             HStack {
-                Text("Spent \(totalAmount) on \(categoryName)")
+                Text("\(totalAmount) on \(categoryName)")
                 Spacer()
                 Text("\(transactions.count) item\(transactions.count > 1 ? "s" : "")")
                 Label("Expand Grouped Transactions", systemImage: "chevron.right")

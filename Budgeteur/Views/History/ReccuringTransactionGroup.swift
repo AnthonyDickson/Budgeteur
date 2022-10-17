@@ -46,7 +46,7 @@ struct ReccuringTransactionGroup: View {
             }
         } header: {
             HStack {
-                Text("Spent \(totalAmount) on Recurring")
+                Text("\(totalAmount) on Recurring")
                 Spacer()
                 Text("\(transactions.count) item\(transactions.count > 1 ? "s" : "")")
                 Label("Expand Grouped Transactions", systemImage: "chevron.right")
