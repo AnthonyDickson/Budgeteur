@@ -132,6 +132,27 @@ final class DataModel: ObservableObject {
         return repeatTransactions
     }
     
+    /// Remove recurring transactions given a set of indices and a list of recurring transactions.
+    ///
+    /// This function will remove the parent transaction of each recurring transactions.
+    /// - Parameters:
+    ///   - indexSet: The indices of the transactions to remove from `recurringTransactons`.
+    ///   - recurringTransactions: The list of recurring transactions.
+    func removeRecurringTransactions(atOffsets indexSet: IndexSet, from recurringTransactions: [RecurringTransaction]) {
+        var indices: [Int] = []
+        
+        for index in indexSet {
+            let parentID = recurringTransactions[index].parentID
+            
+            // TODO: Use binary search to make this faster.
+            if let parentIndex = transactions.firstIndex(where: { $0.id == parentID }) {
+                indices.append(parentIndex)
+            }
+        }
+        
+        transactions.remove(atOffsets: IndexSet(indices))
+    }
+    
     // MARK: - Initialisers
     
     /// Create the data model with the supplied data.
@@ -188,6 +209,14 @@ final class DataModel: ObservableObject {
             date: Calendar.current.date(byAdding: .month, value: -3, to: startDate)!,
             categoryID: categories[2].id,
             recurrencePeriod: .weekly
+        ))
+        
+        sampleTransactions.append(Transaction(
+            amount: 15.0,
+            description: "Netflix",
+            date: Calendar.current.date(byAdding: .month, value: -3, to: startDate)!,
+            categoryID: categories[3].id,
+            recurrencePeriod: .monthly
         ))
         
         let transactions = sampleTransactions.sorted(by: { $0.date > $1.date })

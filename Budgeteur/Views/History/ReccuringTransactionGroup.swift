@@ -40,7 +40,6 @@ struct ReccuringTransactionGroup: View {
                         }
                 }
                 .onDelete { indexSet in
-                    // TODO: Convert the index set from index of the recurring transactions to index of the parent transactions.
                     onRowDelete(indexSet)
                 }
             }
