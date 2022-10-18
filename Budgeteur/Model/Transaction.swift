@@ -54,8 +54,8 @@ struct Transaction: TransactionProtocol {
         }
     }
     var description: String = ""
-    var date = Date.now
     var categoryID: UUID?
+    var date = Date.now
     var recurrencePeriod = RecurrencePeriod.never
     
     /// A sample transaction.

@@ -115,7 +115,7 @@ struct History: View {
                     
                     if let recurringTransactions = data.getRecurringTransactions(for: dateInterval), recurringTransactions.count > 0 {
                         // TODO: If ``groupByCategory`` is `true`, insert the repeated transactions into their respective categories.
-                        ReccuringTransactionGroup(
+                        RecurringTransactionGroup(
                             transactions: recurringTransactions,
                             getCategoryName: data.getCategoryName,
                             onRowTap: { recurringTransaction in
@@ -123,7 +123,6 @@ struct History: View {
                                     selectedTransaction = transaction
                                     isEditing = true
                                 }
-                                // TODO: In editor view, add option to stop transaction recurring. This would need to either add an end date which is checked when calculating recurring transactions, or replace the recurring transaction with regular transactions for the period the recurring transaction was active.
                             }, onRowDelete: { indexSet in
                                 // TODO: Show a confirmation dialog when deleting recurring transaction.
                                 data.removeRecurringTransactions(atOffsets: indexSet, from: recurringTransactions)
@@ -150,6 +149,11 @@ struct History: View {
                             },
                             onSave: {
                                 data.updateTransaction(selectedTransaction)
+                                isEditing = false
+                            },
+                            // TODO: Only show the 'Stop Recurring' button if the transaction was set to recurr BEFORE the edit view is opened.
+                            stopRecurring: {
+                                data.stopRecurring(transaction: $0)
                                 isEditing = false
                             }
                         )

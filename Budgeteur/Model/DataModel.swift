@@ -31,8 +31,9 @@ final class DataModel: ObservableObject {
     /// A collection of transactions
     ///
     /// Transactions are sorted by date in descending order, however this is not guaranteed if the transactions collection is modified directly.
-    /// The methods ``addTransaction(_:)``, ``removeTransaction(_:)`` and ``updateTransaction(_:)`` should be used to modify this collection.
+    /// Methods such as ``addTransaction(_:)``, ``removeTransaction(_:)`` and ``updateTransaction(_:)`` should be used to modify this collection.
     @Published var transactions: [Transaction] = []
+    // TODO: Fix "Publishing changes from within view updates is not allowed, this will cause undefined behavior." on transactions. See console when running simulator.
     
     var oneOffTransactions: [Transaction] { transactions.filter({ $0.recurrencePeriod == .never }) }
     var repeatTransactions: [Transaction] { transactions.filter({ $0.recurrencePeriod != .never }) }
@@ -153,6 +154,37 @@ final class DataModel: ObservableObject {
         transactions.remove(atOffsets: IndexSet(indices))
     }
     
+    /// Stop a transaction from recurring.
+    ///
+    /// This will delete the transaction, and create transactions to replace it.
+    /// - Parameter transaction: The recurring transaction to stop.
+    func stopRecurring(transaction: Transaction) {
+        // TODO: Try alternative approach of adding an end date which is checked when calculating recurring transactions.
+        if transaction.recurrencePeriod == .never {
+            return
+        }
+        
+        var currentDate = transaction.date
+        let endDate = Date.now
+        let step = transaction.recurrencePeriod.getDateComponents()
+        
+        while currentDate < endDate {
+            let newTransaction = Transaction(
+                amount: transaction.amount,
+                description: transaction.description,
+                categoryID: transaction.categoryID,
+                date: currentDate,
+                recurrencePeriod: .never
+            )
+            
+            addTransaction(newTransaction)
+            
+            currentDate = Calendar.current.date(byAdding: step, to: currentDate)!
+        }
+        
+        removeTransaction(transaction)
+    }
+    
     // MARK: - Initialisers
     
     /// Create the data model with the supplied data.
@@ -198,24 +230,24 @@ final class DataModel: ObservableObject {
             sampleTransactions.append(Transaction(
                 amount: amount,
                 description: description,
-                date: date,
-                categoryID: category.id
+                categoryID: category.id,
+                date: date
             ))
         }
         
         sampleTransactions.append(Transaction(
             amount: 255.0,
             description: "Rent",
-            date: Calendar.current.date(byAdding: .month, value: -3, to: startDate)!,
             categoryID: categories[2].id,
+            date: Calendar.current.date(byAdding: .month, value: -3, to: startDate)!,
             recurrencePeriod: .weekly
         ))
         
         sampleTransactions.append(Transaction(
             amount: 15.0,
             description: "Netflix",
-            date: Calendar.current.date(byAdding: .month, value: -3, to: startDate)!,
             categoryID: categories[3].id,
+            date: Calendar.current.date(byAdding: .month, value: -3, to: startDate)!,
             recurrencePeriod: .monthly
         ))
         

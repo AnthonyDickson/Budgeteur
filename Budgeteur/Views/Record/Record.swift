@@ -37,8 +37,8 @@ struct Record: View {
         let transaction = Transaction(
             amount: amount,
             description: description,
-            date: date,
             categoryID: categoryID,
+            date: date,
             recurrencePeriod: recurrencePeriod
         )
         data.addTransaction(transaction)

@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// Shows transctions grouped by a category in a collapsable view.
-struct ReccuringTransactionGroup: View {
+struct RecurringTransactionGroup: View {
     /// The transaction data.
     var transactions: [RecurringTransaction]
     /// A function that gets the name of the category that a transaction belong to.
@@ -64,12 +64,12 @@ struct ReccuringTransactionGroup: View {
     }
 }
 
-struct ReccuringTransactionGroup_Previews: PreviewProvider {
+struct RecurringTransactionGroup_Previews: PreviewProvider {
     static var data = DataModel()
 
     static var previews: some View {
         List {
-            ReccuringTransactionGroup(
+            RecurringTransactionGroup(
                 transactions: data.transactions
                     .filter { $0.categoryID == data.categories[0].id }
                     .map { RecurringTransaction(amount: $0.amount, description: $0.description, categoryID: $0.categoryID, date: $0.date, recurrencePeriod: $0.recurrencePeriod, parentID: $0.id) },
