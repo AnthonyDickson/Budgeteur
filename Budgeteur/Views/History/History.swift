@@ -148,13 +148,16 @@ struct History: View {
                                 isEditing = false
                             },
                             onSave: {
-                                data.updateTransaction(selectedTransaction)
                                 isEditing = false
+                                data.updateTransaction(selectedTransaction)
                             },
                             // TODO: Only show the 'Stop Recurring' button if the transaction was set to recurr BEFORE the edit view is opened.
-                            stopRecurring: {
-                                data.stopRecurring(transaction: $0)
+                            stopRecurring: { transaction in
                                 isEditing = false
+                                DispatchQueue.main.async {
+                                    // For some reason, wrapping this function call gets rid of the warning (? not sure, has purple symbol instead of yellow) 'Publishing changes from within view updates is not allowed, this will cause undefined behavior.'
+                                    data.stopRecurring(transaction: transaction)
+                                }
                             }
                         )
                     }

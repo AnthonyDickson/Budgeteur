@@ -33,7 +33,6 @@ final class DataModel: ObservableObject {
     /// Transactions are sorted by date in descending order, however this is not guaranteed if the transactions collection is modified directly.
     /// Methods such as ``addTransaction(_:)``, ``removeTransaction(_:)`` and ``updateTransaction(_:)`` should be used to modify this collection.
     @Published var transactions: [Transaction] = []
-    // TODO: Fix "Publishing changes from within view updates is not allowed, this will cause undefined behavior." on transactions. See console when running simulator.
     
     var oneOffTransactions: [Transaction] { transactions.filter({ $0.recurrencePeriod == .never }) }
     var repeatTransactions: [Transaction] { transactions.filter({ $0.recurrencePeriod != .never }) }
@@ -159,7 +158,6 @@ final class DataModel: ObservableObject {
     /// This will delete the transaction, and create transactions to replace it.
     /// - Parameter transaction: The recurring transaction to stop.
     func stopRecurring(transaction: Transaction) {
-        // TODO: Try alternative approach of adding an end date which is checked when calculating recurring transactions.
         if transaction.recurrencePeriod == .never {
             return
         }

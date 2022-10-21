@@ -13,14 +13,12 @@ struct PeriodPicker: View {
     @Binding var selectedPeriod: Period
     
     var body: some View {
-        VStack {
-            Picker("Period", selection: $selectedPeriod) {
-                ForEach(Period.allCases) { period in
-                    Text(period.rawValue)
-                }
+        Picker("Period", selection: $selectedPeriod) {
+            ForEach(Period.allCases) { period in
+                Text(period.rawValue)
             }
-            .pickerStyle(.segmented)
         }
+        .pickerStyle(.segmented)
     }
 }
 
