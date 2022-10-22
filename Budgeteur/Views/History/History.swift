@@ -129,6 +129,7 @@ struct History: View {
                             })
                     }
                 } header: {
+                    // TODO: Include recurring transactions in total.
                     HStack {
                         Text("Spent \(Currency.format(transactions.reduce(0) { $0 + $1.amount}))")
                         Spacer()

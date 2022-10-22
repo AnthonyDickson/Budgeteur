@@ -12,13 +12,15 @@ struct BudgetOverview: View {
     var period: Period
     /// The transaction data.
     var transactions: [Transaction]
+    /// A function that gets the recurring transactions for a given date interval.
+    var getRecurringTransactions: (_ dateInterval: DateInterval) -> [RecurringTransaction]
     
     /// Get the total amount of all transactions in the current time period (e.g. this week, this month).
     private var totalSpending: Double {
-        // TODO: Add repeating transactions to sum.
         let dateInterval = period.getDateInterval(for: Date.now)
+        let recurringTransactions = getRecurringTransactions(dateInterval)
         
-        var sum = 0.0
+        var sum = recurringTransactions.reduce(0, { $0 + $1.amount })
         
         for transaction in transactions {
             if transaction.date > dateInterval.end {
@@ -26,6 +28,7 @@ struct BudgetOverview: View {
             } else if transaction.date < dateInterval.start {
                 break
             }
+
             sum += transaction.amount
         }
         
@@ -64,6 +67,10 @@ struct BudgetOverview_Previews: PreviewProvider {
     static var data = DataModel()
     
     static var previews: some View {
-        BudgetOverview(period: data.period, transactions: data.transactions)
+        BudgetOverview(
+            period: data.period,
+            transactions: data.transactions,
+            getRecurringTransactions: { dateInterval in data.getRecurringTransactions(for: dateInterval) }
+        )
     }
 }
