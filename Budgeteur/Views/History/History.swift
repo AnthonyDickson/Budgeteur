@@ -7,53 +7,16 @@
 
 import SwiftUI
 
-extension Period {
-    /// Format a date for section headers.
-    /// - Parameters:
-    ///   - date: A date.
-    ///   - withYear: Whether to include the year.
-    /// - Returns: The formatted date string.
-    fileprivate func formatDateForHeader(_ date: Date, withYear: Bool = false) -> String {
-        let style = Date.FormatStyle.dateTime.day().month(.abbreviated)
-        
-        if withYear {
-            return "\(date.formatted(style)) '\(date.formatted(.dateTime.year(.twoDigits)))"
-        }
-        
-        return date.formatted(style)
-    }
-    
-    /// Get a formatted string for a given date interval and user selected time period.
-    /// - Parameters:
-    ///   - dateInterval: A date interval.
-    /// - Returns: A formatted string for the date interval.
-    fileprivate func getDateLabel(for dateInterval: DateInterval) -> String {
-        switch(self) {
-        case .oneDay:
-            return formatDateForHeader(dateInterval.start, withYear: true)
-        case .oneWeek, .twoWeeks, .threeMonths:
-            let start = formatDateForHeader(dateInterval.start)
-            let end = formatDateForHeader(dateInterval.end, withYear: true)
-            
-            return "\(start) - \(end)"
-        case .oneMonth:
-            let month = dateInterval.start.formatted(.dateTime.month())
-            let year = dateInterval.start.formatted(.dateTime.year(.twoDigits))
-            
-            return "\(month) '\(year)"
-        case .oneYear:
-            return dateInterval.start.formatted(.dateTime.year())
-        }
-    }
-}
-
 /// Displays the details of transactions in a vertical list.
 struct History: View {
     /// The app's data model.
     @ObservedObject var data: DataModel
     
+    /// Whether the transaction editor sheet is displayed.
     @State private var isEditing = false
+    /// The transaction the user tapped on.
     @State private var selectedTransaction = Transaction.sample
+    /// Whether to group transactions by category.
     @State private var groupByCategory: Bool = false
     
     /// The transactions grouped by the user selected time period.
@@ -129,16 +92,9 @@ struct History: View {
                             })
                     }
                 } header: {
-                    // TODO: Include recurring transactions in total.
-                    HStack {
-                        Text("Spent \(Currency.format(transactions.reduce(0) { $0 + $1.amount}))")
-                        Spacer()
-                        Text(data.period.getDateLabel(for: dateInterval))
-                    }
-                    .frame(maxWidth: .infinity)
-                    .font(.headline)
-                    .bold()
-                    .foregroundColor(.primary)
+                    HistorySectionHeader(transactions: transactions,
+                                         recurringTransactions: data.getRecurringTransactions(for: dateInterval),
+                                         dateIntervalLabel: data.period.getDateIntervalLabel(for: dateInterval))
                 }
                 .sheet(isPresented: $isEditing) {
                     NavigationStack {

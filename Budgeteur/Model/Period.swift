@@ -84,4 +84,42 @@ enum Period: String, CaseIterable, Identifiable {
         
         return DateInterval(start: startDate, end: endDate)
     }
+    
+    /// Format a date for section headers.
+    /// - Parameters:
+    ///   - date: A date.
+    ///   - withYear: Whether to include the year.
+    /// - Returns: The formatted date string.
+    private func formatDateForHeader(_ date: Date, withYear: Bool = false) -> String {
+        let style = Date.FormatStyle.dateTime.day().month(.abbreviated)
+        
+        if withYear {
+            return "\(date.formatted(style)) '\(date.formatted(.dateTime.year(.twoDigits)))"
+        }
+        
+        return date.formatted(style)
+    }
+    
+    /// Get a formatted string for a given date interval and user selected time period.
+    /// - Parameters:
+    ///   - dateInterval: A date interval.
+    /// - Returns: A formatted string for the date interval.
+    func getDateIntervalLabel(for dateInterval: DateInterval) -> String {
+        switch(self) {
+        case .oneDay:
+            return formatDateForHeader(dateInterval.start, withYear: true)
+        case .oneWeek, .twoWeeks, .threeMonths:
+            let start = formatDateForHeader(dateInterval.start)
+            let end = formatDateForHeader(dateInterval.end, withYear: true)
+            
+            return "\(start) - \(end)"
+        case .oneMonth:
+            let month = dateInterval.start.formatted(.dateTime.month())
+            let year = dateInterval.start.formatted(.dateTime.year(.twoDigits))
+            
+            return "\(month) '\(year)"
+        case .oneYear:
+            return dateInterval.start.formatted(.dateTime.year())
+        }
+    }
 }

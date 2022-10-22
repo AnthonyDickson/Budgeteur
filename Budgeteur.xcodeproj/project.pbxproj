@@ -16,6 +16,7 @@
 		923B7D3928F9397E000E46BD /* BudgetOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D3828F9397E000E46BD /* BudgetOverview.swift */; };
 		9246C91128FA4E3700D7849A /* RecurringTransactionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9246C91028FA4E3700D7849A /* RecurringTransactionRow.swift */; };
 		9246C91328FBAA5700D7849A /* RecurringTransactionGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9246C91228FBAA5700D7849A /* RecurringTransactionGroup.swift */; };
+		926589E82903AB9B00994793 /* HistorySectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926589E72903AB9B00994793 /* HistorySectionHeader.swift */; };
 		927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91DA28F220310013B404 /* BudgeteurApp.swift */; };
 		927B91DD28F220310013B404 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91DC28F220310013B404 /* ContentView.swift */; };
 		927B91DF28F220320013B404 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 927B91DE28F220320013B404 /* Assets.xcassets */; };
@@ -66,6 +67,7 @@
 		923B7D3828F9397E000E46BD /* BudgetOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetOverview.swift; sourceTree = "<group>"; };
 		9246C91028FA4E3700D7849A /* RecurringTransactionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringTransactionRow.swift; sourceTree = "<group>"; };
 		9246C91228FBAA5700D7849A /* RecurringTransactionGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringTransactionGroup.swift; sourceTree = "<group>"; };
+		926589E72903AB9B00994793 /* HistorySectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistorySectionHeader.swift; sourceTree = "<group>"; };
 		927B91D728F220310013B404 /* Budgeteur.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Budgeteur.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		927B91DA28F220310013B404 /* BudgeteurApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgeteurApp.swift; sourceTree = "<group>"; };
 		927B91DC28F220310013B404 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				927B920828F22A2F0013B404 /* History.swift */,
+				926589E72903AB9B00994793 /* HistorySectionHeader.swift */,
 				923B7D3428F933CF000E46BD /* TransactionGroup.swift */,
 				9246C91228FBAA5700D7849A /* RecurringTransactionGroup.swift */,
 				927B920428F220670013B404 /* TransactionRow.swift */,
@@ -391,6 +394,7 @@
 				9246C91328FBAA5700D7849A /* RecurringTransactionGroup.swift in Sources */,
 				923B7D3228F92FA6000E46BD /* DateRepeatSheet.swift in Sources */,
 				927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */,
+				926589E82903AB9B00994793 /* HistorySectionHeader.swift in Sources */,
 				923B7D3728F937E6000E46BD /* AmountDisplay.swift in Sources */,
 				927B922228F4DF7E0013B404 /* CategorySelector.swift in Sources */,
 				927B920B28F22AEA0013B404 /* DataModel.swift in Sources */,
