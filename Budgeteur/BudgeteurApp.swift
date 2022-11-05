@@ -10,10 +10,12 @@ import SwiftUI
 @main
 struct BudgeteurApp: App {
     @StateObject private var data = DataModel()
+    @StateObject private var dataManager = DataManager.sample
 
     var body: some Scene {
         WindowGroup {
             ContentView(data: data)
+                .environment(\.managedObjectContext, dataManager.context)
         }
     }
 }

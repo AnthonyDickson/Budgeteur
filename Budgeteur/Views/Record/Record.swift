@@ -34,7 +34,7 @@ struct Record: View {
     
     /// Add the transaction to the app's data.
     private func save() {
-        let transaction = Transaction(
+        let transaction = TransactionClass(
             amount: amount,
             description: description,
             categoryID: categoryID,

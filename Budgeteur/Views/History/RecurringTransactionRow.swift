@@ -17,7 +17,7 @@ struct RecurringTransactionRow: View {
         let amountString = Currency.format(transaction.amount)
         let categoryName = getCategoryName(transaction.categoryID)
         
-        if categoryName != UserCategory.defaultName {
+        if categoryName != UserCategoryClass.defaultName {
             return "\(amountString) on \(categoryName)"
         } else {
             return amountString

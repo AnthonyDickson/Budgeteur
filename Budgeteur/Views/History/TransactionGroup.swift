@@ -12,9 +12,9 @@ struct TransactionGroup: View {
     /// The name of the category that the transactions belong to.
     var categoryName: String
     /// The transaction data.
-    var transactions: [Transaction]
+    var transactions: [TransactionClass]
     /// What to do when a user taps on a transaction row.
-    var onRowTap: (_ transaction: Transaction) -> ()
+    var onRowTap: (_ transaction: TransactionClass) -> ()
     /// What to do when a user deletes a transaction.
     var onRowDelete: (_ indexSet: IndexSet) -> ()
     

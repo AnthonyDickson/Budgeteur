@@ -15,12 +15,12 @@ struct History: View {
     /// Whether the transaction editor sheet is displayed.
     @State private var isEditing = false
     /// The transaction the user tapped on.
-    @State private var selectedTransaction = Transaction.sample
+    @State private var selectedTransaction = TransactionClass.sample
     /// Whether to group transactions by category.
     @State private var groupByCategory: Bool = false
     
     /// The transactions grouped by the user selected time period.
-    private var transactionsByDate: Dictionary<DateInterval, [Transaction]> {
+    private var transactionsByDate: Dictionary<DateInterval, [TransactionClass]> {
         Dictionary(
             grouping: data.oneOffTransactions,
             by: { data.period.getDateInterval(for: $0.date) }
@@ -30,7 +30,7 @@ struct History: View {
     /// Group transactions by category.
     /// - Parameter transactions: Transaction data.
     /// - Returns: An array of dictionary elements mapping category IDs to lists of transactions.
-    private func groupTransactionsByCategory(_ transactions: [Transaction]) -> [Dictionary<UUID?, [Transaction]>.Element] {
+    private func groupTransactionsByCategory(_ transactions: [TransactionClass]) -> [Dictionary<UUID?, [TransactionClass]>.Element] {
         let result = Dictionary(grouping: transactions, by: { $0.categoryID })
         let sortedResults = result.sorted(by: {
             $0.value.reduce(0, { $0 + $1.amount}) > $1.value.reduce(0, { $0 + $1.amount})

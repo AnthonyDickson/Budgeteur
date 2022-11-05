@@ -44,7 +44,7 @@ struct RecurringTransaction: TransactionProtocol {
 }
 
 /// Represents an expenditure or income.
-struct Transaction: TransactionProtocol {
+struct TransactionClass: TransactionProtocol {
     let id = UUID()
     var amount: Double {
         didSet {
@@ -59,7 +59,7 @@ struct Transaction: TransactionProtocol {
     var recurrencePeriod = RecurrencePeriod.never
     
     /// A sample transaction.
-    static var sample: Transaction {
-        Transaction(amount: 10000, description: "A huge diamond")
+    static var sample: TransactionClass {
+        TransactionClass(amount: 10000, description: "A huge diamond")
     }
 }

@@ -19,28 +19,15 @@ struct ContentView: View {
     }
     
     var body: some View {
-        TabView(selection: $selectedTab) {
-            NavigationStack {
-                Record(data: data)
-            }
-            .tabItem {
-                Label("Record", systemImage: "creditcard")
-            }
-            .tag(Tab.new)
-            
-            NavigationStack {
-                History(data: data)
-            }
-            .tabItem {
-                Label("History", systemImage: "list.bullet")
-            }
-            .tag(Tab.list)
-        }
+        TransactionView()
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView(data: DataModel())
+    static var dataManager = DataManager.sample
+    
+    static var previews: some View {        
+        return ContentView(data: DataModel())
+            .environment(\.managedObjectContext, dataManager.context)
     }
 }

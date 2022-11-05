@@ -10,7 +10,7 @@ import SwiftUI
 /// Displays the header of a section in the history view - this is the total spent for the period and the start + end dates of the current time period.
 struct HistorySectionHeader: View {
     /// The list of transactions that occured within the specific time period.
-    let transactions: [Transaction]
+    let transactions: [TransactionClass]
     /// The list of recurring transactions that occured within the specific time period.
     let recurringTransactions: [RecurringTransaction]
     /// The formatted string of the specific time period (date interval).
@@ -18,7 +18,7 @@ struct HistorySectionHeader: View {
     /// The total amount of the regular transactions plus the recurring transactions.
     private let totalExpense: Double
     
-    init(transactions: [Transaction], recurringTransactions: [RecurringTransaction], dateIntervalLabel: String) {
+    init(transactions: [TransactionClass], recurringTransactions: [RecurringTransaction], dateIntervalLabel: String) {
         self.transactions = transactions
         self.recurringTransactions = recurringTransactions
         self.dateIntervalLabel = dateIntervalLabel

@@ -9,14 +9,14 @@ import SwiftUI
 
 /// Form for editing an existing transaction, or deleting it.
 struct TransactionEditor: View {
-    @Binding var categories: [UserCategory]
-    @Binding var transaction: Transaction
+    @Binding var categories: [UserCategoryClass]
+    @Binding var transaction: TransactionClass
     /// A function to run if the user presses the cancel button in the toolbar.
     var onCancel: () -> ()
     /// A function to run if the user presses the save button in the toolbar.
     var onSave: () -> ()
     /// A function that stops a recurring transaction.
-    var stopRecurring: (_ transaction: Transaction) -> ()
+    var stopRecurring: (_ transaction: TransactionClass) -> ()
     
     static private let numberFormatter = {
         let formatter = NumberFormatter()

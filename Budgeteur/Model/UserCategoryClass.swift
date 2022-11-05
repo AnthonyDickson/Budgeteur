@@ -8,7 +8,7 @@
 import Foundation
 
 /// A user defined category for expenses.
-struct UserCategory: Identifiable, Equatable, Hashable {
+struct UserCategoryClass: Identifiable, Equatable, Hashable {
     var id = UUID()
     var name: String
     

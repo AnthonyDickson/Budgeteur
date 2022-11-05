@@ -12,7 +12,7 @@ import SwiftUI
 /// The parent view should ensure that the environment variable `editMode` is set to `EditMode.active`.
 struct CategoryEditor: View {
     /// The list of user defined categories.
-    @Binding var categories: [UserCategory]
+    @Binding var categories: [UserCategoryClass]
     
     /// The name that will be used to create a new category.
     @State private var newCategoryName = ""
@@ -22,7 +22,7 @@ struct CategoryEditor: View {
             TextField("Add a new category!", text: $newCategoryName)
                 .submitLabel(.done)
                 .onSubmit {
-                    categories.append(UserCategory(name: newCategoryName))
+                    categories.append(UserCategoryClass(name: newCategoryName))
                     newCategoryName = ""
                 }
             

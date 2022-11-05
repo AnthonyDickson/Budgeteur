@@ -10,7 +10,7 @@ import SwiftUI
 
 /// Displays categories as a scrollable, horizontal list of categories and an edit button.
 struct CategorySelector: View {
-    @Binding var categories: [UserCategory]
+    @Binding var categories: [UserCategoryClass]
     /// The ID of the category the user has tapped on.
     @Binding var selectedCategory: UUID?
     
@@ -29,7 +29,7 @@ struct CategorySelector: View {
     /// Dummy binding used to send to child view.
     ///
     /// If ``categories`` is used directly instead of this binding, it results in buggy behaviour such as the cursor jumping to the end of the line after each change.
-    @State private var draftCategories: [UserCategory] = []
+    @State private var draftCategories: [UserCategoryClass] = []
     
     /// Get the color for the category label.
     ///

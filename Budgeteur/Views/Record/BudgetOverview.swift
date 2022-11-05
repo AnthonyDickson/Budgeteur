@@ -11,7 +11,7 @@ struct BudgetOverview: View {
     /// The user selected time period for aggregating transactions.
     var period: Period
     /// The transaction data.
-    var transactions: [Transaction]
+    var transactions: [TransactionClass]
     /// A function that gets the recurring transactions for a given date interval.
     var getRecurringTransactions: (_ dateInterval: DateInterval) -> [RecurringTransaction]
     

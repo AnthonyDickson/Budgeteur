@@ -9,7 +9,7 @@ import SwiftUI
 
 /// The details of a single transaction intended to be view inside of a List view.
 struct TransactionRow: View {
-    var transaction: Transaction
+    var transaction: TransactionClass
     /// The category that the transaction belongs to. Defaults to displaying nothing.
     var categoryName: String? = nil
     
@@ -17,7 +17,7 @@ struct TransactionRow: View {
     private var amountText: String {
         let amountString = Currency.format(transaction.amount)
         
-        if let categoryName = categoryName, categoryName != UserCategory.defaultName {
+        if let categoryName = categoryName, categoryName != UserCategoryClass.defaultName {
             return "\(amountString) on \(categoryName)"
         } else {
             return amountString
@@ -41,7 +41,7 @@ struct TransactionRow: View {
 struct TransactionRow_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            TransactionRow(transaction: Transaction.sample)
+            TransactionRow(transaction: TransactionClass.sample)
         }
         .listStyle(.inset)
     }
