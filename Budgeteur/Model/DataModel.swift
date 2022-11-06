@@ -101,25 +101,11 @@ class DataManager: ObservableObject {
     }
     
     func createUserCategory(name: String) -> UserCategory {
-        let userCategory = UserCategory(context: context)
-        
-        userCategory.id = UUID()
-        userCategory.name = name
-        
-        return userCategory
+        return UserCategory(insertInto: context, name: name)
     }
     
     func createTransaction(amount: Double, label: String = "", date: Date = Date.now, recurrencePeriod: RecurrencePeriod = .never, category: UserCategory? = nil) -> Transaction {
-        let transaction = Transaction(context: context)
-        
-        transaction.id = UUID()
-        transaction.amount = amount
-        transaction.date = date
-        transaction.recurrencePeriod = recurrencePeriod.rawValue
-        transaction.categoryOfTransaction = category
-        transaction.categoryOfTransaction?.addToTransactionsWithCategory(transaction)
-        
-        return transaction
+        return Transaction(insertInto: context, amount: amount, label: label, date: date, recurrencePeriod: recurrencePeriod, userCategory: category)
     }
     
     func getUserCategories() -> [UserCategory] {

@@ -8,24 +8,33 @@
 import SwiftUI
 
 struct TransactionView: View {
-    @FetchRequest(sortDescriptors: []) var transactions: FetchedResults<Transaction>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\Transaction.date, order: .reverse)]) var transactions: FetchedResults<Transaction>
+    
+    func categoryText(transaction: Transaction) -> String {
+        if let category = transaction.categoryOfTransaction {
+            return " on \(category.name)"
+        }
+        
+        return ""
+    }
     
     var body: some View {
         List {
             ForEach(transactions) { transaction in
                 HStack {
-                    VStack {
-                        Text(Currency.format(transaction.amount))
-                        Text(transaction.categoryOfTransaction?.name ?? "")
-                        Text(transaction.label ?? "")
+                    VStack(alignment: .leading) {
+                        Text("\(Currency.format(transaction.amount))\(categoryText(transaction: transaction))")
+                        Text(transaction.label)
+                            .font(.caption)
                     }
                     Spacer()
                     VStack {
-                        Text(transaction.date?.formatted(date: .abbreviated, time: .omitted) ?? "")
+                        Text(transaction.date.formatted(date: .abbreviated, time: .omitted))
                     }
                 }
             }
         }
+        .listStyle(.inset)
     }
 }
 

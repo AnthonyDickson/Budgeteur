@@ -16,10 +16,20 @@ extension UserCategory {
         return NSFetchRequest<UserCategory>(entityName: "UserCategory")
     }
 
-    @NSManaged public var id: UUID?
-    @NSManaged public var name: String?
+    @NSManaged public var id: UUID
+    @NSManaged public var name: String
     @NSManaged public var transactionsWithCategory: NSSet?
-
+    
+    public convenience init(insertInto context: NSManagedObjectContext, name: String) {
+        guard let entity = NSEntityDescription.entity(forEntityName: "UserCategory", in: context) else {
+            fatalError("Could not get entity description for 'UserCategory'.")
+        }
+        
+        self.init(entity: entity, insertInto: context)
+        
+        self.id = UUID()
+        self.name = name
+    }
 }
 
 // MARK: Generated accessors for transactionsWithCategory

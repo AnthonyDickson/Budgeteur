@@ -8,7 +8,7 @@
 import Foundation
 
 /// The time period that a transaction may repeat over.
-enum RecurrencePeriod: String, CaseIterable {
+public enum RecurrencePeriod: String, CaseIterable {
     case never = "Never"
     case daily = "Daily"
     case weekly = "Weekly"
