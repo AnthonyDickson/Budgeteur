@@ -11,7 +11,7 @@ struct TransactionView: View {
     @FetchRequest(sortDescriptors: [SortDescriptor(\Transaction.date, order: .reverse)]) var transactions: FetchedResults<Transaction>
     
     func categoryText(transaction: Transaction) -> String {
-        if let category = transaction.categoryOfTransaction {
+        if let category = transaction.category {
             return " on \(category.name)"
         }
         

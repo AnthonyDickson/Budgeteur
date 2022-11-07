@@ -21,7 +21,7 @@ extension Transaction {
     @NSManaged public var label: String
     @NSManaged public var date: Date
     @NSManaged public var recurrencePeriod: String
-    @NSManaged public var categoryOfTransaction: UserCategory?
+    @NSManaged public var category: UserCategory?
     
     public convenience init(insertInto context: NSManagedObjectContext, amount: Double, label: String = "", date: Date = .now, recurrencePeriod: RecurrencePeriod = .never, userCategory: UserCategory?) {
         guard let entity = NSEntityDescription.entity(forEntityName: "Transaction", in: context) else {
@@ -35,8 +35,8 @@ extension Transaction {
         self.label = label
         self.date = date
         self.recurrencePeriod = recurrencePeriod.rawValue
-        self.categoryOfTransaction = userCategory
-        self.categoryOfTransaction?.addToTransactionsWithCategory(self)
+        self.category = userCategory
+        self.category?.addToTransactionsWithCategory(self)
     }
 }
 
