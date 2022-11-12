@@ -85,6 +85,26 @@ enum Period: String, CaseIterable, Identifiable {
         return DateInterval(start: startDate, end: endDate)
     }
     
+    /// Get the date increment needed such that adding the increment to another date will create a date interval corresponding to the chosen time period.
+    ///  For example given ``oneWeek``,  the function will return a `DateComoponents` object with the days attribute set to `6` (this function assumes open ended intervals).
+    /// - Returns: A `DateComponents` object.
+    func getDateIncrement() -> DateComponents {
+        switch(self) {
+        case .oneDay:
+            return DateComponents(day: 1, second: -1)
+        case .oneWeek:
+            return DateComponents(day: 6)
+        case .twoWeeks:
+            return DateComponents(day: 13)
+        case .oneMonth:
+            return DateComponents(month: 1, day: -1)
+        case .threeMonths:
+            return DateComponents(month: 3, day: -1)
+        case .oneYear:
+            return DateComponents(year: 1, day: -1)
+        }
+    }
+    
     /// Format a date for section headers.
     /// - Parameters:
     ///   - date: A date.

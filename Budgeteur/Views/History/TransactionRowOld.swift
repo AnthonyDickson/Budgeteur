@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// The details of a single transaction intended to be view inside of a List view.
-struct TransactionRow: View {
+struct TransactionRowOld: View {
     var transaction: TransactionClass
     /// The category that the transaction belongs to. Defaults to displaying nothing.
     var categoryName: String? = nil
@@ -41,7 +41,7 @@ struct TransactionRow: View {
 struct TransactionRow_Previews: PreviewProvider {
     static var previews: some View {
         List {
-            TransactionRow(transaction: TransactionClass.sample)
+            TransactionRowOld(transaction: TransactionClass.sample)
         }
         .listStyle(.inset)
     }

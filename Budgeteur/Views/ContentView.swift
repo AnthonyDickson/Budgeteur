@@ -19,7 +19,7 @@ struct ContentView: View {
     }
     
     var body: some View {
-        TransactionView()
+        TransactionList()
     }
 }
 

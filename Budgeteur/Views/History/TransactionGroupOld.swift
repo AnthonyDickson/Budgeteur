@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// Shows transctions grouped by a category in a collapsable view.
-struct TransactionGroup: View {
+struct TransactionGroupOld: View {
     /// The name of the category that the transactions belong to.
     var categoryName: String
     /// The transaction data.
@@ -33,7 +33,7 @@ struct TransactionGroup: View {
             // TODO: Animate the group being expanded with a sliding animation.
             if showTransactions {
                 ForEach(transactions) { transaction in
-                    TransactionRow(transaction: transaction)
+                    TransactionRowOld(transaction: transaction)
                         .padding(.leading)
                         .onTapGesture {
                             onRowTap(transaction)
@@ -64,12 +64,12 @@ struct TransactionGroup: View {
     }
 }
 
-struct TransactionGroup_Previews: PreviewProvider {
+struct TransactionGroupOld_Previews: PreviewProvider {
     static var data = DataModel()
 
     static var previews: some View {
         List {
-            TransactionGroup(
+            TransactionGroupOld(
                 categoryName: data.categories[0].name,
                 transactions: data.transactions.filter({ $0.categoryID == data.categories[0].id }),
                 onRowTap: {_ in},

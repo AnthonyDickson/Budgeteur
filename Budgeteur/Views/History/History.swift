@@ -47,7 +47,7 @@ struct History: View {
                         // TODO: Insert recurring transactions for period into transaction groups
                         // TODO: For each group, add text displaying what percent of total spending/income the group contributes.
                         ForEach(groupTransactionsByCategory(transactions), id: \.key) { categoryID, subTransactions in
-                            TransactionGroup(
+                            TransactionGroupOld(
                                 categoryName: data.getCategoryName(categoryID),
                                 transactions: subTransactions,
                                 // TODO: For recurring transactions, the ``onRowTap`` callback in ``TransactionGroup`` should find and send the parent transaction.
@@ -62,7 +62,7 @@ struct History: View {
                         }
                     } else {
                         ForEach(transactions) { transaction in
-                            TransactionRow(
+                            TransactionRowOld(
                                 transaction: transaction,
                                 categoryName: data.getCategoryName(transaction.categoryID)
                             )
