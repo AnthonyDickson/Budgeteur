@@ -346,7 +346,11 @@ struct TransactionList: View {
         var recurringTransactions: [TransactionItem] = []
         
         let startDate =  Calendar.current.startOfDay(for: transaction.date)
-        let endDate = Calendar.current.startOfDay(for: Date.now)
+        let today = Calendar.current.startOfDay(for: Date.now)
+        
+        guard let endDate = Calendar.current.date(byAdding: DateComponents(day: 1, second: -1), to: today) else {
+            fatalError("Error: Could create date by adding \(DateComponents(day: 1, second: -1)) to \(Date.now)")
+        }
         
         guard let recurrencePeriod = RecurrencePeriod(rawValue: transaction.recurrencePeriod) else {
             fatalError("Error: Could not convert '\(transaction.recurrencePeriod)' to a valid enum value of RecurrencePeriod.")
