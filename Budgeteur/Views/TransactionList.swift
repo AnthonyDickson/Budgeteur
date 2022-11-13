@@ -21,8 +21,8 @@ struct TransactionItem: Identifiable {
     let recurrencePeriod: RecurrencePeriod
     /// The category that the transaction fits into (e.g., home expenses vs. entertainment).
     let category: UserCategory?
-    /// The unique identifier for the transaction that the auto-generated recurring transaction was created from.
-    let parentID: UUID?
+    /// The transaction that the proxy transaction was created from.
+    let parent: Transaction
 }
 
 /// A collection of a list of one-off and recurring transactions.
@@ -158,6 +158,29 @@ struct TransactionRow: View {
     }
 }
 
+/// Creates a ForEach displaying each transaction as a ``TransactionRow``.
+struct TransactionRows: View {
+    /// The collection of transactions to display in this section.
+    var transactions: [TransactionItem]
+    /// Whether to use the date or the category for the header title.
+    var useDateForHeader: Bool
+    
+    @Environment(\.managedObjectContext) private var context
+    
+    var body: some View {
+        ForEach(transactions.sorted(by: { $0.date > $1.date })) { transaction in
+            TransactionRow(transaction: transaction, useDateForHeader: useDateForHeader)
+        }
+        .onDelete { indexSet in
+            DispatchQueue.main.async {
+                for index in indexSet {
+                    context.delete(transactions[index].parent)
+                }
+            }
+        }
+    }
+}
+
 /// A section that the user can collapse/expand by tapping on the header.
 struct CollapsibleTransactionSection: View {
     /// The string to display in the section header
@@ -165,17 +188,17 @@ struct CollapsibleTransactionSection: View {
     /// The collection of transactions to display in this section.
     var transactions: [TransactionItem]
     /// Whether to use the date or the category for the header title.
-    var useDateForHeader = false
+    var useDateForHeader: Bool
     /// Whether to expand the transactions list. Defaults to having the list collapsed (false).
     @State var showTransactions = false
+    
+    @Environment(\.managedObjectContext) private var context
     
     var body: some View {
         Section {
             if showTransactions {
-                ForEach(transactions.sorted(by: { $0.date > $1.date })) { transaction in
-                    TransactionRow(transaction: transaction, useDateForHeader: useDateForHeader)
-                }
-                .padding(.leading, 20)
+                TransactionRows(transactions: transactions, useDateForHeader: useDateForHeader)
+                    .padding(.leading, 20)
             }
         } header: {
             HStack {
@@ -211,16 +234,23 @@ struct TransactionGroup: View {
         Section {
             ForEach(transactionSet.groupOneOffByDate(), id: \.key) { date, transactions in
                 if period == .oneDay {
-                    ForEach(transactions.sorted(by: { $0.date > $1.date })) { transaction in
-                        TransactionRow(transaction: transaction)
-                    }
+                    TransactionRows(transactions: transactions, useDateForHeader: false)
                 } else {
-                    CollapsibleTransactionSection(title: getFormattedDate(for: date), transactions: transactions, showTransactions: true)
+                    CollapsibleTransactionSection(
+                        title: getFormattedDate(for: date),
+                        transactions: transactions,
+                        useDateForHeader: false,
+                        showTransactions: true
+                    )
                 }
             }
             
             if transactionSet.recurringTransactions.count > 0 {
-                CollapsibleTransactionSection(title: "Recurring Transactions", transactions: transactionSet.recurringTransactions)
+                CollapsibleTransactionSection(
+                    title: "Recurring Transactions",
+                    transactions: transactionSet.recurringTransactions,
+                    useDateForHeader: false
+                )
             }
         } header: {
             HStack {
@@ -329,7 +359,7 @@ struct TransactionList: View {
                     date: transaction.date,
                     recurrencePeriod: .never,
                     category: transaction.category,
-                    parentID: nil
+                    parent: transaction
                 ))
             } else {
                 recurringTransactions.append(contentsOf: getRecurringTransactions(for: transaction))
@@ -399,7 +429,7 @@ struct TransactionList: View {
                 date: date,
                 recurrencePeriod: recurrencePeriod,
                 category: transaction.category,
-                parentID: transaction.id
+                parent: transaction
             ))
             
             date = nextDate
