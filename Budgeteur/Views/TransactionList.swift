@@ -192,8 +192,6 @@ struct CollapsibleTransactionSection: View {
     /// Whether to expand the transactions list. Defaults to having the list collapsed (false).
     @State var showTransactions = false
     
-    @Environment(\.managedObjectContext) private var context
-    
     var body: some View {
         Section {
             if showTransactions {
