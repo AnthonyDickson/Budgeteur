@@ -98,7 +98,7 @@ struct History: View {
                 }
                 .sheet(isPresented: $isEditing) {
                     NavigationStack {
-                        TransactionEditor(
+                        TransactionEditorOld(
                             categories: $data.categories,
                             transaction: $selectedTransaction,
                             onCancel: {

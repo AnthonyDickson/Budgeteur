@@ -12,17 +12,26 @@ struct TransactionItem: Identifiable {
     /// A unique identifier for the transaction, or the auto-generated recurring transaction.
     let id: UUID
     /// How much money was spent/earned.
-    let amount: Double
+    var amount: Double
     /// A description of the cash flow.
-    let label: String
+    var label: String
     /// When the transaction ocurred.
-    let date: Date
+    var date: Date
     /// How often the transaction repeats, if ever.
-    let recurrencePeriod: RecurrencePeriod
+    var recurrencePeriod: RecurrencePeriod
     /// The category that the transaction fits into (e.g., home expenses vs. entertainment).
-    let category: UserCategory?
+    var category: UserCategory?
     /// The transaction that the proxy transaction was created from.
     let parent: Transaction
+    
+    /// Syncs the changes made to the proxy with the underlying object in Core Data.
+    func update() {
+        parent.amount = amount
+        parent.label = label
+        parent.date = date
+        parent.recurrencePeriod = recurrencePeriod.rawValue
+        parent.category = category
+    }
 }
 
 /// A collection of a list of one-off and recurring transactions.
@@ -165,11 +174,16 @@ struct TransactionRows: View {
     /// Whether to use the date or the category for the header title.
     var useDateForHeader: Bool
     
+    @State private var selectedTransaction: TransactionItem? = nil
+    
     @Environment(\.managedObjectContext) private var context
     
     var body: some View {
         ForEach(transactions.sorted(by: { $0.date > $1.date })) { transaction in
             TransactionRow(transaction: transaction, useDateForHeader: useDateForHeader)
+                .onTapGesture {
+                    selectedTransaction = transaction
+                }
         }
         .onDelete { indexSet in
             DispatchQueue.main.async {
@@ -178,8 +192,254 @@ struct TransactionRows: View {
                 }
             }
         }
+        .sheet(item: $selectedTransaction) {
+            selectedTransaction = nil
+        } content: { transaction in
+            NavigationStack {
+                TransactionEditor(
+                    transaction: transaction,
+                    onCancel: {
+                        selectedTransaction = nil
+                    },
+                    onSave: {
+                        selectedTransaction = nil
+                        // TODO: Fix changes not saving properly.
+                        try? context.save()
+                    },
+                    stopRecurring: {transaction in }
+                )
+            }
+        }
+
     }
 }
+
+
+/// Form for editing an existing transaction, or deleting it.
+struct TransactionEditor: View {
+    @State var transaction: TransactionItem
+    /// A function to run if the user presses the cancel button in the toolbar.
+    var onCancel: () -> ()
+    /// A function to run if the user presses the save button in the toolbar.
+    var onSave: () -> ()
+    /// A function that stops a recurring transaction.
+    var stopRecurring: (_ transaction: TransactionItem) -> ()
+    
+    static private let numberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.locale = Locale.current
+        formatter.alwaysShowsDecimalSeparator = true
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 2
+        
+        return formatter
+    }()
+    
+    var body: some View {
+        List {
+            Section("Description"){
+                TextField("Description", text: $transaction.label, axis: .vertical)
+            }
+            
+            Section("Tag") {
+                CategoryPicker(selectedCategory: $transaction.category)
+                    .padding(.horizontal, -20)
+            }
+            
+            Section("Amount") {
+                TextField("Amount", value: $transaction.amount, formatter: TransactionEditor.numberFormatter)
+                    .keyboardType(.decimalPad)
+            }
+            
+            Section("Date") {
+                DatePicker("Date", selection: $transaction.date, displayedComponents: [.date])
+                    .labelsHidden()
+            }
+            
+            Section("Repeats") {
+                RecurrencePeriodPicker(recurrencePeriod: $transaction.recurrencePeriod)
+            }
+            
+            if transaction.recurrencePeriod != .never {
+                Button("Stop Recurring", role: .destructive) {
+                    stopRecurring(transaction)
+                }
+                .foregroundColor(.red)
+            }
+        }
+        .listStyle(.grouped)
+        .navigationTitle("Edit Transaction")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading){
+                Button("Cancel", role: .cancel) {
+                    onCancel()
+                }
+                .foregroundColor(.red)
+            }
+            
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Save") {
+                    transaction.update()
+
+                    onSave()
+                }
+            }
+        }
+    }
+}
+
+
+/// Displays categories as a scrollable, horizontal list of categories and an edit button.
+struct CategoryPicker: View {
+    @FetchRequest(sortDescriptors: [SortDescriptor(\UserCategory.name, order: .forward)]) private var categories: FetchedResults<UserCategory>
+    /// The ID of the category the user has tapped on.
+    @Binding var selectedCategory: UserCategory?
+    
+    /// The width of the button borders.
+    var lineWidth = 1.0
+    
+    /// The radius of the button borders.
+    var cornerRadius = 5.0
+    
+    /// The dash style for the edit category button.
+    var dashStyle: [CGFloat] = [5.0, 3.0]
+    
+    /// Whether to display the sheet with the form to add, edit and delete categories.
+    @State private var showCategoryEditor: Bool = false
+    
+    /// Dummy binding used to send to child view.
+    ///
+    /// If ``categories`` is used directly instead of this binding, it results in buggy behaviour such as the cursor jumping to the end of the line after each change.
+    @State private var draftCategories: [UserCategoryClass] = []
+    
+    /// Get the color for the category label.
+    ///
+    /// If no category has been selected by the user, all categories are given the same color.
+    /// Otherwise, the selected category is highlighted and the other categories are grayed out.
+    /// - Parameter category: The category that is to be displayed.
+    /// - Returns: The saturation level for the given category's label.
+    private func getColor(for category: UserCategory) -> Color {
+        if selectedCategory == nil {
+            return .primary
+        } else if category == selectedCategory {
+            return .purple
+        } else {
+            return .secondary
+        }
+    }
+    
+    /// Get the saturation for the category label.
+    ///
+    /// If a category has been selected by the user, then the saturation is reduced to 0.0 from 1.0.
+    /// This is intended to make the selected category stand out by removing the color from emojis in the unselected categories.
+    /// - Parameter category: The category that is to be displayed.
+    /// - Returns: The saturation level for the given category's label.
+    private func getSaturation(for category: UserCategory) -> Double {
+        if selectedCategory == nil || category == selectedCategory {
+            return 1.0
+        } else {
+            return 0.0
+        }
+    }
+    
+    ///  Sets ``selectedTag`` or removes the selection depending on the input category.
+    /// - Parameter category: The category the user tapped on.
+    private func updateSelectedTag(with category: UserCategory) {
+        if category == selectedCategory {
+            selectedCategory = nil
+        } else {
+            selectedCategory = category
+        }
+    }
+    
+    /// Scrolls the scroll view to a category's button.
+    ///
+    /// If the user has not selected a category, this function has no effect.
+    /// - Parameters:
+    ///   - category: The category the user selected, can be nil.
+    ///   - proxy: The `ScrollViewProxy` object to use for scrolling.
+    private func scrollTo(_ category: UserCategory?, using proxy: ScrollViewProxy) {
+        if let category = category {
+            withAnimation {
+                proxy.scrollTo(category.id, anchor: .trailing)
+            }
+        }
+    }
+    
+    var body: some View {
+        ScrollViewReader { proxy in
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(categories) { category in
+                        Button {
+                            updateSelectedTag(with: category)
+                            dismissKeyboard()
+                        } label: {
+                            Text(category.name)
+                                .foregroundColor(getColor(for: category))
+                                .saturation(getSaturation(for: category))
+                                .padding()
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: cornerRadius)
+                                        .strokeBorder(getColor(for: category), lineWidth: lineWidth)
+                                }
+                        }
+                        .id(category.id)
+                    }
+                    
+//                    Button {
+//                        draftCategories = categories
+//                        showCategoryEditor = true
+//                    } label: {
+//                        Text("Edit Tags")
+//                            .foregroundColor(.primary)
+//                            .padding()
+//                            .overlay {
+//                                RoundedRectangle(cornerRadius: cornerRadius)
+//                                    .strokeBorder(style: StrokeStyle(lineWidth: lineWidth, dash: dashStyle))
+//                                    .foregroundColor(.primary)
+//                            }
+//                    }
+                }
+                .padding(.horizontal)
+                .onAppear {
+                    // The async call is needed here so the animation happens after the view is rendered.
+                    DispatchQueue.main.async {
+                        scrollTo(selectedCategory, using: proxy)
+                    }
+                }
+            }
+//            .sheet(isPresented: $showCategoryEditor, onDismiss: {
+//                scrollTo(selectedCategory, using: proxy)
+//            }) {
+//                // Even though the parent views are generally embeded in a navigation stack,
+//                // we have to add another one here to ensure the toolbar shows. Why?
+//                NavigationStack {
+//                    CategoryEditor(categories: $draftCategories)
+//                        .environment(\.editMode, .constant(EditMode.active))
+//                        .navigationTitle("Edit Categories")
+//                        .navigationBarTitleDisplayMode(.inline)
+//                        .toolbar {
+//                            ToolbarItem(placement: .navigationBarLeading){
+//                                Button("Cancel", role: .cancel) {
+//                                    showCategoryEditor = false
+//                                }
+//                                .foregroundColor(.red)
+//                            }
+//                            ToolbarItem(placement: .navigationBarTrailing){
+//                                Button("Save") {
+//                                    showCategoryEditor = false
+//                                    categories = draftCategories
+//                                }
+//                            }
+//                        }
+//                }
+//            }
+        }
+    }
+}
+
 
 /// A section that the user can collapse/expand by tapping on the header.
 struct CollapsibleTransactionSection: View {
@@ -335,7 +595,7 @@ struct TransactionListHeader: View {
 /// Displays transactions in a grouped list view with an area at the top for grouping controls.
 struct TransactionList: View {
     /// All the recorded transactions.
-    @FetchRequest(sortDescriptors: [SortDescriptor(\Transaction.date, order: .reverse)]) var transactions: FetchedResults<Transaction>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\Transaction.date, order: .reverse)]) private var transactions: FetchedResults<Transaction>
     /// Whether to group transactions by date interval or category.
     @State var groupByCategory: Bool = false
     /// The selected date interval to group transactions by.

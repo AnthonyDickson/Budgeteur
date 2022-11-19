@@ -28,13 +28,13 @@
 		927B920728F227890013B404 /* TransactionClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920628F227890013B404 /* TransactionClass.swift */; };
 		927B920928F22A2F0013B404 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920828F22A2F0013B404 /* History.swift */; };
 		927B920B28F22AEA0013B404 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920A28F22AEA0013B404 /* DataModel.swift */; };
-		927B921328F241270013B404 /* TransactionEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921228F241270013B404 /* TransactionEditor.swift */; };
+		927B921328F241270013B404 /* TransactionEditorOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921228F241270013B404 /* TransactionEditorOld.swift */; };
 		927B921828F3AFEB0013B404 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921728F3AFEB0013B404 /* Record.swift */; };
 		927B921A28F3B87E0013B404 /* Keypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921928F3B87E0013B404 /* Keypad.swift */; };
 		927B921C28F3CCE50013B404 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921B28F3CCE50013B404 /* Currency.swift */; };
 		927B921E28F3D6C20013B404 /* Stateful.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921D28F3D6C20013B404 /* Stateful.swift */; };
 		927B922028F4C1CE0013B404 /* UserCategoryClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921F28F4C1CE0013B404 /* UserCategoryClass.swift */; };
-		927B922228F4DF7E0013B404 /* CategorySelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B922128F4DF7E0013B404 /* CategorySelector.swift */; };
+		927B922228F4DF7E0013B404 /* CategorySelectorOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B922128F4DF7E0013B404 /* CategorySelectorOld.swift */; };
 		92B2A0CF28F5514D00B81F0D /* CategoryEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B2A0CE28F5514D00B81F0D /* CategoryEditor.swift */; };
 		92B2A0D228F667FB00B81F0D /* PeriodPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B2A0D128F667FB00B81F0D /* PeriodPicker.swift */; };
 		92B2A0D428F66BCA00B81F0D /* Period.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B2A0D328F66BCA00B81F0D /* Period.swift */; };
@@ -88,13 +88,13 @@
 		927B920628F227890013B404 /* TransactionClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionClass.swift; sourceTree = "<group>"; };
 		927B920828F22A2F0013B404 /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		927B920A28F22AEA0013B404 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
-		927B921228F241270013B404 /* TransactionEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionEditor.swift; sourceTree = "<group>"; };
+		927B921228F241270013B404 /* TransactionEditorOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionEditorOld.swift; sourceTree = "<group>"; };
 		927B921728F3AFEB0013B404 /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		927B921928F3B87E0013B404 /* Keypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keypad.swift; sourceTree = "<group>"; };
 		927B921B28F3CCE50013B404 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		927B921D28F3D6C20013B404 /* Stateful.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stateful.swift; sourceTree = "<group>"; };
 		927B921F28F4C1CE0013B404 /* UserCategoryClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCategoryClass.swift; sourceTree = "<group>"; };
-		927B922128F4DF7E0013B404 /* CategorySelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelector.swift; sourceTree = "<group>"; };
+		927B922128F4DF7E0013B404 /* CategorySelectorOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorOld.swift; sourceTree = "<group>"; };
 		92B2A0CE28F5514D00B81F0D /* CategoryEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryEditor.swift; sourceTree = "<group>"; };
 		92B2A0D128F667FB00B81F0D /* PeriodPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodPicker.swift; sourceTree = "<group>"; };
 		92B2A0D328F66BCA00B81F0D /* Period.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Period.swift; sourceTree = "<group>"; };
@@ -242,7 +242,7 @@
 				9246C91228FBAA5700D7849A /* RecurringTransactionGroup.swift */,
 				927B920428F220670013B404 /* TransactionRowOld.swift */,
 				9246C91028FA4E3700D7849A /* RecurringTransactionRow.swift */,
-				927B921228F241270013B404 /* TransactionEditor.swift */,
+				927B921228F241270013B404 /* TransactionEditorOld.swift */,
 			);
 			path = History;
 			sourceTree = "<group>";
@@ -250,7 +250,7 @@
 		927B922328F4E9120013B404 /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				927B922128F4DF7E0013B404 /* CategorySelector.swift */,
+				927B922128F4DF7E0013B404 /* CategorySelectorOld.swift */,
 				92B2A0CE28F5514D00B81F0D /* CategoryEditor.swift */,
 			);
 			path = Category;
@@ -402,7 +402,7 @@
 				92E0E93B29138F6100BC83E9 /* UserCategory+CoreDataClass.swift in Sources */,
 				9246C91128FA4E3700D7849A /* RecurringTransactionRow.swift in Sources */,
 				92E0E93629138E0B00BC83E9 /* Model.xcdatamodeld in Sources */,
-				927B921328F241270013B404 /* TransactionEditor.swift in Sources */,
+				927B921328F241270013B404 /* TransactionEditorOld.swift in Sources */,
 				923B7D3928F9397E000E46BD /* BudgetOverview.swift in Sources */,
 				927B91DD28F220310013B404 /* ContentView.swift in Sources */,
 				927B921C28F3CCE50013B404 /* Currency.swift in Sources */,
@@ -420,7 +420,7 @@
 				926589E82903AB9B00994793 /* HistorySectionHeader.swift in Sources */,
 				92E0E93E29138F6100BC83E9 /* Transaction+CoreDataProperties.swift in Sources */,
 				923B7D3728F937E6000E46BD /* AmountDisplay.swift in Sources */,
-				927B922228F4DF7E0013B404 /* CategorySelector.swift in Sources */,
+				927B922228F4DF7E0013B404 /* CategorySelectorOld.swift in Sources */,
 				927B920B28F22AEA0013B404 /* DataModel.swift in Sources */,
 				923B7D3528F933CF000E46BD /* TransactionGroupOld.swift in Sources */,
 				923B7D2C28F921CE000E46BD /* RecurrencePeriod.swift in Sources */,

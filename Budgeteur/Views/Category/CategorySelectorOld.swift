@@ -9,7 +9,7 @@ import SwiftUI
 
 
 /// Displays categories as a scrollable, horizontal list of categories and an edit button.
-struct CategorySelector: View {
+struct CategorySelectorOld: View {
     @Binding var categories: [UserCategoryClass]
     /// The ID of the category the user has tapped on.
     @Binding var selectedCategory: UUID?
@@ -162,7 +162,7 @@ struct CategorySelector: View {
 struct CategorySelector_Previews: PreviewProvider {
     static var previews: some View {
         Stateful(initialState: nil) { $userTag in
-            CategorySelector(categories: .constant(DataModel().categories),
+            CategorySelectorOld(categories: .constant(DataModel().categories),
                              selectedCategory: $userTag)
         }
     }

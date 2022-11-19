@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// Form for editing an existing transaction, or deleting it.
-struct TransactionEditor: View {
+struct TransactionEditorOld: View {
     @Binding var categories: [UserCategoryClass]
     @Binding var transaction: TransactionClass
     /// A function to run if the user presses the cancel button in the toolbar.
@@ -35,12 +35,12 @@ struct TransactionEditor: View {
             }
             
             Section("Tag") {
-                CategorySelector(categories: $categories, selectedCategory: $transaction.categoryID)
+                CategorySelectorOld(categories: $categories, selectedCategory: $transaction.categoryID)
                     .padding(.horizontal, -20)
             }
             
             Section("Amount") {
-                TextField("Amount", value: $transaction.amount, formatter: TransactionEditor.numberFormatter)
+                TextField("Amount", value: $transaction.amount, formatter: TransactionEditorOld.numberFormatter)
                     .keyboardType(.decimalPad)
             }
             
@@ -80,12 +80,12 @@ struct TransactionEditor: View {
     }
 }
 
-struct TransactionEditor_Previews: PreviewProvider {
+struct TransactionEditorOld_Previews: PreviewProvider {
     static var data = DataModel()
     
     static var previews: some View {
         NavigationStack {
-            TransactionEditor(
+            TransactionEditorOld(
                 categories: .constant(data.categories),
                               transaction: .constant(data.transactions.last!),
                 onCancel: {},

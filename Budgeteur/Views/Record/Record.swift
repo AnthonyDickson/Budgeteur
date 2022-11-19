@@ -91,7 +91,7 @@ struct Record: View {
                     .multilineTextAlignment(.center)
                     .padding()
                 
-                CategorySelector(categories: $data.categories, selectedCategory: $categoryID)
+                CategorySelectorOld(categories: $data.categories, selectedCategory: $categoryID)
                 
                 Keypad(amount: $amount, onSave: save)
             }
