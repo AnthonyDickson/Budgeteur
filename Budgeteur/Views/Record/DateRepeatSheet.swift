@@ -24,7 +24,7 @@ struct DateRepeatSheet: View {
                 DatePicker("Date", selection: $date, displayedComponents: [.date])
                     .labelsHidden()
                     .padding(.trailing)
-                RecurrencePeriodPicker(recurrencePeriod: $recurrencePeriod)
+                RecurrencePeriodPickerOld(recurrencePeriod: $recurrencePeriod)
             }
         }
         .padding(.top)

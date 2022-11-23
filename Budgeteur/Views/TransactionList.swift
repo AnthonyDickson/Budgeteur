@@ -25,6 +25,8 @@ struct TransactionItem: Identifiable {
     let parent: Transaction
     
     /// Syncs the changes made to the proxy with the underlying object in Core Data.
+    ///
+    /// **Note**: Does not save changes to the Core Data store.
     func update() {
         parent.amount = amount
         parent.label = label
@@ -162,6 +164,12 @@ struct TransactionRow: View {
                 Text(transaction.label)
             }
             Spacer()
+            
+            if transaction.recurrencePeriod != .never {
+                Label("Recurring Transaction", systemImage: "repeat")
+                    .labelStyle(.iconOnly)
+            }
+            
             Text(Currency.format(transaction.amount))
         }
     }
@@ -179,6 +187,7 @@ struct TransactionRows: View {
     @Environment(\.managedObjectContext) private var context
     
     var body: some View {
+        // TODO: Enable sorting by either date or amount.
         ForEach(transactions.sorted(by: { $0.date > $1.date })) { transaction in
             TransactionRow(transaction: transaction, useDateForHeader: useDateForHeader)
                 .onTapGesture {
@@ -192,38 +201,47 @@ struct TransactionRows: View {
                 }
             }
         }
-        .sheet(item: $selectedTransaction) {
-            selectedTransaction = nil
-        } content: { transaction in
+        .sheet(item: $selectedTransaction) { transaction in
             NavigationStack {
-                TransactionEditor(
-                    transaction: transaction,
-                    onCancel: {
-                        selectedTransaction = nil
-                    },
-                    onSave: {
-                        selectedTransaction = nil
-                        // TODO: Fix changes not saving properly.
-                        try? context.save()
-                    },
-                    stopRecurring: {transaction in }
-                )
+                TransactionEditor(transaction: transaction)
             }
         }
 
     }
 }
 
+struct RecurrencePicker: View {
+    @Binding var recurrencePeriod: RecurrencePeriod
+    /// Whether to show the user the recurrence period 'never'.
+    ///
+    /// This should be set to `false` for recurring transactions.
+    /// The user should not be able to select 'never' for a recurring transaction, they should instead set an end date or delete the recurring transaction.
+    var allowNever: Bool
+    
+    var body: some View {
+        Picker(selection: $recurrencePeriod) {
+            ForEach(RecurrencePeriod.allCases, id: \.rawValue) { period in
+                if allowNever || period != .never {
+                    Text(period.rawValue)
+                        .tag(period)
+                }
+            }
+        } label: {
+            Text("Recurrence Period")
+        }
+        .pickerStyle(.menu)
+        .labelsHidden()
+    }
+    
+}
+
 
 /// Form for editing an existing transaction, or deleting it.
 struct TransactionEditor: View {
+    @EnvironmentObject private var dataManager: DataManager
+    @Environment(\.dismiss) private var dismiss: DismissAction
+    
     @State var transaction: TransactionItem
-    /// A function to run if the user presses the cancel button in the toolbar.
-    var onCancel: () -> ()
-    /// A function to run if the user presses the save button in the toolbar.
-    var onSave: () -> ()
-    /// A function that stops a recurring transaction.
-    var stopRecurring: (_ transaction: TransactionItem) -> ()
     
     static private let numberFormatter = {
         let formatter = NumberFormatter()
@@ -234,6 +252,14 @@ struct TransactionEditor: View {
         
         return formatter
     }()
+    
+    private var isRecurringTransaction: Bool {
+        transaction.parent.recurrencePeriod != RecurrencePeriod.never.rawValue
+    }
+    
+    private var dateSectionLabel: String {
+        isRecurringTransaction ? "Start Date" : "Date"
+    }
     
     var body: some View {
         List {
@@ -250,39 +276,55 @@ struct TransactionEditor: View {
                 TextField("Amount", value: $transaction.amount, formatter: TransactionEditor.numberFormatter)
                     .keyboardType(.decimalPad)
             }
+            .onAppear {
+                if isRecurringTransaction {
+                    // Need to do this since TransactionItem for recurring transactions will have the amount adjusted for the current time period. The parent transaction holds the unadjusted amount.
+                    transaction.amount = transaction.parent.amount
+                }
+            }
             
-            Section("Date") {
+            Section(dateSectionLabel) {
                 DatePicker("Date", selection: $transaction.date, displayedComponents: [.date])
                     .labelsHidden()
             }
             
+            // TODO: Add endDate attribute to Transaction.
+//            if isRecurringTransaction {
+//                Section("End Date") {
+//                    DatePicker("Date", selection: $transaction.endDate, displayedComponents: [.date])
+//                        .labelsHidden()
+//                }
+//            }
+            
             Section("Repeats") {
-                RecurrencePeriodPicker(recurrencePeriod: $transaction.recurrencePeriod)
+                RecurrencePicker(
+                    recurrencePeriod: $transaction.recurrencePeriod,
+                    allowNever: !isRecurringTransaction
+                )
             }
             
-            if transaction.recurrencePeriod != .never {
-                Button("Stop Recurring", role: .destructive) {
-                    stopRecurring(transaction)
-                }
-                .foregroundColor(.red)
-            }
+            // TODO: Implement function to stop recurring a transaction by setting an end date.
+//            if transaction.recurrencePeriod != .never {
+//                Button("Stop Recurring", role: .destructive) {
+//                    stopRecurring(transaction)
+//                }
+//                .foregroundColor(.red)
+//            }
         }
         .listStyle(.grouped)
         .navigationTitle("Edit Transaction")
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.automatic)
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading){
+            ToolbarItem(placement: .cancellationAction) {
                 Button("Cancel", role: .cancel) {
-                    onCancel()
+                    dismiss()
                 }
                 .foregroundColor(.red)
             }
-            
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .confirmationAction) {
                 Button("Save") {
-                    transaction.update()
-
-                    onSave()
+                    dataManager.updateTransaction(transaction: transaction)
+                    dismiss()
                 }
             }
         }
@@ -311,7 +353,7 @@ struct CategoryPicker: View {
     /// Dummy binding used to send to child view.
     ///
     /// If ``categories`` is used directly instead of this binding, it results in buggy behaviour such as the cursor jumping to the end of the line after each change.
-    @State private var draftCategories: [UserCategoryClass] = []
+    @State private var draftCategories: [UserCategory] = []
     
     /// Get the color for the category label.
     ///
@@ -388,19 +430,18 @@ struct CategoryPicker: View {
                         .id(category.id)
                     }
                     
-//                    Button {
-//                        draftCategories = categories
-//                        showCategoryEditor = true
-//                    } label: {
-//                        Text("Edit Tags")
-//                            .foregroundColor(.primary)
-//                            .padding()
-//                            .overlay {
-//                                RoundedRectangle(cornerRadius: cornerRadius)
-//                                    .strokeBorder(style: StrokeStyle(lineWidth: lineWidth, dash: dashStyle))
-//                                    .foregroundColor(.primary)
-//                            }
-//                    }
+                    Button {
+                        showCategoryEditor = true
+                    } label: {
+                        Text("Edit Tags")
+                            .foregroundColor(.primary)
+                            .padding()
+                            .overlay {
+                                RoundedRectangle(cornerRadius: cornerRadius)
+                                    .strokeBorder(style: StrokeStyle(lineWidth: lineWidth, dash: dashStyle))
+                                    .foregroundColor(.primary)
+                            }
+                    }
                 }
                 .padding(.horizontal)
                 .onAppear {
@@ -410,32 +451,91 @@ struct CategoryPicker: View {
                     }
                 }
             }
-//            .sheet(isPresented: $showCategoryEditor, onDismiss: {
-//                scrollTo(selectedCategory, using: proxy)
-//            }) {
-//                // Even though the parent views are generally embeded in a navigation stack,
-//                // we have to add another one here to ensure the toolbar shows. Why?
-//                NavigationStack {
-//                    CategoryEditor(categories: $draftCategories)
-//                        .environment(\.editMode, .constant(EditMode.active))
-//                        .navigationTitle("Edit Categories")
-//                        .navigationBarTitleDisplayMode(.inline)
-//                        .toolbar {
-//                            ToolbarItem(placement: .navigationBarLeading){
-//                                Button("Cancel", role: .cancel) {
-//                                    showCategoryEditor = false
-//                                }
-//                                .foregroundColor(.red)
-//                            }
-//                            ToolbarItem(placement: .navigationBarTrailing){
-//                                Button("Save") {
-//                                    showCategoryEditor = false
-//                                    categories = draftCategories
-//                                }
-//                            }
-//                        }
+            .sheet(isPresented: $showCategoryEditor, onDismiss: {
+                scrollTo(selectedCategory, using: proxy)
+            }) {
+                NavigationStack {
+                    CategoryEditor()
+                }
+            }
+        }
+    }
+}
+
+/// Displays the user defined categories in a list and allows the user to add, edit and delete categories.
+///
+/// The parent view should ensure that the environment variable `editMode` is set to `EditMode.active`.
+struct CategoryEditor: View {
+    @Environment(\.dismiss) private var dismiss: DismissAction
+    @EnvironmentObject private var dataManager: DataManager
+    /// The list of user defined categories.
+    @FetchRequest(sortDescriptors: [SortDescriptor(\UserCategory.name, order: .forward)]) private var categories: FetchedResults<UserCategory>
+    
+    /// The name that will be used to create a new category.
+    @State private var newCategoryName = ""
+    
+    var body: some View {
+        List {
+            Section {
+                HStack {
+                    TextField("Tag Name", text: $newCategoryName)
+                        .submitLabel(.done)
+                        .onSubmit {
+                            _ = dataManager.createUserCategory(name: newCategoryName)
+                            newCategoryName = ""
+                    }
+                    
+                    Spacer()
+                    
+                    Button("Add") {
+                            _ = dataManager.createUserCategory(name: newCategoryName)
+                            newCategoryName = ""
+                    }
+                    .disabled(newCategoryName.isEmpty)
+                }
+            }
+            
+            Section {
+                if categories.isEmpty {
+                    Text("No Tags")
+                } else {
+                    ForEach(categories) { category in
+                        Text(category.name)
+                        // TODO: Make categories editable
+        //                TextField(category.name, text: $category.name)
+                    }
+                    .onDelete { categoryIndices in
+                        DispatchQueue.main.async {
+                            categoryIndices.map{ categories[$0] }.forEach { category in
+                                dataManager.deleteUserCategory(category: category)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .navigationTitle("Edit Tags")
+        .navigationBarTitleDisplayMode(.inline)
+        // TODO: When editing, make sure we are only editing a temporary copy, and to only save the changes once the users taps save.
+//        .toolbar {
+//            ToolbarItem(placement: .navigationBarLeading){
+//                Button("Cancel", role: .cancel) {
+//                    dismiss()
+//                }
+//                .foregroundColor(.red)
+//            }
+//            ToolbarItem(placement: .navigationBarTrailing){
+//                Button("Save") {
+//                    dismiss()
 //                }
 //            }
+//        }
+        .toolbar {
+            ToolbarItem(placement: .primaryAction){
+                Button("Done") {
+                    dismiss()
+                }
+            }
         }
     }
 }
@@ -594,6 +694,7 @@ struct TransactionListHeader: View {
 
 /// Displays transactions in a grouped list view with an area at the top for grouping controls.
 struct TransactionList: View {
+    @EnvironmentObject private var dataManager: DataManager
     /// All the recorded transactions.
     @FetchRequest(sortDescriptors: [SortDescriptor(\Transaction.date, order: .reverse)]) private var transactions: FetchedResults<Transaction>
     /// Whether to group transactions by date interval or category.
@@ -720,10 +821,16 @@ struct TransactionList: View {
 }
 
 struct TransactionList_Previews: PreviewProvider {
-    static var dataManager: DataManager = .sample
+    static var dataManager: DataManager = .init(inMemory: true)
     
     static var previews: some View {
-        TransactionList()
-            .environment(\.managedObjectContext, dataManager.container.viewContext)
+        NavigationStack {
+            TransactionList()
+        }
+        .environment(\.managedObjectContext, dataManager.container.viewContext)
+        .environmentObject(dataManager)
+        .onAppear {
+            dataManager.addSampleData()
+        }
     }
 }

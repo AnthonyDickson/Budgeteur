@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		923B7D2C28F921CE000E46BD /* RecurrencePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D2B28F921CE000E46BD /* RecurrencePeriod.swift */; };
 		923B7D2E28F923AC000E46BD /* DissmissKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D2D28F923AC000E46BD /* DissmissKeyboard.swift */; };
-		923B7D3028F92B15000E46BD /* RecurrencePeriodPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D2F28F92B15000E46BD /* RecurrencePeriodPicker.swift */; };
+		923B7D3028F92B15000E46BD /* RecurrencePeriodPickerOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D2F28F92B15000E46BD /* RecurrencePeriodPickerOld.swift */; };
 		923B7D3228F92FA6000E46BD /* DateRepeatSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D3128F92FA6000E46BD /* DateRepeatSheet.swift */; };
 		923B7D3528F933CF000E46BD /* TransactionGroupOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D3428F933CF000E46BD /* TransactionGroupOld.swift */; };
 		923B7D3728F937E6000E46BD /* AmountDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D3628F937E6000E46BD /* AmountDisplay.swift */; };
@@ -35,7 +35,7 @@
 		927B921E28F3D6C20013B404 /* Stateful.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921D28F3D6C20013B404 /* Stateful.swift */; };
 		927B922028F4C1CE0013B404 /* UserCategoryClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921F28F4C1CE0013B404 /* UserCategoryClass.swift */; };
 		927B922228F4DF7E0013B404 /* CategorySelectorOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B922128F4DF7E0013B404 /* CategorySelectorOld.swift */; };
-		92B2A0CF28F5514D00B81F0D /* CategoryEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B2A0CE28F5514D00B81F0D /* CategoryEditor.swift */; };
+		92B2A0CF28F5514D00B81F0D /* CategoryEditorOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B2A0CE28F5514D00B81F0D /* CategoryEditorOld.swift */; };
 		92B2A0D228F667FB00B81F0D /* PeriodPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B2A0D128F667FB00B81F0D /* PeriodPicker.swift */; };
 		92B2A0D428F66BCA00B81F0D /* Period.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B2A0D328F66BCA00B81F0D /* Period.swift */; };
 		92E0E93629138E0B00BC83E9 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 92E0E93429138E0B00BC83E9 /* Model.xcdatamodeld */; };
@@ -66,7 +66,7 @@
 /* Begin PBXFileReference section */
 		923B7D2B28F921CE000E46BD /* RecurrencePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrencePeriod.swift; sourceTree = "<group>"; };
 		923B7D2D28F923AC000E46BD /* DissmissKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DissmissKeyboard.swift; sourceTree = "<group>"; };
-		923B7D2F28F92B15000E46BD /* RecurrencePeriodPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrencePeriodPicker.swift; sourceTree = "<group>"; };
+		923B7D2F28F92B15000E46BD /* RecurrencePeriodPickerOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrencePeriodPickerOld.swift; sourceTree = "<group>"; };
 		923B7D3128F92FA6000E46BD /* DateRepeatSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRepeatSheet.swift; sourceTree = "<group>"; };
 		923B7D3428F933CF000E46BD /* TransactionGroupOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionGroupOld.swift; sourceTree = "<group>"; };
 		923B7D3628F937E6000E46BD /* AmountDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountDisplay.swift; sourceTree = "<group>"; };
@@ -95,7 +95,7 @@
 		927B921D28F3D6C20013B404 /* Stateful.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stateful.swift; sourceTree = "<group>"; };
 		927B921F28F4C1CE0013B404 /* UserCategoryClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCategoryClass.swift; sourceTree = "<group>"; };
 		927B922128F4DF7E0013B404 /* CategorySelectorOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorOld.swift; sourceTree = "<group>"; };
-		92B2A0CE28F5514D00B81F0D /* CategoryEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryEditor.swift; sourceTree = "<group>"; };
+		92B2A0CE28F5514D00B81F0D /* CategoryEditorOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryEditorOld.swift; sourceTree = "<group>"; };
 		92B2A0D128F667FB00B81F0D /* PeriodPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodPicker.swift; sourceTree = "<group>"; };
 		92B2A0D328F66BCA00B81F0D /* Period.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Period.swift; sourceTree = "<group>"; };
 		92E0E93529138E0B00BC83E9 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -251,7 +251,7 @@
 			isa = PBXGroup;
 			children = (
 				927B922128F4DF7E0013B404 /* CategorySelectorOld.swift */,
-				92B2A0CE28F5514D00B81F0D /* CategoryEditor.swift */,
+				92B2A0CE28F5514D00B81F0D /* CategoryEditorOld.swift */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -260,7 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				92B2A0D128F667FB00B81F0D /* PeriodPicker.swift */,
-				923B7D2F28F92B15000E46BD /* RecurrencePeriodPicker.swift */,
+				923B7D2F28F92B15000E46BD /* RecurrencePeriodPickerOld.swift */,
 			);
 			path = Period;
 			sourceTree = "<group>";
@@ -424,9 +424,9 @@
 				927B920B28F22AEA0013B404 /* DataModel.swift in Sources */,
 				923B7D3528F933CF000E46BD /* TransactionGroupOld.swift in Sources */,
 				923B7D2C28F921CE000E46BD /* RecurrencePeriod.swift in Sources */,
-				92B2A0CF28F5514D00B81F0D /* CategoryEditor.swift in Sources */,
+				92B2A0CF28F5514D00B81F0D /* CategoryEditorOld.swift in Sources */,
 				927B922028F4C1CE0013B404 /* UserCategoryClass.swift in Sources */,
-				923B7D3028F92B15000E46BD /* RecurrencePeriodPicker.swift in Sources */,
+				923B7D3028F92B15000E46BD /* RecurrencePeriodPickerOld.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

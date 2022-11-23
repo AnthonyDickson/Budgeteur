@@ -134,7 +134,7 @@ struct CategorySelectorOld: View {
                 // Even though the parent views are generally embeded in a navigation stack,
                 // we have to add another one here to ensure the toolbar shows. Why?
                 NavigationStack {
-                    CategoryEditor(categories: $draftCategories)
+                    CategoryEditorOld(categories: $draftCategories)
                         .environment(\.editMode, .constant(EditMode.active))
                         .navigationTitle("Edit Categories")
                         .navigationBarTitleDisplayMode(.inline)

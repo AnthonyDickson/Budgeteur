@@ -10,7 +10,7 @@ import SwiftUI
 /// Displays the user defined categories in a list and allows the user to add, edit and delete categories.
 ///
 /// The parent view should ensure that the environment variable `editMode` is set to `EditMode.active`.
-struct CategoryEditor: View {
+struct CategoryEditorOld: View {
     /// The list of user defined categories.
     @Binding var categories: [UserCategoryClass]
     
@@ -42,7 +42,7 @@ struct CategoryEditor: View {
 
 struct CategoryEditor_Previews: PreviewProvider {
     static var previews: some View {
-        CategoryEditor(categories: .constant(DataModel().categories))
+        CategoryEditorOld(categories: .constant(DataModel().categories))
             .environment(\.editMode, .constant(EditMode.active))
     }
 }

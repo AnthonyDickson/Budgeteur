@@ -16,16 +16,25 @@ class DataManager: ObservableObject {
         container.viewContext
     }
     
-    /// 
-    static var sample: DataManager {
-        let manager = DataManager(inMemory: true)
+    init(inMemory: Bool = false) {
+        if inMemory {
+            container.persistentStoreDescriptions = [NSPersistentStoreDescription(url: URL(filePath: "/dev/null"))]
+        }
         
+        container.loadPersistentStores { storeDescription, error in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        }
+    }
+    
+    func addSampleData(numSamples: Int = 50, addRecurring: Bool = true) {
         let categories = [
-            manager.createUserCategory(name: "Groceries 🍎"),
-            manager.createUserCategory(name: "Eating Out 🍔"),
-            manager.createUserCategory(name: "Home Expenses 🏡"),
-            manager.createUserCategory(name: "Entertainment 🎶"),
-            manager.createUserCategory(name: "Donation ❤️")
+            createUserCategory(name: "Groceries 🛒"),
+            createUserCategory(name: "Eating Out 🍔"),
+            createUserCategory(name: "Home Expenses 🏡"),
+            createUserCategory(name: "Entertainment 🎶"),
+            createUserCategory(name: "Donation ❤️")
         ]
         
         let rng = GKMersenneTwisterRandomSource(seed: 42)
@@ -39,7 +48,7 @@ class DataManager: ObservableObject {
         ]
         let startDate = Date.now
         
-        for index in 0...25 {
+        for index in 0..<numSamples {
             let description = descriptions[rng.nextInt(upperBound: descriptions.count)]
             let amount = 100.0 * Double(rng.nextUniform())
             let date = Calendar.current.date(
@@ -48,7 +57,7 @@ class DataManager: ObservableObject {
                 to: startDate)!
             let category = categories[rng.nextInt(upperBound: categories.count)]
             
-            _ = manager.createTransaction(
+            _ = createTransaction(
                 amount: amount,
                 label: description,
                 date: date,
@@ -56,34 +65,23 @@ class DataManager: ObservableObject {
             )
         }
         
-        _ = manager.createTransaction(
-            amount: 255.0,
-            label: "Rent",
-            date: Calendar.current.date(byAdding: .month, value: -3, to: startDate)!,
-            recurrencePeriod: .weekly,
-            category: categories[2]
-        )
         
-        _ = manager.createTransaction(
-            amount: 15.0,
-            label: "Netflix",
-            date: Calendar.current.date(byAdding: .month, value: -3, to: startDate)!,
-            recurrencePeriod: .monthly,
-            category: categories[3]
-        )
-        
-        return manager
-    }
-    
-    init(inMemory: Bool = false) {
-        if inMemory {
-            container.persistentStoreDescriptions = [NSPersistentStoreDescription(url: URL(filePath: "/dev/null"))]
-        }
-        
-        container.loadPersistentStores { storeDescription, error in
-            if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
+        if addRecurring {
+            _ = createTransaction(
+                amount: 255.0,
+                label: "Rent",
+                date: Calendar.current.date(byAdding: .month, value: -3, to: startDate)!,
+                recurrencePeriod: .weekly,
+                category: categories[2]
+            )
+            
+            _ = createTransaction(
+                amount: 15.0,
+                label: "Netflix",
+                date: Calendar.current.date(byAdding: .month, value: -3, to: startDate)!,
+                recurrencePeriod: .monthly,
+                category: categories[3]
+            )
         }
     }
     
@@ -139,6 +137,21 @@ class DataManager: ObservableObject {
         }
         
         return fetchedTransactions
+    }
+    
+    func updateTransaction(transaction: Transaction, amount: Double, label: String, date: Date, recurrencePeriod: RecurrencePeriod, category: UserCategory?) {
+        transaction.amount = amount
+        transaction.label = label
+        transaction.date = date
+        transaction.recurrencePeriod = recurrencePeriod.rawValue
+        transaction.category = category
+        
+        save()
+    }
+    
+    func updateTransaction(transaction: TransactionItem) {
+        transaction.update()
+        save()
     }
     
     func deleteUserCategory(category: UserCategory) {

@@ -50,7 +50,7 @@ struct TransactionEditorOld: View {
             }
             
             Section("Repeats") {
-                RecurrencePeriodPicker(recurrencePeriod: $transaction.recurrencePeriod)
+                RecurrencePeriodPickerOld(recurrencePeriod: $transaction.recurrencePeriod)
             }
             
             if transaction.recurrencePeriod != .never {

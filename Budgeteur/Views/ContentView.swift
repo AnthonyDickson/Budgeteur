@@ -19,15 +19,22 @@ struct ContentView: View {
     }
     
     var body: some View {
-        TransactionList()
+        NavigationStack {
+            TransactionList()
+        }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
-    static var dataManager = DataManager.sample
+    static var dataManager = DataManager(inMemory: true)
     
-    static var previews: some View {        
+    static var previews: some View {
+        
         return ContentView(data: DataModel())
             .environment(\.managedObjectContext, dataManager.context)
+            .environmentObject(dataManager)
+            .onAppear {
+                dataManager.addSampleData()
+            }
     }
 }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RecurrencePeriodPicker: View {
+struct RecurrencePeriodPickerOld: View {
     @Binding var recurrencePeriod: RecurrencePeriod
     
     var body: some View {
@@ -28,7 +28,7 @@ struct RecurrencePeriodPicker: View {
 struct RecurrencePeriodPicker_Previews: PreviewProvider {
     static var previews: some View {
         Stateful(initialState: RecurrencePeriod.never) { $recurrencePeriod in
-            RecurrencePeriodPicker(recurrencePeriod: $recurrencePeriod)
+            RecurrencePeriodPickerOld(recurrencePeriod: $recurrencePeriod)
         }
     }
 }
