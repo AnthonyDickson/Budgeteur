@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BudgetOverview: View {
+struct BudgetOverviewOld: View {
     /// The user selected time period for aggregating transactions.
     var period: Period
     /// The transaction data.
@@ -63,11 +63,11 @@ struct BudgetOverview: View {
     }
 }
 
-struct BudgetOverview_Previews: PreviewProvider {
+struct BudgetOverviewOld_Previews: PreviewProvider {
     static var data = DataModel()
     
     static var previews: some View {
-        BudgetOverview(
+        BudgetOverviewOld(
             period: data.period,
             transactions: data.transactions,
             getRecurringTransactions: { dateInterval in data.getRecurringTransactions(for: dateInterval) }

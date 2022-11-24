@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// TODO: Separate views into own files.
+
 /// Proxy object to display ``Transaction`` instances in the GUI. It can hold one-off transactions and the auto-generated recurring transactions.
 struct TransactionItem: Identifiable {
     /// A unique identifier for the transaction, or the auto-generated recurring transaction.
@@ -17,6 +19,8 @@ struct TransactionItem: Identifiable {
     var label: String
     /// When the transaction ocurred.
     var date: Date
+    /// When the recurring transaction should end. If `nil`, the transaction will recur indefinitely.
+    var endDate: Date?
     /// How often the transaction repeats, if ever.
     var recurrencePeriod: RecurrencePeriod
     /// The category that the transaction fits into (e.g., home expenses vs. entertainment).
@@ -31,6 +35,7 @@ struct TransactionItem: Identifiable {
         parent.amount = amount
         parent.label = label
         parent.date = date
+        parent.endDate = endDate
         parent.recurrencePeriod = recurrencePeriod.rawValue
         parent.category = category
     }
@@ -260,6 +265,12 @@ struct TransactionEditor: View {
     private var dateSectionLabel: String {
         isRecurringTransaction ? "Start Date" : "Date"
     }
+
+    private func endOfDay(for date: Date) -> Date {
+        let startOfDay = Calendar.current.startOfDay(for: date)
+        return Calendar.current.date(byAdding: DateComponents(day: 1, second: -1), to: startOfDay)!
+    }
+    
     
     var body: some View {
         List {
@@ -276,25 +287,26 @@ struct TransactionEditor: View {
                 TextField("Amount", value: $transaction.amount, formatter: TransactionEditor.numberFormatter)
                     .keyboardType(.decimalPad)
             }
-            .onAppear {
-                if isRecurringTransaction {
-                    // Need to do this since TransactionItem for recurring transactions will have the amount adjusted for the current time period. The parent transaction holds the unadjusted amount.
-                    transaction.amount = transaction.parent.amount
-                }
-            }
+            
             
             Section(dateSectionLabel) {
-                DatePicker("Date", selection: $transaction.date, displayedComponents: [.date])
+                DatePicker(dateSectionLabel, selection: $transaction.date, displayedComponents: .date)
                     .labelsHidden()
             }
             
-            // TODO: Add endDate attribute to Transaction.
-//            if isRecurringTransaction {
-//                Section("End Date") {
-//                    DatePicker("Date", selection: $transaction.endDate, displayedComponents: [.date])
-//                        .labelsHidden()
-//                }
-//            }
+            if isRecurringTransaction {
+                Section("End Date") {
+                    DatePicker(
+                        "End Date",
+                        selection: Binding<Date>(
+                            get: { transaction.endDate ?? Date.now },
+                            set: { transaction.endDate = endOfDay(for: $0) }
+                        ),
+                        displayedComponents: .date
+                    )
+                    .labelsHidden()
+                }
+            }
             
             Section("Repeats") {
                 RecurrencePicker(
@@ -302,14 +314,6 @@ struct TransactionEditor: View {
                     allowNever: !isRecurringTransaction
                 )
             }
-            
-            // TODO: Implement function to stop recurring a transaction by setting an end date.
-//            if transaction.recurrencePeriod != .never {
-//                Button("Stop Recurring", role: .destructive) {
-//                    stopRecurring(transaction)
-//                }
-//                .foregroundColor(.red)
-//            }
         }
         .listStyle(.grouped)
         .navigationTitle("Edit Transaction")
@@ -326,6 +330,15 @@ struct TransactionEditor: View {
                     dataManager.updateTransaction(transaction: transaction)
                     dismiss()
                 }
+            }
+        }
+        .onAppear {
+            if isRecurringTransaction {
+                // Need to do this since TransactionItem for recurring transactions will have the amount adjusted for the current time period. The parent transaction holds the unadjusted amount.
+                transaction.amount = transaction.parent.amount
+                // Dates will also be for the proxy transaction, rather than the parent transaction.
+                transaction.date = transaction.parent.date
+                transaction.endDate = transaction.parent.endDate
             }
         }
     }
@@ -698,9 +711,9 @@ struct TransactionList: View {
     /// All the recorded transactions.
     @FetchRequest(sortDescriptors: [SortDescriptor(\Transaction.date, order: .reverse)]) private var transactions: FetchedResults<Transaction>
     /// Whether to group transactions by date interval or category.
-    @State var groupByCategory: Bool = false
+    @AppStorage("groupByCategory") private var groupByCategory: Bool = false
     /// The selected date interval to group transactions by.
-    @State var period: Period = .oneWeek
+    @AppStorage("period") private var period: Period = .oneWeek
     
     /// Convert transactions from the Core Data interface class to a proxy class object that is more suited for the GUI.
     /// - Parameter transactions: The transactions from the Core Data store.
@@ -732,13 +745,23 @@ struct TransactionList: View {
     /// - Parameter transaction: The base transaction to generate recurring transactions from.
     /// - Returns: The list of generated transactions.
     func getRecurringTransactions(for transaction: Transaction) -> [TransactionItem] {
+        // TODO: Refactor common parts of this func with func from `BudgetOverview`.
         var recurringTransactions: [TransactionItem] = []
         
         let startDate =  Calendar.current.startOfDay(for: transaction.date)
         let today = Calendar.current.startOfDay(for: Date.now)
         
-        guard let endDate = Calendar.current.date(byAdding: DateComponents(day: 1, second: -1), to: today) else {
+        guard let endOfToday = Calendar.current.date(byAdding: DateComponents(day: 1, second: -1), to: today) else {
             fatalError("Error: Could create date by adding \(DateComponents(day: 1, second: -1)) to \(Date.now)")
+        }
+        
+        let endDate: Date
+        
+        // TODO: Make sure that transaction.endDate is always either nil or a date that is one second before midnight.
+        if let transactionEndDate = transaction.endDate, transactionEndDate < endOfToday {
+            endDate = transactionEndDate
+        } else {
+            endDate = endOfToday
         }
         
         guard let recurrencePeriod = RecurrencePeriod(rawValue: transaction.recurrencePeriod) else {
@@ -764,15 +787,14 @@ struct TransactionList: View {
             fatalError("Given non-recurring transaction (recurrencePeriod == .never) when a recurring transaction was expected.")
         }
         
-        let dateIncrement = period.getDateIncrement()
-        
-        var date = startDate
+        let dailyAmount = transaction.amount * multiplier
         
         let isoCalendar = Calendar(identifier: .iso8601)
+        let dateIncrement = period.getDateIncrement()
+        var date = startDate
         
+        // TODO: Change calculation to use num times in period * base price when period <= recurrence period. When recurrence period > period, fall back to fractional calculation.
         while date < endDate {
-            let dailyAmount = transaction.amount * multiplier
-            
             guard let nextDate = isoCalendar.date(byAdding: dateIncrement, to: date) else {
                 fatalError("Error: Could not increment date \(date) by increment \(dateIncrement)")
             }

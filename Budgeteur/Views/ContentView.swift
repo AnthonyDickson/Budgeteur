@@ -10,31 +10,33 @@ import SwiftUI
 struct ContentView: View {
     /// The container for the app's data.
     @ObservedObject var data: DataModel
-    /// The tab that is currently displayed.
-    @State private var selectedTab: Tab = .new
-    
-    enum Tab {
-        case new
-        case list
-    }
     
     var body: some View {
-        NavigationStack {
+        TabView {
+            NavigationStack {
+                TransactionInput()
+            }
+            .tabItem {
+                Label("New", systemImage: "creditcard")
+            }
+            
             TransactionList()
+                .tabItem {
+                    Label("History", systemImage: "scroll")
+                }
         }
     }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var dataManager = DataManager(inMemory: true)
     
-    static var previews: some View {
+    struct ContentView_Previews: PreviewProvider {
+        static var dataManager = DataManager(inMemory: true)
         
-        return ContentView(data: DataModel())
-            .environment(\.managedObjectContext, dataManager.context)
-            .environmentObject(dataManager)
-            .onAppear {
-                dataManager.addSampleData()
-            }
+        static var previews: some View {
+            ContentView(data: DataModel())
+                .environment(\.managedObjectContext, dataManager.context)
+                .environmentObject(dataManager)
+                .onAppear {
+                    dataManager.addSampleData()
+                }
+        }
     }
 }

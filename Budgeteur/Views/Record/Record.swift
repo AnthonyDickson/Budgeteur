@@ -61,7 +61,7 @@ struct Record: View {
         GeometryReader { _ in
             VStack(alignment: .center) {
                 ZStack {
-                    BudgetOverview(period: data.period, transactions: data.transactions, getRecurringTransactions: data.getRecurringTransactions)
+                    BudgetOverviewOld(period: data.period, transactions: data.transactions, getRecurringTransactions: data.getRecurringTransactions)
                     
                     HStack {
                         Spacer()
