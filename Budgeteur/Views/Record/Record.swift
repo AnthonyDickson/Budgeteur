@@ -1,31 +1,28 @@
 //
-//  TransactionForm.swift
+//  Record.swift
 //  Budgeteur
 //
-//  Created by Anthony Dickson on 10/10/22.
+//  Created by Anthony Dickson on 24/11/22.
 //
 
 import SwiftUI
+import CoreData
 
 
 /// A form for creating a new transaction. Features a big keypad.
 struct Record: View {
-    /// The app data.
-    @ObservedObject var data: DataModel
+    @EnvironmentObject private var dataManager: DataManager
     
-    /// A description of the transaction.
-    @State var description = ""
     /// The amount of money spent.
     @State var amount = 0.0
+    /// A description of the transaction.
+    @State var label = ""
     /// When the transaction occured.
     @State var date = Date.now
     /// The ID of the category the transaction fits into (e.g., groceries vs. entertainment).
-    @State var categoryID: UUID? = nil
+    @State var category: UserCategory? = nil
     /// How often the transaction repeats, if ever.
     @State var recurrencePeriod = RecurrencePeriod.never
-    
-    /// Whether to show the date/repitition controls.
-    @State private var showDateControls = false
     
     /// Is the current amount invalid?
     private var invalidAmount: Bool {
@@ -34,24 +31,17 @@ struct Record: View {
     
     /// Add the transaction to the app's data.
     private func save() {
-        let transaction = TransactionClass(
-            amount: amount,
-            description: description,
-            categoryID: categoryID,
-            date: date,
-            recurrencePeriod: recurrencePeriod
-        )
-        data.addTransaction(transaction)
+        _ = dataManager.createTransaction(amount: amount, label: label, date: date, recurrencePeriod: recurrencePeriod, category: category)
         reset()
     }
     
     /// Reset the inputs to their default values.
     private func reset() {
         withAnimation {
-            description = ""
+            label = ""
             amount = 0.0
             date = Date.now
-            categoryID = nil
+            category = nil
             recurrencePeriod = .never
         }
     }
@@ -60,25 +50,7 @@ struct Record: View {
         // Need GeometryReader here to prevent the keyboard from moving the views (keyboard avoidance).
         GeometryReader { _ in
             VStack(alignment: .center) {
-                ZStack {
-                    BudgetOverviewOld(period: data.period, transactions: data.transactions, getRecurringTransactions: data.getRecurringTransactions)
-                    
-                    HStack {
-                        Spacer()
-                        
-                        Button {
-                            showDateControls = true
-                        } label: {
-                            Label("Change date and repetition.", systemImage: "ellipsis")
-                                .labelStyle(.iconOnly)
-                                .foregroundColor(.primary)
-                        }
-                        .sheet(isPresented: $showDateControls) {
-                            DateRepeatSheet(date: $date, recurrencePeriod: $recurrencePeriod)
-                        }
-                    }
-                    .padding(.horizontal)
-                }
+                RecordTitleBar(date: $date, recurrencePeriod: $recurrencePeriod)
                 
                 Spacer()
                 
@@ -86,12 +58,12 @@ struct Record: View {
                 
                 Spacer()
                 
-                TextField("What did you pay for?", text: $description)
+                TextField("What did you pay for?", text: $label)
                     .submitLabel(.done)
                     .multilineTextAlignment(.center)
                     .padding()
                 
-                CategorySelectorOld(categories: $data.categories, selectedCategory: $categoryID)
+                CategoryPicker(selectedCategory: $category)
                 
                 Keypad(amount: $amount, onSave: save)
             }
@@ -106,7 +78,14 @@ struct Record: View {
 }
 
 struct Record_Previews: PreviewProvider {
+    static var dataManager: DataManager = .init(inMemory: true)
+    
     static var previews: some View {
-        Record(data: DataModel())
+        Record()
+            .environment(\.managedObjectContext, dataManager.container.viewContext)
+            .environmentObject(dataManager)
+            .onAppear {
+                dataManager.addSampleData()
+            }
     }
 }

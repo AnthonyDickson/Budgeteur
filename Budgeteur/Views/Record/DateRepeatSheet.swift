@@ -7,8 +7,11 @@
 
 import SwiftUI
 
+/// Form for selecting the data and the recurrence period of a transaction.
 struct DateRepeatSheet: View {
+    /// When the transaction occured.
     @Binding var date: Date
+    /// How often the transaction repeats, if ever.
     @Binding var recurrencePeriod: RecurrencePeriod
     
     var body: some View {
@@ -21,10 +24,10 @@ struct DateRepeatSheet: View {
             }
             
             GridRow {
-                DatePicker("Date", selection: $date, displayedComponents: [.date])
+                DatePicker("Date", selection: $date, in: ...Date.now, displayedComponents: .date)
                     .labelsHidden()
                     .padding(.trailing)
-                RecurrencePeriodPickerOld(recurrencePeriod: $recurrencePeriod)
+                RecurrencePeriodPicker(recurrencePeriod: $recurrencePeriod, allowNever: true)
             }
         }
         .padding(.top)
@@ -34,6 +37,10 @@ struct DateRepeatSheet: View {
 
 struct DateRepeatSheet_Previews: PreviewProvider {
     static var previews: some View {
-        DateRepeatSheet(date: .constant(Date.now), recurrencePeriod: .constant(.never))
+        Stateful(initialState: Date.now) { $date in
+            Stateful(initialState: RecurrencePeriod.weekly) { $recurrencePeriod in
+                DateRepeatSheet(date: $date, recurrencePeriod: $recurrencePeriod)
+            }
+        }
     }
 }

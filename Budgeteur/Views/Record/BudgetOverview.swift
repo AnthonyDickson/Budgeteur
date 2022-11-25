@@ -1,15 +1,14 @@
 //
-//  TransactionInput.swift
+//  BudgetOverview.swift
 //  Budgeteur
 //
-//  Created by Anthony Dickson on 24/11/22.
+//  Created by Anthony Dickson on 25/11/22.
 //
 
 import SwiftUI
-import CoreData
 
 struct BudgetOverview: View {
-    @EnvironmentObject private var dataManager: DataManager
+    @Environment(\.managedObjectContext) private var context
     
     /// The user selected time period for aggregating transactions.
     @AppStorage("period") private var period: Period = .oneWeek
@@ -95,13 +94,13 @@ struct BudgetOverview: View {
         requestForRecurringTransactions.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
             NSPredicate(format: "recurrencePeriod != %@", RecurrencePeriod.never.rawValue),
             NSPredicate(format: "date <= %@", dateInterval.end as NSDate),
-            NSPredicate(format: "endDate = nil OR endDate <= %@", dateInterval.end as NSDate)
+            NSPredicate(format: "endDate = nil OR %@ <= endDate", dateInterval.start as NSDate)
         ])
         
         
         do {
-            let oneOffTransactions = try dataManager.context.fetch(requestForOneOffTransactions)
-            let recurringTransactions = try dataManager.context.fetch(requestForRecurringTransactions)
+            let oneOffTransactions = try context.fetch(requestForOneOffTransactions)
+            let recurringTransactions = try context.fetch(requestForRecurringTransactions)
             
             let sum = oneOffTransactions.reduce(0.0) { partialResult, transaction in
                 partialResult + transaction.amount
@@ -143,104 +142,18 @@ struct BudgetOverview: View {
     }
 }
 
-/// A form for creating a new transaction. Features a big keypad.
-struct TransactionInput: View {
-    @EnvironmentObject private var dataManager: DataManager
-    
-    /// The amount of money spent.
-    @State var amount = 0.0
-    /// A description of the transaction.
-    @State var label = ""
-    /// When the transaction occured.
-    @State var date = Date.now
-    /// The ID of the category the transaction fits into (e.g., groceries vs. entertainment).
-    @State var category: UserCategory? = nil
-    /// How often the transaction repeats, if ever.
-    @State var recurrencePeriod = RecurrencePeriod.never
-    
-    /// Whether to show the date/repitition controls.
-    @State private var showDateControls = false
-    
-    /// Is the current amount invalid?
-    private var invalidAmount: Bool {
-        amount <= 0
-    }
-    
-    /// Add the transaction to the app's data.
-    private func save() {
-        _ = dataManager.createTransaction(amount: amount, label: label, date: date, recurrencePeriod: recurrencePeriod, category: category)
-        reset()
-    }
-    
-    /// Reset the inputs to their default values.
-    private func reset() {
-        withAnimation {
-            label = ""
-            amount = 0.0
-            date = Date.now
-            category = nil
-            recurrencePeriod = .never
-        }
-    }
-    
-    var body: some View {
-        // Need GeometryReader here to prevent the keyboard from moving the views (keyboard avoidance).
-        GeometryReader { _ in
-            VStack(alignment: .center) {
-                ZStack {
-                    BudgetOverview()
-                    
-                    HStack {
-                        Spacer()
-                        
-                        Button {
-                            showDateControls = true
-                        } label: {
-                            Label("Change date and repetition.", systemImage: "ellipsis")
-                                .labelStyle(.iconOnly)
-                                .foregroundColor(.primary)
-                        }
-                        .sheet(isPresented: $showDateControls) {
-                            DateRepeatSheet(date: $date, recurrencePeriod: $recurrencePeriod)
-                        }
-                    }
-                    .padding(.horizontal)
-                }
-                
-                Spacer()
-                
-                AmountDisplay(amount: amount)
-                
-                Spacer()
-                
-                TextField("What did you pay for?", text: $label)
-                    .submitLabel(.done)
-                    .multilineTextAlignment(.center)
-                    .padding()
-                
-                CategoryPicker(selectedCategory: $category)
-                
-                Keypad(amount: $amount, onSave: save)
-            }
-        }
-        // Tapping on anything other than the description textfield will dismiss the keyboard.
-        .onTapGesture {
-            dismissKeyboard()
-        }
-        // This stops the keyboard from pushing up the keypad view
-        .ignoresSafeArea(.keyboard, edges: .all)
-    }
-}
-
-struct TransactionInput_Previews: PreviewProvider {
-    static var dataManager: DataManager = .init(inMemory: true)
+struct BudgetOverview_Previews: PreviewProvider {
+    static var dataManager: DataManager = {
+        let m: DataManager = .init(inMemory: true)
+        
+        _ = m.createTransaction(amount: 405, date: Date.now)
+        _ = m.createTransaction(amount: 15, date: Date.distantPast, recurrencePeriod: .weekly)
+        
+        return m
+    }()
     
     static var previews: some View {
-        TransactionInput()
-            .environment(\.managedObjectContext, dataManager.container.viewContext)
-            .environmentObject(dataManager)
-            .onAppear {
-                dataManager.addSampleData()
-            }
+        BudgetOverview()
+            .environment(\.managedObjectContext, dataManager.context)
     }
 }

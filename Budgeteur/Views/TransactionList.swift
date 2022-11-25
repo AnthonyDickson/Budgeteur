@@ -215,31 +215,6 @@ struct TransactionRows: View {
     }
 }
 
-struct RecurrencePicker: View {
-    @Binding var recurrencePeriod: RecurrencePeriod
-    /// Whether to show the user the recurrence period 'never'.
-    ///
-    /// This should be set to `false` for recurring transactions.
-    /// The user should not be able to select 'never' for a recurring transaction, they should instead set an end date or delete the recurring transaction.
-    var allowNever: Bool
-    
-    var body: some View {
-        Picker(selection: $recurrencePeriod) {
-            ForEach(RecurrencePeriod.allCases, id: \.rawValue) { period in
-                if allowNever || period != .never {
-                    Text(period.rawValue)
-                        .tag(period)
-                }
-            }
-        } label: {
-            Text("Recurrence Period")
-        }
-        .pickerStyle(.menu)
-        .labelsHidden()
-    }
-    
-}
-
 
 /// Form for editing an existing transaction, or deleting it.
 struct TransactionEditor: View {
@@ -309,7 +284,7 @@ struct TransactionEditor: View {
             }
             
             Section("Repeats") {
-                RecurrencePicker(
+                RecurrencePeriodPicker(
                     recurrencePeriod: $transaction.recurrencePeriod,
                     allowNever: !isRecurringTransaction
                 )
