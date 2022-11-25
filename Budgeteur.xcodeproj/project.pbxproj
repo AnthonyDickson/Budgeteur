@@ -18,6 +18,7 @@
 		92436FBF2930758700E45836 /* CategoryPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FBE2930758700E45836 /* CategoryPicker.swift */; };
 		92436FC129307FC600E45836 /* CategoryEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FC029307FC600E45836 /* CategoryEditor.swift */; };
 		92436FC32930851600E45836 /* HistoryHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FC22930851600E45836 /* HistoryHeader.swift */; };
+		92436FC729316A9900E45836 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FC629316A9900E45836 /* Transaction.swift */; };
 		927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91DA28F220310013B404 /* BudgeteurApp.swift */; };
 		927B91DD28F220310013B404 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91DC28F220310013B404 /* ContentView.swift */; };
 		927B91DF28F220320013B404 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 927B91DE28F220320013B404 /* Assets.xcassets */; };
@@ -69,6 +70,7 @@
 		92436FBE2930758700E45836 /* CategoryPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPicker.swift; sourceTree = "<group>"; };
 		92436FC029307FC600E45836 /* CategoryEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryEditor.swift; sourceTree = "<group>"; };
 		92436FC22930851600E45836 /* HistoryHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryHeader.swift; sourceTree = "<group>"; };
+		92436FC629316A9900E45836 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		927B91D728F220310013B404 /* Budgeteur.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Budgeteur.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		927B91DA28F220310013B404 /* BudgeteurApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgeteurApp.swift; sourceTree = "<group>"; };
 		927B91DC28F220310013B404 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 		927B920D28F22CAE0013B404 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				92436FC629316A9900E45836 /* Transaction.swift */,
 				927B920628F227890013B404 /* TransactionItem.swift */,
 				927B920A28F22AEA0013B404 /* DataModel.swift */,
 				927B921B28F3CCE50013B404 /* Currency.swift */,
@@ -394,6 +397,7 @@
 				92436FB9292F46B400E45836 /* Record.swift in Sources */,
 				92E0E9402915FBB300BC83E9 /* History.swift in Sources */,
 				92436FC129307FC600E45836 /* CategoryEditor.swift in Sources */,
+				92436FC729316A9900E45836 /* Transaction.swift in Sources */,
 				92B2A0D428F66BCA00B81F0D /* Period.swift in Sources */,
 				923B7D3228F92FA6000E46BD /* DateRepeatSheet.swift in Sources */,
 				927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */,
