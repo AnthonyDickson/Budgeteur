@@ -9,12 +9,11 @@ import SwiftUI
 /// An app for tracking your expenses and income, and assisting with your budgeting efforts!
 @main
 struct BudgeteurApp: App {
-    @StateObject private var data = DataModel()
     @StateObject private var dataManager = DataManager()
 
     var body: some Scene {
         WindowGroup {
-            ContentView(data: data)
+            ContentView()
                 .environment(\.managedObjectContext, dataManager.context)
                 .environmentObject(dataManager)
         }

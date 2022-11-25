@@ -11,14 +11,13 @@
 		923B7D2E28F923AC000E46BD /* DissmissKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D2D28F923AC000E46BD /* DissmissKeyboard.swift */; };
 		923B7D3028F92B15000E46BD /* RecurrencePeriodPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D2F28F92B15000E46BD /* RecurrencePeriodPicker.swift */; };
 		923B7D3228F92FA6000E46BD /* DateRepeatSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D3128F92FA6000E46BD /* DateRepeatSheet.swift */; };
-		923B7D3528F933CF000E46BD /* TransactionGroupOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D3428F933CF000E46BD /* TransactionGroupOld.swift */; };
 		923B7D3728F937E6000E46BD /* AmountDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D3628F937E6000E46BD /* AmountDisplay.swift */; };
 		92436FB9292F46B400E45836 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FB8292F46B400E45836 /* Record.swift */; };
 		92436FBB29305B7100E45836 /* BudgetOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FBA29305B7100E45836 /* BudgetOverview.swift */; };
 		92436FBD2930658D00E45836 /* RecordTitleBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FBC2930658D00E45836 /* RecordTitleBar.swift */; };
-		9246C91128FA4E3700D7849A /* RecurringTransactionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9246C91028FA4E3700D7849A /* RecurringTransactionRow.swift */; };
-		9246C91328FBAA5700D7849A /* RecurringTransactionGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9246C91228FBAA5700D7849A /* RecurringTransactionGroup.swift */; };
-		926589E82903AB9B00994793 /* HistorySectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926589E72903AB9B00994793 /* HistorySectionHeader.swift */; };
+		92436FBF2930758700E45836 /* CategoryPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FBE2930758700E45836 /* CategoryPicker.swift */; };
+		92436FC129307FC600E45836 /* CategoryEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FC029307FC600E45836 /* CategoryEditor.swift */; };
+		92436FC32930851600E45836 /* HistoryHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FC22930851600E45836 /* HistoryHeader.swift */; };
 		927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91DA28F220310013B404 /* BudgeteurApp.swift */; };
 		927B91DD28F220310013B404 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91DC28F220310013B404 /* ContentView.swift */; };
 		927B91DF28F220320013B404 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 927B91DE28F220320013B404 /* Assets.xcassets */; };
@@ -26,17 +25,11 @@
 		927B91EC28F220320013B404 /* BudgeteurTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91EB28F220320013B404 /* BudgeteurTests.swift */; };
 		927B91F628F220320013B404 /* BudgeteurUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91F528F220320013B404 /* BudgeteurUITests.swift */; };
 		927B91F828F220320013B404 /* BudgeteurUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91F728F220320013B404 /* BudgeteurUITestsLaunchTests.swift */; };
-		927B920528F220670013B404 /* TransactionRowOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920428F220670013B404 /* TransactionRowOld.swift */; };
-		927B920728F227890013B404 /* TransactionClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920628F227890013B404 /* TransactionClass.swift */; };
-		927B920928F22A2F0013B404 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920828F22A2F0013B404 /* History.swift */; };
+		927B920728F227890013B404 /* TransactionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920628F227890013B404 /* TransactionItem.swift */; };
 		927B920B28F22AEA0013B404 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920A28F22AEA0013B404 /* DataModel.swift */; };
-		927B921328F241270013B404 /* TransactionEditorOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921228F241270013B404 /* TransactionEditorOld.swift */; };
 		927B921A28F3B87E0013B404 /* Keypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921928F3B87E0013B404 /* Keypad.swift */; };
 		927B921C28F3CCE50013B404 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921B28F3CCE50013B404 /* Currency.swift */; };
 		927B921E28F3D6C20013B404 /* Stateful.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921D28F3D6C20013B404 /* Stateful.swift */; };
-		927B922028F4C1CE0013B404 /* UserCategoryClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921F28F4C1CE0013B404 /* UserCategoryClass.swift */; };
-		927B922228F4DF7E0013B404 /* CategorySelectorOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B922128F4DF7E0013B404 /* CategorySelectorOld.swift */; };
-		92B2A0CF28F5514D00B81F0D /* CategoryEditorOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B2A0CE28F5514D00B81F0D /* CategoryEditorOld.swift */; };
 		92B2A0D228F667FB00B81F0D /* PeriodPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B2A0D128F667FB00B81F0D /* PeriodPicker.swift */; };
 		92B2A0D428F66BCA00B81F0D /* Period.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B2A0D328F66BCA00B81F0D /* Period.swift */; };
 		92E0E93629138E0B00BC83E9 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 92E0E93429138E0B00BC83E9 /* Model.xcdatamodeld */; };
@@ -44,7 +37,7 @@
 		92E0E93C29138F6100BC83E9 /* UserCategory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E0E93829138F6100BC83E9 /* UserCategory+CoreDataProperties.swift */; };
 		92E0E93D29138F6100BC83E9 /* Transaction+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E0E93929138F6100BC83E9 /* Transaction+CoreDataClass.swift */; };
 		92E0E93E29138F6100BC83E9 /* Transaction+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E0E93A29138F6100BC83E9 /* Transaction+CoreDataProperties.swift */; };
-		92E0E9402915FBB300BC83E9 /* TransactionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E0E93F2915FBB300BC83E9 /* TransactionList.swift */; };
+		92E0E9402915FBB300BC83E9 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E0E93F2915FBB300BC83E9 /* History.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,14 +62,13 @@
 		923B7D2D28F923AC000E46BD /* DissmissKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DissmissKeyboard.swift; sourceTree = "<group>"; };
 		923B7D2F28F92B15000E46BD /* RecurrencePeriodPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrencePeriodPicker.swift; sourceTree = "<group>"; };
 		923B7D3128F92FA6000E46BD /* DateRepeatSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRepeatSheet.swift; sourceTree = "<group>"; };
-		923B7D3428F933CF000E46BD /* TransactionGroupOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionGroupOld.swift; sourceTree = "<group>"; };
 		923B7D3628F937E6000E46BD /* AmountDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountDisplay.swift; sourceTree = "<group>"; };
 		92436FB8292F46B400E45836 /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		92436FBA29305B7100E45836 /* BudgetOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetOverview.swift; sourceTree = "<group>"; };
 		92436FBC2930658D00E45836 /* RecordTitleBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordTitleBar.swift; sourceTree = "<group>"; };
-		9246C91028FA4E3700D7849A /* RecurringTransactionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringTransactionRow.swift; sourceTree = "<group>"; };
-		9246C91228FBAA5700D7849A /* RecurringTransactionGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringTransactionGroup.swift; sourceTree = "<group>"; };
-		926589E72903AB9B00994793 /* HistorySectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistorySectionHeader.swift; sourceTree = "<group>"; };
+		92436FBE2930758700E45836 /* CategoryPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPicker.swift; sourceTree = "<group>"; };
+		92436FC029307FC600E45836 /* CategoryEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryEditor.swift; sourceTree = "<group>"; };
+		92436FC22930851600E45836 /* HistoryHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryHeader.swift; sourceTree = "<group>"; };
 		927B91D728F220310013B404 /* Budgeteur.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Budgeteur.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		927B91DA28F220310013B404 /* BudgeteurApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgeteurApp.swift; sourceTree = "<group>"; };
 		927B91DC28F220310013B404 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -87,17 +79,11 @@
 		927B91F128F220320013B404 /* BudgeteurUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BudgeteurUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		927B91F528F220320013B404 /* BudgeteurUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgeteurUITests.swift; sourceTree = "<group>"; };
 		927B91F728F220320013B404 /* BudgeteurUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgeteurUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		927B920428F220670013B404 /* TransactionRowOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRowOld.swift; sourceTree = "<group>"; };
-		927B920628F227890013B404 /* TransactionClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionClass.swift; sourceTree = "<group>"; };
-		927B920828F22A2F0013B404 /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
+		927B920628F227890013B404 /* TransactionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionItem.swift; sourceTree = "<group>"; };
 		927B920A28F22AEA0013B404 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
-		927B921228F241270013B404 /* TransactionEditorOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionEditorOld.swift; sourceTree = "<group>"; };
 		927B921928F3B87E0013B404 /* Keypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keypad.swift; sourceTree = "<group>"; };
 		927B921B28F3CCE50013B404 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		927B921D28F3D6C20013B404 /* Stateful.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stateful.swift; sourceTree = "<group>"; };
-		927B921F28F4C1CE0013B404 /* UserCategoryClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCategoryClass.swift; sourceTree = "<group>"; };
-		927B922128F4DF7E0013B404 /* CategorySelectorOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectorOld.swift; sourceTree = "<group>"; };
-		92B2A0CE28F5514D00B81F0D /* CategoryEditorOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryEditorOld.swift; sourceTree = "<group>"; };
 		92B2A0D128F667FB00B81F0D /* PeriodPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodPicker.swift; sourceTree = "<group>"; };
 		92B2A0D328F66BCA00B81F0D /* Period.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Period.swift; sourceTree = "<group>"; };
 		92E0E93529138E0B00BC83E9 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -105,7 +91,7 @@
 		92E0E93829138F6100BC83E9 /* UserCategory+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserCategory+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		92E0E93929138F6100BC83E9 /* Transaction+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transaction+CoreDataClass.swift"; sourceTree = "<group>"; };
 		92E0E93A29138F6100BC83E9 /* Transaction+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transaction+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		92E0E93F2915FBB300BC83E9 /* TransactionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionList.swift; sourceTree = "<group>"; };
+		92E0E93F2915FBB300BC83E9 /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,7 +197,6 @@
 			isa = PBXGroup;
 			children = (
 				927B91DC28F220310013B404 /* ContentView.swift */,
-				92E0E93F2915FBB300BC83E9 /* TransactionList.swift */,
 				923B7D2D28F923AC000E46BD /* DissmissKeyboard.swift */,
 				927B921D28F3D6C20013B404 /* Stateful.swift */,
 				927B922328F4E9120013B404 /* Category */,
@@ -225,10 +210,9 @@
 		927B920D28F22CAE0013B404 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				927B920628F227890013B404 /* TransactionClass.swift */,
+				927B920628F227890013B404 /* TransactionItem.swift */,
 				927B920A28F22AEA0013B404 /* DataModel.swift */,
 				927B921B28F3CCE50013B404 /* Currency.swift */,
-				927B921F28F4C1CE0013B404 /* UserCategoryClass.swift */,
 				92B2A0D328F66BCA00B81F0D /* Period.swift */,
 				923B7D2B28F921CE000E46BD /* RecurrencePeriod.swift */,
 				92E0E93429138E0B00BC83E9 /* Model.xcdatamodeld */,
@@ -239,13 +223,8 @@
 		927B921628F27AFD0013B404 /* History */ = {
 			isa = PBXGroup;
 			children = (
-				927B920828F22A2F0013B404 /* History.swift */,
-				926589E72903AB9B00994793 /* HistorySectionHeader.swift */,
-				923B7D3428F933CF000E46BD /* TransactionGroupOld.swift */,
-				9246C91228FBAA5700D7849A /* RecurringTransactionGroup.swift */,
-				927B920428F220670013B404 /* TransactionRowOld.swift */,
-				9246C91028FA4E3700D7849A /* RecurringTransactionRow.swift */,
-				927B921228F241270013B404 /* TransactionEditorOld.swift */,
+				92E0E93F2915FBB300BC83E9 /* History.swift */,
+				92436FC22930851600E45836 /* HistoryHeader.swift */,
 			);
 			path = History;
 			sourceTree = "<group>";
@@ -253,8 +232,8 @@
 		927B922328F4E9120013B404 /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				927B922128F4DF7E0013B404 /* CategorySelectorOld.swift */,
-				92B2A0CE28F5514D00B81F0D /* CategoryEditorOld.swift */,
+				92436FBE2930758700E45836 /* CategoryPicker.swift */,
+				92436FC029307FC600E45836 /* CategoryEditor.swift */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -398,14 +377,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				927B920528F220670013B404 /* TransactionRowOld.swift in Sources */,
 				92436FBB29305B7100E45836 /* BudgetOverview.swift in Sources */,
-				927B920928F22A2F0013B404 /* History.swift in Sources */,
 				927B921A28F3B87E0013B404 /* Keypad.swift in Sources */,
 				92E0E93B29138F6100BC83E9 /* UserCategory+CoreDataClass.swift in Sources */,
-				9246C91128FA4E3700D7849A /* RecurringTransactionRow.swift in Sources */,
 				92E0E93629138E0B00BC83E9 /* Model.xcdatamodeld in Sources */,
-				927B921328F241270013B404 /* TransactionEditorOld.swift in Sources */,
 				927B91DD28F220310013B404 /* ContentView.swift in Sources */,
 				927B921C28F3CCE50013B404 /* Currency.swift in Sources */,
 				923B7D2E28F923AC000E46BD /* DissmissKeyboard.swift in Sources */,
@@ -413,23 +388,20 @@
 				92B2A0D228F667FB00B81F0D /* PeriodPicker.swift in Sources */,
 				92436FBD2930658D00E45836 /* RecordTitleBar.swift in Sources */,
 				92E0E93C29138F6100BC83E9 /* UserCategory+CoreDataProperties.swift in Sources */,
-				927B920728F227890013B404 /* TransactionClass.swift in Sources */,
+				92436FBF2930758700E45836 /* CategoryPicker.swift in Sources */,
+				927B920728F227890013B404 /* TransactionItem.swift in Sources */,
 				92E0E93D29138F6100BC83E9 /* Transaction+CoreDataClass.swift in Sources */,
 				92436FB9292F46B400E45836 /* Record.swift in Sources */,
-				92E0E9402915FBB300BC83E9 /* TransactionList.swift in Sources */,
+				92E0E9402915FBB300BC83E9 /* History.swift in Sources */,
+				92436FC129307FC600E45836 /* CategoryEditor.swift in Sources */,
 				92B2A0D428F66BCA00B81F0D /* Period.swift in Sources */,
-				9246C91328FBAA5700D7849A /* RecurringTransactionGroup.swift in Sources */,
 				923B7D3228F92FA6000E46BD /* DateRepeatSheet.swift in Sources */,
 				927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */,
-				926589E82903AB9B00994793 /* HistorySectionHeader.swift in Sources */,
 				92E0E93E29138F6100BC83E9 /* Transaction+CoreDataProperties.swift in Sources */,
+				92436FC32930851600E45836 /* HistoryHeader.swift in Sources */,
 				923B7D3728F937E6000E46BD /* AmountDisplay.swift in Sources */,
-				927B922228F4DF7E0013B404 /* CategorySelectorOld.swift in Sources */,
 				927B920B28F22AEA0013B404 /* DataModel.swift in Sources */,
-				923B7D3528F933CF000E46BD /* TransactionGroupOld.swift in Sources */,
 				923B7D2C28F921CE000E46BD /* RecurrencePeriod.swift in Sources */,
-				92B2A0CF28F5514D00B81F0D /* CategoryEditorOld.swift in Sources */,
-				927B922028F4C1CE0013B404 /* UserCategoryClass.swift in Sources */,
 				923B7D3028F92B15000E46BD /* RecurrencePeriodPicker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,9 +8,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    /// The container for the app's data.
-    @ObservedObject var data: DataModel
-    
     var body: some View {
         TabView {
             NavigationStack {
@@ -20,7 +17,7 @@ struct ContentView: View {
                 Label("New", systemImage: "creditcard")
             }
             
-            TransactionList()
+            History()
                 .tabItem {
                     Label("History", systemImage: "scroll")
                 }
@@ -31,7 +28,7 @@ struct ContentView: View {
         static var dataManager = DataManager(inMemory: true)
         
         static var previews: some View {
-            ContentView(data: DataModel())
+            ContentView()
                 .environment(\.managedObjectContext, dataManager.context)
                 .environmentObject(dataManager)
                 .onAppear {
