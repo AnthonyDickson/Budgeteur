@@ -11,8 +11,8 @@ extension Transaction {
     /// Get the total of the recurring transactions within a given date interval.
     /// - Parameter period: The reporting period (e.g. weekly) to group transactions into.
     /// - Returns: The sum of the recurring transactions.
-    func sumRecurringTransactions(with period: Period, in dateInterval: DateInterval) -> Double {
-        return getRecurringTransactions(with: period)
+    func sumRecurringTransactions(in dateInterval: DateInterval, groupBy period: Period) -> Double {
+        return getRecurringTransactions(groupBy: period)
             .filter({ dateInterval.start <= $0.date && $0.date <= dateInterval.end })
             .reduce(0) { $0 + $1.amount }
     }
@@ -20,7 +20,7 @@ extension Transaction {
     /// Generate proxy transaction objects for a given base transaction.
     /// - Parameter period: The reporting period (e.g. weekly) to group transactions into.
     /// - Returns: The list of generated transactions.
-    func getRecurringTransactions(with period: Period) -> [TransactionItem] {
+    func getRecurringTransactions(groupBy period: Period) -> [TransactionItem] {
         var recurringTransactions: [TransactionItem] = []
         
         let startDate =  Calendar.current.startOfDay(for: self.date)
@@ -32,7 +32,6 @@ extension Transaction {
         
         let endDate: Date
         
-        // TODO: Make sure that transaction.endDate is always either nil or a date that is one second before midnight.
         if let transactionEndDate = self.endDate, transactionEndDate < endOfToday {
             endDate = transactionEndDate
         } else {

@@ -38,7 +38,7 @@ struct BudgetOverview: View {
             let sum = oneOffTransactions.reduce(0.0) { partialResult, transaction in
                 partialResult + transaction.amount
             } + recurringTransactions.reduce(0.0, { partialResult, transaction in
-                partialResult + transaction.sumRecurringTransactions(with: period, in: dateInterval)
+                partialResult + transaction.sumRecurringTransactions(in: dateInterval, groupBy: period)
             })
             
             return sum

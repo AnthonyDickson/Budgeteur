@@ -440,7 +440,7 @@ struct History: View {
                     parent: transaction
                 ))
             } else {
-                recurringTransactions.append(contentsOf: transaction.getRecurringTransactions(with: period))
+                recurringTransactions.append(contentsOf: transaction.getRecurringTransactions(groupBy: period))
             }
         }
         
