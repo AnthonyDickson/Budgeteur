@@ -53,7 +53,7 @@ struct Record: View {
                 RecordTitleBar(date: $date, recurrencePeriod: $recurrencePeriod)
                 
                 Spacer()
-                
+                // TODO: Add ability to toggle between expenses/income.
                 AmountDisplay(amount: amount)
                 
                 Spacer()

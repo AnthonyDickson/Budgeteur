@@ -21,6 +21,11 @@ struct ContentView: View {
                 .tabItem {
                     Label("History", systemImage: "scroll")
                 }
+            
+            Settings()
+                .tabItem {
+                    Label("Settings", systemImage: "gear")
+                }
         }
     }
     

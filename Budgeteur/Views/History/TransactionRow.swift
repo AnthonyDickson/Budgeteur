@@ -40,6 +40,7 @@ struct TransactionRow: View {
             
             Text(Currency.format(transaction.amount))
         }
+        .listRowSeparator(.hidden)
     }
 }
 

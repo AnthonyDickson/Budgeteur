@@ -17,6 +17,7 @@ struct TransactionEditor: View {
     static private let numberFormatter = {
         let formatter = NumberFormatter()
         formatter.locale = Locale.current
+        formatter.numberStyle = .currency
         formatter.alwaysShowsDecimalSeparator = true
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 2

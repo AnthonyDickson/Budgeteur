@@ -85,6 +85,15 @@ class DataManager: ObservableObject {
         }
     }
     
+    /// Delete everything in the Core Data store.
+    func deleteAll() {
+        let categories = try? context.fetch(UserCategory.fetchRequest())
+        let transactions = try? context.fetch(Transaction.fetchRequest())
+        
+        categories?.forEach { context.delete($0) }
+        transactions?.forEach { context.delete($0) }
+    }
+    
     func save() {
         guard context.hasChanges else {
             return

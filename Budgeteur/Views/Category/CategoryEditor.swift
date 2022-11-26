@@ -20,22 +20,25 @@ struct CategoryEditor: View {
     /// The name that will be used to create a new category.
     @State private var newCategoryName = ""
     
+    private func createCategoryAndReset() {
+        if !newCategoryName.isEmpty {
+            _ = dataManager.createUserCategory(name: newCategoryName)
+            newCategoryName = ""
+        }
+    }
+    
     var body: some View {
         List {
             Section {
                 HStack {
                     TextField("Tag Name", text: $newCategoryName)
                         .submitLabel(.done)
-                        .onSubmit {
-                            _ = dataManager.createUserCategory(name: newCategoryName)
-                            newCategoryName = ""
-                    }
+                        .onSubmit(createCategoryAndReset)
                     
                     Spacer()
                     
                     Button("Add") {
-                            _ = dataManager.createUserCategory(name: newCategoryName)
-                            newCategoryName = ""
+                        createCategoryAndReset()
                     }
                     .disabled(newCategoryName.isEmpty)
                 }
