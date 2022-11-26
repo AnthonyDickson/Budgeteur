@@ -9,10 +9,11 @@ import SwiftUI
 
 /// Form for editing an existing transaction, or deleting it.
 struct TransactionEditor: View {
+    /// The transaction to edit.
+    @State var transaction: TransactionItem
+    
     @EnvironmentObject private var dataManager: DataManager
     @Environment(\.dismiss) private var dismiss: DismissAction
-    
-    @State var transaction: TransactionItem
     
     static private let numberFormatter = {
         let formatter = NumberFormatter()
@@ -25,19 +26,21 @@ struct TransactionEditor: View {
         return formatter
     }()
     
+    /// Check whether the transaction we are editing is a recurring one.
     private var isRecurringTransaction: Bool {
         transaction.parent.recurrencePeriod != RecurrencePeriod.never.rawValue
     }
     
+    /// Get the label for the date section which should change based on whether the transaction is  a one-off or recurring one.
     private var dateSectionLabel: String {
         isRecurringTransaction ? "Start Date" : "Date"
     }
 
+    /// Get the end of the day (one second before midnight) for a given date.
     private func endOfDay(for date: Date) -> Date {
         let startOfDay = Calendar.current.startOfDay(for: date)
         return Calendar.current.date(byAdding: DateComponents(day: 1, second: -1), to: startOfDay)!
     }
-    
     
     var body: some View {
         List {
@@ -62,6 +65,7 @@ struct TransactionEditor: View {
             }
             
             if isRecurringTransaction {
+                // TODO: Show 'None' if no end date has been set. Tapping 'none' should bring up a date picker. If a date has been selected, there should be a 'x' button to remove the end date.
                 Section("End Date") {
                     DatePicker(
                         "End Date",
@@ -73,18 +77,33 @@ struct TransactionEditor: View {
                     )
                     .labelsHidden()
                 }
+                
+                Section("Repeats") {
+                    RecurrencePeriodPicker(
+                        recurrencePeriod: $transaction.recurrencePeriod,
+                        allowNever: false
+                    )
+                }
             }
             
-            Section("Repeats") {
-                RecurrencePeriodPicker(
-                    recurrencePeriod: $transaction.recurrencePeriod,
-                    allowNever: !isRecurringTransaction
-                )
+            DeleteButtonWithConfirmation {
+                dataManager.deleteTransaction(transaction: transaction.parent)
+                dataManager.save()
+                dismiss()
+            } label: {
+                HStack {
+                    Spacer()
+                    Label("Delete", systemImage: "trash")
+                        .labelStyle(.iconOnly)
+                        .foregroundColor(.red)
+                    Text("Delete")
+                    Spacer()
+                }
             }
         }
         .listStyle(.grouped)
         .navigationTitle("Edit Transaction")
-        .navigationBarTitleDisplayMode(.automatic)
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button("Cancel", role: .cancel) {
@@ -115,8 +134,19 @@ struct TransactionEditor_Previews: PreviewProvider {
     static var dataManager: DataManager = .init(inMemory: true)
     
     static var previews: some View {
-        let transaction = TransactionItem.fromTransaction(dataManager.createTransaction(amount: 420.69, label: "Foo Bar", date: Date.now, recurrencePeriod: .never))
+        let transactionOneOff = TransactionItem.fromTransaction(dataManager.createTransaction(amount: 420.69, label: "Foo", date: Date.now, recurrencePeriod: .never))
+        let transactionRecurring = TransactionItem.fromTransaction(dataManager.createTransaction(amount: 420.69, label: "Bar", date: Date.now, recurrencePeriod: .weekly))
         
-        TransactionEditor(transaction: transaction)
+    
+        NavigationStack {
+            TransactionEditor(transaction: transactionOneOff)
+        }
+        .previewDisplayName("One-Off Transaction")
+        
+        
+        NavigationStack {
+            TransactionEditor(transaction: transactionRecurring)
+        }
+        .previewDisplayName("Recurring Transaction")
     }
 }

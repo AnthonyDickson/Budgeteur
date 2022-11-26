@@ -31,6 +31,7 @@
 		92436FDB2931A9F000E45836 /* TransactionRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FDA2931A9F000E45836 /* TransactionRows.swift */; };
 		92436FDD2931AA0C00E45836 /* TransactionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FDC2931AA0C00E45836 /* TransactionRow.swift */; };
 		92436FDF2931F40200E45836 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FDE2931F40200E45836 /* Settings.swift */; };
+		92436FE12932C89F00E45836 /* DeleteButtonWithConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FE02932C89F00E45836 /* DeleteButtonWithConfirmation.swift */; };
 		927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91DA28F220310013B404 /* BudgeteurApp.swift */; };
 		927B91DD28F220310013B404 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91DC28F220310013B404 /* ContentView.swift */; };
 		927B91DF28F220320013B404 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 927B91DE28F220320013B404 /* Assets.xcassets */; };
@@ -95,6 +96,7 @@
 		92436FDA2931A9F000E45836 /* TransactionRows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRows.swift; sourceTree = "<group>"; };
 		92436FDC2931AA0C00E45836 /* TransactionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRow.swift; sourceTree = "<group>"; };
 		92436FDE2931F40200E45836 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		92436FE02932C89F00E45836 /* DeleteButtonWithConfirmation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteButtonWithConfirmation.swift; sourceTree = "<group>"; };
 		927B91D728F220310013B404 /* Budgeteur.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Budgeteur.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		927B91DA28F220310013B404 /* BudgeteurApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgeteurApp.swift; sourceTree = "<group>"; };
 		927B91DC28F220310013B404 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 				923B7D2D28F923AC000E46BD /* DissmissKeyboard.swift */,
 				927B921D28F3D6C20013B404 /* Stateful.swift */,
 				92436FDE2931F40200E45836 /* Settings.swift */,
+				92436FE02932C89F00E45836 /* DeleteButtonWithConfirmation.swift */,
 				927B922328F4E9120013B404 /* Category */,
 				92B2A0D028F667E900B81F0D /* Period */,
 				923B7D3328F9301E000E46BD /* Record */,
@@ -445,6 +448,7 @@
 				92436FC729316A9900E45836 /* Transaction.swift in Sources */,
 				92436FD329319E9E00E45836 /* Sequence.swift in Sources */,
 				92436FDD2931AA0C00E45836 /* TransactionRow.swift in Sources */,
+				92436FE12932C89F00E45836 /* DeleteButtonWithConfirmation.swift in Sources */,
 				92B2A0D428F66BCA00B81F0D /* Period.swift in Sources */,
 				923B7D3228F92FA6000E46BD /* DateRepeatSheet.swift in Sources */,
 				927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */,

@@ -18,19 +18,18 @@ struct Settings: View {
                     dataManager.addSampleData()
                     dataManager.save()
                 } label: {
-                    Text("Add Sample Data")
+                    Text("Add sample data")
                 }
                 
-                Button(role: .destructive) {
-                    // TODO: Should probably have confirmation dialog here...
+                DeleteButtonWithConfirmation {
                     dataManager.deleteAll()
                     dataManager.save()
                 } label: {
-                    Text("Delete All Data")
+                    Text("Delete all data")
                 }
-                .foregroundColor(.red)
             }
         }
+        .navigationTitle("Settings")
     }
 }
 
