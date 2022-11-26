@@ -37,4 +37,16 @@ struct TransactionItem: Identifiable {
         parent.recurrencePeriod = recurrencePeriod.rawValue
         parent.category = category
     }
+    
+    static func fromTransaction(_ parent: Transaction) -> TransactionItem {
+        return TransactionItem(
+            id: UUID(),
+            amount: parent.amount,
+            label: parent.label,
+            date: parent.date,
+            recurrencePeriod: RecurrencePeriod(rawValue: parent.recurrencePeriod)!,
+            category: parent.category,
+            parent: parent
+        )
+    }
 }

@@ -14,7 +14,7 @@ struct ContentView: View {
                 Record()
             }
             .tabItem {
-                Label("New", systemImage: "creditcard")
+                Label("Record", systemImage: "creditcard")
             }
             
             History()

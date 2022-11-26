@@ -14,7 +14,7 @@ extension Transaction {
     func sumRecurringTransactions(in dateInterval: DateInterval, groupBy period: Period) -> Double {
         return getRecurringTransactions(groupBy: period)
             .filter({ dateInterval.start <= $0.date && $0.date <= dateInterval.end })
-            .reduce(0) { $0 + $1.amount }
+            .sum(\.amount)
     }
     
     /// Generate proxy transaction objects for a given base transaction.

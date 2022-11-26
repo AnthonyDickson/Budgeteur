@@ -35,11 +35,9 @@ struct BudgetOverview: View {
             let oneOffTransactions = try context.fetch(requestForOneOffTransactions)
             let recurringTransactions = try context.fetch(requestForRecurringTransactions)
             
-            let sum = oneOffTransactions.reduce(0.0) { partialResult, transaction in
-                partialResult + transaction.amount
-            } + recurringTransactions.reduce(0.0, { partialResult, transaction in
+            let sum = oneOffTransactions.sum(\.amount) + recurringTransactions.reduce(0.0) { partialResult, transaction in
                 partialResult + transaction.sumRecurringTransactions(in: dateInterval, groupBy: period)
-            })
+            }
             
             return sum
         } catch {

@@ -19,6 +19,17 @@
 		92436FC129307FC600E45836 /* CategoryEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FC029307FC600E45836 /* CategoryEditor.swift */; };
 		92436FC32930851600E45836 /* HistoryHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FC22930851600E45836 /* HistoryHeader.swift */; };
 		92436FC729316A9900E45836 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FC629316A9900E45836 /* Transaction.swift */; };
+		92436FC9293196C700E45836 /* TransactionListByCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FC8293196C700E45836 /* TransactionListByCategory.swift */; };
+		92436FCB2931974300E45836 /* TransactionListByDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FCA2931974300E45836 /* TransactionListByDay.swift */; };
+		92436FCD293197A500E45836 /* TransactionGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FCC293197A500E45836 /* TransactionGroup.swift */; };
+		92436FCF293199F100E45836 /* DateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FCE293199F100E45836 /* DateFormat.swift */; };
+		92436FD129319B6400E45836 /* TransactionGroupCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FD029319B6400E45836 /* TransactionGroupCategory.swift */; };
+		92436FD329319E9E00E45836 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FD229319E9E00E45836 /* Sequence.swift */; };
+		92436FD52931A4CF00E45836 /* CollapsibleTransactionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FD42931A4CF00E45836 /* CollapsibleTransactionSection.swift */; };
+		92436FD72931A99500E45836 /* TransactionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FD62931A99500E45836 /* TransactionSet.swift */; };
+		92436FD92931A9CF00E45836 /* TransactionEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FD82931A9CF00E45836 /* TransactionEditor.swift */; };
+		92436FDB2931A9F000E45836 /* TransactionRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FDA2931A9F000E45836 /* TransactionRows.swift */; };
+		92436FDD2931AA0C00E45836 /* TransactionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FDC2931AA0C00E45836 /* TransactionRow.swift */; };
 		927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91DA28F220310013B404 /* BudgeteurApp.swift */; };
 		927B91DD28F220310013B404 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91DC28F220310013B404 /* ContentView.swift */; };
 		927B91DF28F220320013B404 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 927B91DE28F220320013B404 /* Assets.xcassets */; };
@@ -71,6 +82,17 @@
 		92436FC029307FC600E45836 /* CategoryEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryEditor.swift; sourceTree = "<group>"; };
 		92436FC22930851600E45836 /* HistoryHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryHeader.swift; sourceTree = "<group>"; };
 		92436FC629316A9900E45836 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
+		92436FC8293196C700E45836 /* TransactionListByCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionListByCategory.swift; sourceTree = "<group>"; };
+		92436FCA2931974300E45836 /* TransactionListByDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionListByDay.swift; sourceTree = "<group>"; };
+		92436FCC293197A500E45836 /* TransactionGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionGroup.swift; sourceTree = "<group>"; };
+		92436FCE293199F100E45836 /* DateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormat.swift; sourceTree = "<group>"; };
+		92436FD029319B6400E45836 /* TransactionGroupCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionGroupCategory.swift; sourceTree = "<group>"; };
+		92436FD229319E9E00E45836 /* Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
+		92436FD42931A4CF00E45836 /* CollapsibleTransactionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleTransactionSection.swift; sourceTree = "<group>"; };
+		92436FD62931A99500E45836 /* TransactionSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSet.swift; sourceTree = "<group>"; };
+		92436FD82931A9CF00E45836 /* TransactionEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionEditor.swift; sourceTree = "<group>"; };
+		92436FDA2931A9F000E45836 /* TransactionRows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRows.swift; sourceTree = "<group>"; };
+		92436FDC2931AA0C00E45836 /* TransactionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRow.swift; sourceTree = "<group>"; };
 		927B91D728F220310013B404 /* Budgeteur.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Budgeteur.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		927B91DA28F220310013B404 /* BudgeteurApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgeteurApp.swift; sourceTree = "<group>"; };
 		927B91DC28F220310013B404 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -212,12 +234,15 @@
 		927B920D28F22CAE0013B404 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				92436FC629316A9900E45836 /* Transaction.swift */,
-				927B920628F227890013B404 /* TransactionItem.swift */,
-				927B920A28F22AEA0013B404 /* DataModel.swift */,
 				927B921B28F3CCE50013B404 /* Currency.swift */,
+				927B920A28F22AEA0013B404 /* DataModel.swift */,
+				92436FCE293199F100E45836 /* DateFormat.swift */,
 				92B2A0D328F66BCA00B81F0D /* Period.swift */,
 				923B7D2B28F921CE000E46BD /* RecurrencePeriod.swift */,
+				92436FD229319E9E00E45836 /* Sequence.swift */,
+				92436FC629316A9900E45836 /* Transaction.swift */,
+				927B920628F227890013B404 /* TransactionItem.swift */,
+				92436FD62931A99500E45836 /* TransactionSet.swift */,
 				92E0E93429138E0B00BC83E9 /* Model.xcdatamodeld */,
 			);
 			path = Model;
@@ -228,6 +253,14 @@
 			children = (
 				92E0E93F2915FBB300BC83E9 /* History.swift */,
 				92436FC22930851600E45836 /* HistoryHeader.swift */,
+				92436FC8293196C700E45836 /* TransactionListByCategory.swift */,
+				92436FCA2931974300E45836 /* TransactionListByDay.swift */,
+				92436FCC293197A500E45836 /* TransactionGroup.swift */,
+				92436FD029319B6400E45836 /* TransactionGroupCategory.swift */,
+				92436FD42931A4CF00E45836 /* CollapsibleTransactionSection.swift */,
+				92436FD82931A9CF00E45836 /* TransactionEditor.swift */,
+				92436FDA2931A9F000E45836 /* TransactionRows.swift */,
+				92436FDC2931AA0C00E45836 /* TransactionRow.swift */,
 			);
 			path = History;
 			sourceTree = "<group>";
@@ -383,11 +416,15 @@
 				92436FBB29305B7100E45836 /* BudgetOverview.swift in Sources */,
 				927B921A28F3B87E0013B404 /* Keypad.swift in Sources */,
 				92E0E93B29138F6100BC83E9 /* UserCategory+CoreDataClass.swift in Sources */,
+				92436FCB2931974300E45836 /* TransactionListByDay.swift in Sources */,
 				92E0E93629138E0B00BC83E9 /* Model.xcdatamodeld in Sources */,
+				92436FCF293199F100E45836 /* DateFormat.swift in Sources */,
+				92436FDB2931A9F000E45836 /* TransactionRows.swift in Sources */,
 				927B91DD28F220310013B404 /* ContentView.swift in Sources */,
 				927B921C28F3CCE50013B404 /* Currency.swift in Sources */,
 				923B7D2E28F923AC000E46BD /* DissmissKeyboard.swift in Sources */,
 				927B921E28F3D6C20013B404 /* Stateful.swift in Sources */,
+				92436FD129319B6400E45836 /* TransactionGroupCategory.swift in Sources */,
 				92B2A0D228F667FB00B81F0D /* PeriodPicker.swift in Sources */,
 				92436FBD2930658D00E45836 /* RecordTitleBar.swift in Sources */,
 				92E0E93C29138F6100BC83E9 /* UserCategory+CoreDataProperties.swift in Sources */,
@@ -395,14 +432,21 @@
 				927B920728F227890013B404 /* TransactionItem.swift in Sources */,
 				92E0E93D29138F6100BC83E9 /* Transaction+CoreDataClass.swift in Sources */,
 				92436FB9292F46B400E45836 /* Record.swift in Sources */,
+				92436FD72931A99500E45836 /* TransactionSet.swift in Sources */,
+				92436FCD293197A500E45836 /* TransactionGroup.swift in Sources */,
 				92E0E9402915FBB300BC83E9 /* History.swift in Sources */,
 				92436FC129307FC600E45836 /* CategoryEditor.swift in Sources */,
+				92436FD52931A4CF00E45836 /* CollapsibleTransactionSection.swift in Sources */,
+				92436FC9293196C700E45836 /* TransactionListByCategory.swift in Sources */,
 				92436FC729316A9900E45836 /* Transaction.swift in Sources */,
+				92436FD329319E9E00E45836 /* Sequence.swift in Sources */,
+				92436FDD2931AA0C00E45836 /* TransactionRow.swift in Sources */,
 				92B2A0D428F66BCA00B81F0D /* Period.swift in Sources */,
 				923B7D3228F92FA6000E46BD /* DateRepeatSheet.swift in Sources */,
 				927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */,
 				92E0E93E29138F6100BC83E9 /* Transaction+CoreDataProperties.swift in Sources */,
 				92436FC32930851600E45836 /* HistoryHeader.swift in Sources */,
+				92436FD92931A9CF00E45836 /* TransactionEditor.swift in Sources */,
 				923B7D3728F937E6000E46BD /* AmountDisplay.swift in Sources */,
 				927B920B28F22AEA0013B404 /* DataModel.swift in Sources */,
 				923B7D2C28F921CE000E46BD /* RecurrencePeriod.swift in Sources */,
