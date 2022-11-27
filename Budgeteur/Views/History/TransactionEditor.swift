@@ -60,22 +60,13 @@ struct TransactionEditor: View {
             
             
             Section(dateSectionLabel) {
-                DatePicker(dateSectionLabel, selection: $transaction.date, displayedComponents: .date)
+                DatePicker(dateSectionLabel, selection: $transaction.date, in: ...Date.now, displayedComponents: .date)
                     .labelsHidden()
             }
             
             if isRecurringTransaction {
-                // TODO: Show 'None' if no end date has been set. Tapping 'none' should bring up a date picker. If a date has been selected, there should be a 'x' button to remove the end date.
                 Section("End Date") {
-                    DatePicker(
-                        "End Date",
-                        selection: Binding<Date>(
-                            get: { transaction.endDate ?? Date.now },
-                            set: { transaction.endDate = endOfDay(for: $0) }
-                        ),
-                        displayedComponents: .date
-                    )
-                    .labelsHidden()
+                    OptionalDatePicker(date: $transaction.endDate, dateRange: transaction.date...)
                 }
                 
                 Section("Repeats") {

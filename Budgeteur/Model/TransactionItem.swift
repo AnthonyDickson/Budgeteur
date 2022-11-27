@@ -18,7 +18,17 @@ struct TransactionItem: Identifiable {
     /// When the transaction ocurred.
     var date: Date
     /// When the recurring transaction should end. If `nil`, the transaction will recur indefinitely.
-    var endDate: Date?
+    ///
+    /// When set, it will always be set the date to one second before midnight on the given date.
+    var endDate: Date? {
+        didSet {
+            if let unwrappedDate = endDate {
+                let startOfDay = Calendar.current.startOfDay(for: unwrappedDate)
+                let endOfDay = Calendar.current.date(byAdding: DateComponents(day: 1, second: -1), to: startOfDay)!
+                endDate = endOfDay
+            }
+        }
+    }
     /// How often the transaction repeats, if ever.
     var recurrencePeriod: RecurrencePeriod
     /// The category that the transaction fits into (e.g., home expenses vs. entertainment).
@@ -38,6 +48,9 @@ struct TransactionItem: Identifiable {
         parent.category = category
     }
     
+    /// Create a ``TransactionItem`` from a ``Transaction`` object.
+    /// - Parameter parent: A ``Transaction`` object.
+    /// - Returns: A new ``TransactionItem``.
     static func fromTransaction(_ parent: Transaction) -> TransactionItem {
         return TransactionItem(
             id: UUID(),
