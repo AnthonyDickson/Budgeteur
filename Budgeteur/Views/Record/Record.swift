@@ -8,21 +8,22 @@
 import SwiftUI
 import CoreData
 
-
 /// A form for creating a new transaction. Features a big keypad.
 struct Record: View {
     @EnvironmentObject private var dataManager: DataManager
     
     /// The amount of money spent.
-    @State var amount = 0.0
+    @State private var amount = 0.0
     /// A description of the transaction.
-    @State var label = ""
+    @State private var label = ""
     /// When the transaction occured.
-    @State var date = Date.now
+    @State private var date = Date.now
     /// The ID of the category the transaction fits into (e.g., groceries vs. entertainment).
-    @State var category: UserCategory? = nil
+    @State private var category: UserCategory? = nil
     /// How often the transaction repeats, if ever.
-    @State var recurrencePeriod = RecurrencePeriod.never
+    @State private var recurrencePeriod = RecurrencePeriod.never
+    /// Whether money was spent or earned.
+    @State private var transactionType: TransactionType = .expense
     
     /// Is the current amount invalid?
     private var invalidAmount: Bool {
@@ -31,7 +32,7 @@ struct Record: View {
     
     /// Add the transaction to the app's data.
     private func save() {
-        _ = dataManager.createTransaction(amount: amount, label: label, date: date, recurrencePeriod: recurrencePeriod, category: category)
+        _ = dataManager.createTransaction(amount: amount, type: transactionType, label: label, date: date, recurrencePeriod: recurrencePeriod, category: category)
         reset()
     }
     
@@ -53,8 +54,17 @@ struct Record: View {
                 RecordTitleBar(date: $date, recurrencePeriod: $recurrencePeriod)
                 
                 Spacer()
-                // TODO: Add ability to toggle between expenses/income.
-                AmountDisplay(amount: amount)
+
+                AmountDisplay(amount: amount, transactionType: transactionType)
+                    .onTapGesture {
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            if transactionType == .expense {
+                                transactionType = .income
+                            } else {
+                                transactionType = .expense
+                            }
+                        }
+                    }
                 
                 Spacer()
                 

@@ -80,6 +80,7 @@ extension Transaction {
             recurringTransactions.append(TransactionWrapper(
                 id: UUID(),
                 amount: amountForPeriod,
+                type: TransactionType(rawValue: self.type)!,
                 label: self.label,
                 date: date,
                 recurrencePeriod: recurrencePeriod,

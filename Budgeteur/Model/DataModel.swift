@@ -111,8 +111,8 @@ class DataManager: ObservableObject {
         return UserCategory(insertInto: context, name: name)
     }
     
-    func createTransaction(amount: Double, label: String = "", date: Date = Date.now, recurrencePeriod: RecurrencePeriod = .never, category: UserCategory? = nil) -> Transaction {
-        return Transaction(insertInto: context, amount: amount, label: label, date: date, recurrencePeriod: recurrencePeriod, userCategory: category)
+    func createTransaction(amount: Double, type: TransactionType = .expense, label: String = "", date: Date = Date.now, recurrencePeriod: RecurrencePeriod = .never, category: UserCategory? = nil) -> Transaction {
+        return Transaction(insertInto: context, amount: amount, type: type, label: label, date: date, recurrencePeriod: recurrencePeriod, userCategory: category)
     }
     
     func getUserCategories() -> [UserCategory] {
@@ -148,8 +148,9 @@ class DataManager: ObservableObject {
         return fetchedTransactions
     }
     
-    func updateTransaction(transaction: Transaction, amount: Double, label: String, date: Date, recurrencePeriod: RecurrencePeriod, category: UserCategory?) {
+    func updateTransaction(transaction: Transaction, amount: Double, type: TransactionType, label: String, date: Date, recurrencePeriod: RecurrencePeriod, category: UserCategory?) {
         transaction.amount = amount
+        transaction.type = type.rawValue
         transaction.label = label
         transaction.date = date
         transaction.recurrencePeriod = recurrencePeriod.rawValue

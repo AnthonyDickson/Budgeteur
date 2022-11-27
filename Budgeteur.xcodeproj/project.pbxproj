@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		922E5618293333B50002B77C /* TransactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E5617293333B50002B77C /* TransactionType.swift */; };
 		923B7D2C28F921CE000E46BD /* RecurrencePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D2B28F921CE000E46BD /* RecurrencePeriod.swift */; };
 		923B7D2E28F923AC000E46BD /* DissmissKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D2D28F923AC000E46BD /* DissmissKeyboard.swift */; };
 		923B7D3028F92B15000E46BD /* RecurrencePeriodPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D2F28F92B15000E46BD /* RecurrencePeriodPicker.swift */; };
@@ -74,6 +75,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		922E5617293333B50002B77C /* TransactionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionType.swift; sourceTree = "<group>"; };
 		923B7D2B28F921CE000E46BD /* RecurrencePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrencePeriod.swift; sourceTree = "<group>"; };
 		923B7D2D28F923AC000E46BD /* DissmissKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DissmissKeyboard.swift; sourceTree = "<group>"; };
 		923B7D2F28F92B15000E46BD /* RecurrencePeriodPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrencePeriodPicker.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 				92436FC629316A9900E45836 /* Transaction.swift */,
 				927B920628F227890013B404 /* TransactionWrapper.swift */,
 				92436FD62931A99500E45836 /* TransactionSet.swift */,
+				922E5617293333B50002B77C /* TransactionType.swift */,
 				92E0E93429138E0B00BC83E9 /* Model.xcdatamodeld */,
 			);
 			path = Model;
@@ -471,6 +474,7 @@
 				92E0E93E29138F6100BC83E9 /* Transaction+CoreDataProperties.swift in Sources */,
 				92436FC32930851600E45836 /* HistoryHeader.swift in Sources */,
 				92436FD92931A9CF00E45836 /* TransactionEditor.swift in Sources */,
+				922E5618293333B50002B77C /* TransactionType.swift in Sources */,
 				923B7D3728F937E6000E46BD /* AmountDisplay.swift in Sources */,
 				927B920B28F22AEA0013B404 /* DataModel.swift in Sources */,
 				923B7D2C28F921CE000E46BD /* RecurrencePeriod.swift in Sources */,

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct BudgetOverview: View {
+    // TODO: Fix bug where the total doesn't update when a transaction is deleted.
     @Environment(\.managedObjectContext) private var context
     
     /// The user selected time period for aggregating transactions.

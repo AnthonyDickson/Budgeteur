@@ -5,7 +5,8 @@
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="endDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="label" attributeType="String"/>
-        <attribute name="recurrencePeriod" attributeType="String" defaultValueString="never"/>
+        <attribute name="recurrencePeriod" attributeType="String" defaultValueString="Never"/>
+        <attribute name="type" attributeType="String" defaultValueString="Expense"/>
         <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserCategory" inverseName="transactionsWithCategory" inverseEntity="UserCategory"/>
     </entity>
     <entity name="UserCategory" representedClassName="UserCategory" syncable="YES">

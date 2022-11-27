@@ -32,6 +32,7 @@ struct TransactionSet {
                 oneOffTransactions.append(TransactionWrapper(
                     id: UUID(),
                     amount: transaction.amount,
+                    type: TransactionType(rawValue: transaction.type)!,
                     label: transaction.label,
                     date: transaction.date,
                     recurrencePeriod: .never,

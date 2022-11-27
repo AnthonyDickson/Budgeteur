@@ -13,6 +13,8 @@ struct TransactionWrapper: Identifiable {
     let id: UUID
     /// How much money was spent/earned.
     var amount: Double
+    /// Whether money was spent or earned.
+    var type: TransactionType
     /// A description of the cash flow.
     var label: String
     /// When the transaction ocurred.
@@ -39,6 +41,7 @@ struct TransactionWrapper: Identifiable {
     /// **Note**: Does not save changes to the Core Data store.
     func update() {
         parent.amount = amount
+        parent.type = type.rawValue
         parent.label = label
         parent.date = date
         parent.endDate = endDate
@@ -53,6 +56,7 @@ struct TransactionWrapper: Identifiable {
         return TransactionWrapper(
             id: UUID(),
             amount: parent.amount,
+            type: TransactionType(rawValue: parent.type)!,
             label: parent.label,
             date: parent.date,
             recurrencePeriod: RecurrencePeriod(rawValue: parent.recurrencePeriod)!,
