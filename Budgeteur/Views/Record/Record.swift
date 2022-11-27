@@ -68,7 +68,7 @@ struct Record: View {
                 
                 Spacer()
                 
-                TextField("What did you pay for?", text: $label)
+                TextField("What did you \(transactionType == .expense ? "pay" : "earn money") for?", text: $label)
                     .submitLabel(.done)
                     .multilineTextAlignment(.center)
                     .padding()

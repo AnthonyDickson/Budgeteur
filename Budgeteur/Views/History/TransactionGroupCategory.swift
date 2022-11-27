@@ -14,6 +14,14 @@ struct TransactionGroupCategory: View {
     /// The transactions to display.
     var transactions: [TransactionWrapper]
     
+    var sumExpenses: Double {
+        transactions.filter { $0.type == .expense }.sum(\.amount)
+    }
+    
+    var sumIncome: Double {
+        transactions.filter { $0.type == .income }.sum(\.amount)
+    }
+    
     /// Groups transactions by their category.
     /// - Parameter transactions: The transactions to group.
     /// - Returns: A list of 2-tuples which each contain the category and a list of the transactions that belong to that category.
@@ -31,6 +39,7 @@ struct TransactionGroupCategory: View {
     
     var body: some View {
         Section {
+            // TODO: Add '__% of <spending|expenses>' summary to each section header as a caption (similar to the caption for transaction rows).
             ForEach(groupByCategory(transactions), id: \.key) { category, groupedTransactions in
                 CollapsibleTransactionSection(
                     title: category?.name ?? UserCategory.defaultName,
@@ -41,8 +50,13 @@ struct TransactionGroupCategory: View {
         } header: {
             HStack {
                 Text(title)
+                    .font(.headline)
+                    .foregroundColor(Color(uiColor: .label))
                 Spacer()
-                Text(Currency.format(transactions.sum(\.amount)))
+                VStack {
+                    Text(Currency.format(sumIncome))
+                    Text(Currency.format(-sumExpenses))
+                }
             }
         }
         

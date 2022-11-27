@@ -12,9 +12,18 @@ extension Transaction {
     /// - Parameter period: The reporting period (e.g. weekly) to group transactions into.
     /// - Returns: The sum of the recurring transactions.
     func sumRecurringTransactions(in dateInterval: DateInterval, groupBy period: Period) -> Double {
-        return getRecurringTransactions(groupBy: period)
+        return getRecurringTransactions(in: dateInterval, groupBy: period)
             .filter({ dateInterval.start <= $0.date && $0.date <= dateInterval.end })
             .sum(\.amount)
+    }
+    
+    /// Generate proxy transaction objects for a given base transaction.
+    /// - Parameter dateInterval: The date interval to filter the transactions by.
+    /// - Parameter period: The reporting period (e.g. weekly) to group transactions into.
+    /// - Returns: The list of generated transactions with the given date interval.
+    func getRecurringTransactions(in dateInterval: DateInterval, groupBy period: Period) -> [TransactionWrapper] {
+        return getRecurringTransactions(groupBy: period)
+            .filter({ dateInterval.start <= $0.date && $0.date <= dateInterval.end })
     }
     
     /// Generate proxy transaction objects for a given base transaction.

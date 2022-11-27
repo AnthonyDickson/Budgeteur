@@ -38,7 +38,7 @@ struct TransactionRow: View {
                     .labelStyle(.iconOnly)
             }
             
-            Text(Currency.format(transaction.amount))
+            AmountText(amount: transaction.amount, type: transaction.type)
         }
         .listRowSeparator(.hidden)
     }

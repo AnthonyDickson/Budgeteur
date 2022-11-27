@@ -14,6 +14,18 @@ struct BudgetOverview: View {
     /// The user selected time period for aggregating transactions.
     @AppStorage("period") private var period: Period = .oneWeek
     
+    private func netIncome(of transactions: [Transaction]) -> Double {
+        transactions.reduce(0.0) { partialResult, transaction in
+            transaction.type == TransactionType.income.rawValue ? partialResult + transaction.amount : partialResult - transaction.amount
+        }
+    }
+    
+    private func netIncome(of transactions: [TransactionWrapper]) -> Double {
+        transactions.reduce(0.0) { partialResult, transaction in
+            transaction.type == .income ? partialResult + transaction.amount : partialResult - transaction.amount
+        }
+    }
+    
     /// Get the total amount of all transactions in the current time period (e.g. this week, this month).
     private var totalSpending: Double {
         let dateInterval = period.getDateInterval(for: Date.now)
@@ -35,8 +47,8 @@ struct BudgetOverview: View {
             let oneOffTransactions = try context.fetch(requestForOneOffTransactions)
             let recurringTransactions = try context.fetch(requestForRecurringTransactions)
             
-            let sum = oneOffTransactions.sum(\.amount) + recurringTransactions.reduce(0.0) { partialResult, transaction in
-                partialResult + transaction.sumRecurringTransactions(in: dateInterval, groupBy: period)
+            let sum = netIncome(of: oneOffTransactions) + recurringTransactions.reduce(0.0) { partialResult, transaction in
+                partialResult + netIncome(of: transaction.getRecurringTransactions(in: dateInterval, groupBy: period))
             }
             
             return sum
@@ -65,7 +77,10 @@ struct BudgetOverview: View {
     
     /// A label with the total amount spent and the aggregation period.
     private var spendingSummary: String {
-        "Spent \(Currency.format(totalSpending)) \(timePeriodLabel)"
+        let amount = totalSpending
+        let underOver = totalSpending < 0 ? "over" : "under"
+        
+        return "\(Currency.format(abs(amount))) \(underOver) budget \(timePeriodLabel)"
     }
     
     var body: some View {

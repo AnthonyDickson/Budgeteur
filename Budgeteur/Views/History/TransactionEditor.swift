@@ -92,7 +92,7 @@ struct TransactionEditor: View {
                 }
             }
         }
-        .listStyle(.grouped)
+//        .listStyle(.grouped)
         .navigationTitle("Edit Transaction")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {

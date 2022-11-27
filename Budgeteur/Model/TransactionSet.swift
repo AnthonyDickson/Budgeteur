@@ -19,6 +19,18 @@ struct TransactionSet {
         oneOffTransactions.sum(\.amount) + recurringTransactions.sum(\.amount)
     }
     
+    var sumExpenses: Double {
+        sum(type: .expense)
+    }
+    
+    var sumIncome: Double {
+        sum(type: .income)
+    }
+    
+    private func sum(type: TransactionType) -> Double {
+        oneOffTransactions.filter({ $0.type == type }).sum(\.amount) + recurringTransactions.filter({ $0.type == type }).sum(\.amount)
+    }
+    
     
     /// Convert transactions from the Core Data interface class to a proxy class object that is more suited for the GUI.
     /// - Parameter transactions: The transactions from the Core Data store.

@@ -32,6 +32,7 @@ struct TransactionGroup: View {
             }
             
             if transactionSet.recurringTransactions.count > 0 {
+                // TODO: Sort by amount
                 CollapsibleTransactionSection(
                     title: "Recurring Transactions",
                     transactions: transactionSet.recurringTransactions,
@@ -41,11 +42,15 @@ struct TransactionGroup: View {
         } header: {
             HStack {
                 Text(title)
+                    .font(.headline)
+                    .foregroundColor(Color(uiColor: .label))
                 Spacer()
-                Text(Currency.format(transactionSet.sumAll))
+                VStack {
+                    Text(Currency.format(transactionSet.sumIncome))
+                    Text(Currency.format(-transactionSet.sumExpenses))
+                }
             }
         }
-        
     }
 }
 

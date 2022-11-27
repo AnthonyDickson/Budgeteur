@@ -18,6 +18,12 @@ struct CollapsibleTransactionSection: View {
     /// Whether to expand the transactions list. Defaults to having the list collapsed (false).
     @State var showTransactions = false
     
+    var netIncome: Double {
+        transactions.reduce(0.0) { partialResult, transaction in
+            transaction.type == .expense ? partialResult - transaction.amount : partialResult + transaction.amount
+        }
+    }
+    
     var body: some View {
         Section {
             if showTransactions {
@@ -28,7 +34,7 @@ struct CollapsibleTransactionSection: View {
             HStack {
                 Text(title)
                 Spacer()
-                Text(Currency.format(transactions.sum(\.amount)))
+                AmountText(amount: abs(netIncome), type: netIncome > 0 ? .income : .expense)
                     .bold(showTransactions)
                 
                 Label("Expand Grouped Transactions", systemImage: "chevron.right")

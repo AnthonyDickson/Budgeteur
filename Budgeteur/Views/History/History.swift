@@ -19,6 +19,7 @@ struct History: View {
             HistoryHeader(groupByCategory: $groupByCategory, period: $period)
                 .padding(.horizontal)
             
+            // TODO: Add search for transactions
             if groupByCategory {
                 TransactionListByCategory(period: period)
             } else {

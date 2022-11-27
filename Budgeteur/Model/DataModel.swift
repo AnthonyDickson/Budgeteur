@@ -59,6 +59,7 @@ class DataManager: ObservableObject {
             
             _ = createTransaction(
                 amount: amount,
+                type: .expense,
                 label: description,
                 date: date,
                 category: category
@@ -81,6 +82,15 @@ class DataManager: ObservableObject {
                 date: Calendar.current.date(byAdding: .month, value: -3, to: startDate)!,
                 recurrencePeriod: .monthly,
                 category: categories[3]
+            )
+            
+            _ = createTransaction(
+                amount: 800.0,
+                type: .income,
+                label: "Wages",
+                date: Calendar.current.date(byAdding: DateComponents(month: -3), to: startDate)!,
+                recurrencePeriod: .weekly,
+                category: createUserCategory(name: "Income 💰")
             )
         }
     }
