@@ -10,9 +10,9 @@ import Foundation
 /// A collection of a list of one-off and recurring transactions.
 struct TransactionSet {
     /// A list of the transactions that happen once.
-    let oneOffTransactions: [TransactionItem]
+    let oneOffTransactions: [TransactionWrapper]
     /// A list of the transactions that happen regularly.
-    let recurringTransactions: [TransactionItem]
+    let recurringTransactions: [TransactionWrapper]
     
     /// The sum of all transactions in the set.
     var sumAll: Double {
@@ -24,12 +24,12 @@ struct TransactionSet {
     /// - Parameter transactions: The transactions from the Core Data store.
     /// - Returns: The transactions as a set of one-off transactions and auto-generated recurring transactions.
     static func fromTransactions(_ transactions: [Transaction], groupBy period: Period) -> TransactionSet {
-        var oneOffTransactions: [TransactionItem] = []
-        var recurringTransactions: [TransactionItem] = []
+        var oneOffTransactions: [TransactionWrapper] = []
+        var recurringTransactions: [TransactionWrapper] = []
         
         for transaction in transactions {
             if transaction.recurrencePeriod == RecurrencePeriod.never.rawValue {
-                oneOffTransactions.append(TransactionItem(
+                oneOffTransactions.append(TransactionWrapper(
                     id: transaction.id,
                     amount: transaction.amount,
                     label: transaction.label,
@@ -48,7 +48,7 @@ struct TransactionSet {
     
     /// Groups all of the one-off transactions by date (day).
     /// - Returns: A list of 2-tuples each containing the date and the list of transactions that occured on that day.
-    func groupOneOffByDate() -> [(key: Date, value: [TransactionItem])] {
+    func groupOneOffByDate() -> [(key: Date, value: [TransactionWrapper])] {
         return Dictionary(
             grouping: oneOffTransactions,
             by: { Calendar.current.startOfDay(for: $0.date) }
@@ -59,7 +59,7 @@ struct TransactionSet {
     /// Groups all transactions into date intervals based on the given period.
     /// - Parameter period: The time interval to group transactions into (e.g., 1 day, 1 week).
     /// - Returns: A list of 2-tuples that each contain the date interval and the list of transactions that occur within that interval.
-    func groupAllByDateInterval(period: Period) -> [(key: DateInterval, value: [TransactionItem])] {
+    func groupAllByDateInterval(period: Period) -> [(key: DateInterval, value: [TransactionWrapper])] {
         return Dictionary(
             grouping: oneOffTransactions + recurringTransactions,
             by: { period.getDateInterval(for: $0.date) }

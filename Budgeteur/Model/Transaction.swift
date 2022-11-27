@@ -20,8 +20,8 @@ extension Transaction {
     /// Generate proxy transaction objects for a given base transaction.
     /// - Parameter period: The reporting period (e.g. weekly) to group transactions into.
     /// - Returns: The list of generated transactions.
-    func getRecurringTransactions(groupBy period: Period) -> [TransactionItem] {
-        var recurringTransactions: [TransactionItem] = []
+    func getRecurringTransactions(groupBy period: Period) -> [TransactionWrapper] {
+        var recurringTransactions: [TransactionWrapper] = []
         
         let startDate =  Calendar.current.startOfDay(for: self.date)
         let today = Calendar.current.startOfDay(for: Date.now)
@@ -77,7 +77,7 @@ extension Transaction {
             let numDays = Calendar.current.dateComponents([.day], from: date, to: nextDate).day! + 1
             let amountForPeriod = dailyAmount * Double(numDays)
             
-            recurringTransactions.append(TransactionItem(
+            recurringTransactions.append(TransactionWrapper(
                 id: UUID(),
                 amount: amountForPeriod,
                 label: self.label,

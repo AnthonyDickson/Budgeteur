@@ -12,7 +12,7 @@ struct CollapsibleTransactionSection: View {
     /// The string to display in the section header
     var title: String
     /// The collection of transactions to display in this section.
-    var transactions: [TransactionItem]
+    var transactions: [TransactionWrapper]
     /// Whether to use the date or the category for the header title.
     var useDateForHeader: Bool
     /// Whether to expand the transactions list. Defaults to having the list collapsed (false).

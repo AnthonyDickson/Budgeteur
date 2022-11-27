@@ -12,12 +12,12 @@ struct TransactionGroupCategory: View {
     /// The text that appears in the section header.
     var title: String
     /// The transactions to display.
-    var transactions: [TransactionItem]
+    var transactions: [TransactionWrapper]
     
     /// Groups transactions by their category.
     /// - Parameter transactions: The transactions to group.
     /// - Returns: A list of 2-tuples which each contain the category and a list of the transactions that belong to that category.
-    func groupByCategory(_ transactions: [TransactionItem]) -> [(key: UserCategory?, value: [TransactionItem])] {
+    func groupByCategory(_ transactions: [TransactionWrapper]) -> [(key: UserCategory?, value: [TransactionWrapper])] {
         let groupedTransactions = Dictionary(grouping: transactions, by: { $0.category })
         
         var categoryTotals: Dictionary<UserCategory?, Double> = [:]

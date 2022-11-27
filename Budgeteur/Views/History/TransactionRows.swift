@@ -11,11 +11,11 @@ import CoreData
 /// Creates a ForEach displaying each transaction as a ``TransactionRow``.
 struct TransactionRows: View {
     /// The collection of transactions to display in this section.
-    var transactions: [TransactionItem]
+    var transactions: [TransactionWrapper]
     /// Whether to use the date or the category for the header title.
     var useDateForHeader: Bool
     
-    @State private var selectedTransaction: TransactionItem? = nil
+    @State private var selectedTransaction: TransactionWrapper? = nil
     
     @Environment(\.managedObjectContext) private var context
     

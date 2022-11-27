@@ -19,7 +19,6 @@ enum Period: String, CaseIterable, Identifiable {
     case threeMonths = "3M"
     case oneYear = "1Y"
     
-    
     /// Find the calendar quarter for a date, and return the start of the quarter.
     /// - Parameter date: A date.
     /// - Returns: The date of the first day of the calendar quarter that the given date belongs to.

@@ -34,6 +34,7 @@
 		92436FE12932C89F00E45836 /* DeleteButtonWithConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FE02932C89F00E45836 /* DeleteButtonWithConfirmation.swift */; };
 		92436FE32932E61C00E45836 /* OptionalDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FE22932E61C00E45836 /* OptionalDatePicker.swift */; };
 		92436FE52932F93700E45836 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FE42932F93700E45836 /* Calendar.swift */; };
+		92436FE82932FE3600E45836 /* UserCategoryWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FE72932FE3600E45836 /* UserCategoryWrapper.swift */; };
 		927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91DA28F220310013B404 /* BudgeteurApp.swift */; };
 		927B91DD28F220310013B404 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91DC28F220310013B404 /* ContentView.swift */; };
 		927B91DF28F220320013B404 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 927B91DE28F220320013B404 /* Assets.xcassets */; };
@@ -41,7 +42,7 @@
 		927B91EC28F220320013B404 /* BudgeteurTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91EB28F220320013B404 /* BudgeteurTests.swift */; };
 		927B91F628F220320013B404 /* BudgeteurUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91F528F220320013B404 /* BudgeteurUITests.swift */; };
 		927B91F828F220320013B404 /* BudgeteurUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91F728F220320013B404 /* BudgeteurUITestsLaunchTests.swift */; };
-		927B920728F227890013B404 /* TransactionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920628F227890013B404 /* TransactionItem.swift */; };
+		927B920728F227890013B404 /* TransactionWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920628F227890013B404 /* TransactionWrapper.swift */; };
 		927B920B28F22AEA0013B404 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920A28F22AEA0013B404 /* DataModel.swift */; };
 		927B921A28F3B87E0013B404 /* Keypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921928F3B87E0013B404 /* Keypad.swift */; };
 		927B921C28F3CCE50013B404 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921B28F3CCE50013B404 /* Currency.swift */; };
@@ -101,6 +102,7 @@
 		92436FE02932C89F00E45836 /* DeleteButtonWithConfirmation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteButtonWithConfirmation.swift; sourceTree = "<group>"; };
 		92436FE22932E61C00E45836 /* OptionalDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalDatePicker.swift; sourceTree = "<group>"; };
 		92436FE42932F93700E45836 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
+		92436FE72932FE3600E45836 /* UserCategoryWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCategoryWrapper.swift; sourceTree = "<group>"; };
 		927B91D728F220310013B404 /* Budgeteur.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Budgeteur.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		927B91DA28F220310013B404 /* BudgeteurApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgeteurApp.swift; sourceTree = "<group>"; };
 		927B91DC28F220310013B404 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -111,7 +113,7 @@
 		927B91F128F220320013B404 /* BudgeteurUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BudgeteurUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		927B91F528F220320013B404 /* BudgeteurUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgeteurUITests.swift; sourceTree = "<group>"; };
 		927B91F728F220320013B404 /* BudgeteurUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgeteurUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		927B920628F227890013B404 /* TransactionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionItem.swift; sourceTree = "<group>"; };
+		927B920628F227890013B404 /* TransactionWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionWrapper.swift; sourceTree = "<group>"; };
 		927B920A28F22AEA0013B404 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		927B921928F3B87E0013B404 /* Keypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keypad.swift; sourceTree = "<group>"; };
 		927B921B28F3CCE50013B404 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
@@ -260,8 +262,9 @@
 				92B2A0D328F66BCA00B81F0D /* Period.swift */,
 				923B7D2B28F921CE000E46BD /* RecurrencePeriod.swift */,
 				92436FC629316A9900E45836 /* Transaction.swift */,
-				927B920628F227890013B404 /* TransactionItem.swift */,
+				927B920628F227890013B404 /* TransactionWrapper.swift */,
 				92436FD62931A99500E45836 /* TransactionSet.swift */,
+				92436FE72932FE3600E45836 /* UserCategoryWrapper.swift */,
 				92E0E93429138E0B00BC83E9 /* Model.xcdatamodeld */,
 			);
 			path = Model;
@@ -436,6 +439,7 @@
 				92436FBB29305B7100E45836 /* BudgetOverview.swift in Sources */,
 				927B921A28F3B87E0013B404 /* Keypad.swift in Sources */,
 				92E0E93B29138F6100BC83E9 /* UserCategory+CoreDataClass.swift in Sources */,
+				92436FE82932FE3600E45836 /* UserCategoryWrapper.swift in Sources */,
 				92436FCB2931974300E45836 /* TransactionListByDay.swift in Sources */,
 				92E0E93629138E0B00BC83E9 /* Model.xcdatamodeld in Sources */,
 				92436FE32932E61C00E45836 /* OptionalDatePicker.swift in Sources */,
@@ -452,7 +456,7 @@
 				92E0E93C29138F6100BC83E9 /* UserCategory+CoreDataProperties.swift in Sources */,
 				92436FDF2931F40200E45836 /* Settings.swift in Sources */,
 				92436FBF2930758700E45836 /* CategoryPicker.swift in Sources */,
-				927B920728F227890013B404 /* TransactionItem.swift in Sources */,
+				927B920728F227890013B404 /* TransactionWrapper.swift in Sources */,
 				92E0E93D29138F6100BC83E9 /* Transaction+CoreDataClass.swift in Sources */,
 				92436FB9292F46B400E45836 /* Record.swift in Sources */,
 				92436FD72931A99500E45836 /* TransactionSet.swift in Sources */,

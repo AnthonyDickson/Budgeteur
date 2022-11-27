@@ -10,7 +10,7 @@ import SwiftUI
 /// Form for editing an existing transaction, or deleting it.
 struct TransactionEditor: View {
     /// The transaction to edit.
-    @State var transaction: TransactionItem
+    @State var transaction: TransactionWrapper
     
     @EnvironmentObject private var dataManager: DataManager
     @Environment(\.dismiss) private var dismiss: DismissAction
@@ -125,8 +125,8 @@ struct TransactionEditor_Previews: PreviewProvider {
     static var dataManager: DataManager = .init(inMemory: true)
     
     static var previews: some View {
-        let transactionOneOff = TransactionItem.fromTransaction(dataManager.createTransaction(amount: 420.69, label: "Foo", date: Date.now, recurrencePeriod: .never))
-        let transactionRecurring = TransactionItem.fromTransaction(dataManager.createTransaction(amount: 420.69, label: "Bar", date: Date.now, recurrencePeriod: .weekly))
+        let transactionOneOff = TransactionWrapper.fromTransaction(dataManager.createTransaction(amount: 420.69, label: "Foo", date: Date.now, recurrencePeriod: .never))
+        let transactionRecurring = TransactionWrapper.fromTransaction(dataManager.createTransaction(amount: 420.69, label: "Bar", date: Date.now, recurrencePeriod: .weekly))
         
     
         NavigationStack {

@@ -158,7 +158,7 @@ class DataManager: ObservableObject {
         save()
     }
     
-    func updateTransaction(transaction: TransactionItem) {
+    func updateTransaction(transaction: TransactionWrapper) {
         transaction.update()
         save()
     }

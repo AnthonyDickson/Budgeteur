@@ -10,7 +10,7 @@ import SwiftUI
 /// Displays a transaction in a horizontal layout. Intended to used within a list.
 struct TransactionRow: View {
     /// The transaction to display.
-    var transaction: TransactionItem
+    var transaction: TransactionWrapper
     /// Whether to use the date or the category for the header title.
     var useDateForHeader: Bool = false
     
@@ -49,7 +49,7 @@ struct TransactionRow_Previews: PreviewProvider {
     
     static var previews: some View {
         let category = dataManager.createUserCategory(name: "Category")
-        let transaction = TransactionItem.fromTransaction(
+        let transaction = TransactionWrapper.fromTransaction(
             dataManager.createTransaction(
                 amount: 420.69,
                 label: "Item Description",

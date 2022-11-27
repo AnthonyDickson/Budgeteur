@@ -15,7 +15,7 @@ struct TransactionListByCategory: View {
     /// All the recorded transactions.
     @FetchRequest(sortDescriptors: [SortDescriptor(\Transaction.date, order: .reverse)]) private var transactions: FetchedResults<Transaction>
     
-    private var groupedTransactions: [(key: DateInterval, value: [TransactionItem])] {
+    private var groupedTransactions: [(key: DateInterval, value: [TransactionWrapper])] {
         TransactionSet.fromTransactions(Array(transactions), groupBy: period)
             .groupAllByDateInterval(period: period)
     }

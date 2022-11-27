@@ -8,7 +8,7 @@
 import Foundation
 
 /// Proxy object to display ``Transaction`` instances in the GUI. It can hold one-off transactions and the auto-generated recurring transactions.
-struct TransactionItem: Identifiable {
+struct TransactionWrapper: Identifiable {
     /// A unique identifier for the transaction, or the auto-generated recurring transaction.
     let id: UUID
     /// How much money was spent/earned.
@@ -46,11 +46,11 @@ struct TransactionItem: Identifiable {
         parent.category = category
     }
     
-    /// Create a ``TransactionItem`` from a ``Transaction`` object.
+    /// Create a ``TransactionWrapper`` from a ``Transaction`` object.
     /// - Parameter parent: A ``Transaction`` object.
-    /// - Returns: A new ``TransactionItem``.
-    static func fromTransaction(_ parent: Transaction) -> TransactionItem {
-        return TransactionItem(
+    /// - Returns: A new ``TransactionWrapper``.
+    static func fromTransaction(_ parent: Transaction) -> TransactionWrapper {
+        return TransactionWrapper(
             id: UUID(),
             amount: parent.amount,
             label: parent.label,
