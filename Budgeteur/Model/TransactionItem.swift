@@ -23,9 +23,7 @@ struct TransactionItem: Identifiable {
     var endDate: Date? {
         didSet {
             if let unwrappedDate = endDate {
-                let startOfDay = Calendar.current.startOfDay(for: unwrappedDate)
-                let endOfDay = Calendar.current.date(byAdding: DateComponents(day: 1, second: -1), to: startOfDay)!
-                endDate = endOfDay
+                endDate = Calendar.current.endOfDay(for: unwrappedDate)
             }
         }
     }

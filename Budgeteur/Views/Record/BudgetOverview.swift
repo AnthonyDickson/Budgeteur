@@ -30,7 +30,6 @@ struct BudgetOverview: View {
             NSPredicate(format: "endDate = nil OR %@ <= endDate", dateInterval.start as NSDate)
         ])
         
-        
         do {
             let oneOffTransactions = try context.fetch(requestForOneOffTransactions)
             let recurringTransactions = try context.fetch(requestForRecurringTransactions)

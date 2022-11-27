@@ -33,6 +33,7 @@
 		92436FDF2931F40200E45836 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FDE2931F40200E45836 /* Settings.swift */; };
 		92436FE12932C89F00E45836 /* DeleteButtonWithConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FE02932C89F00E45836 /* DeleteButtonWithConfirmation.swift */; };
 		92436FE32932E61C00E45836 /* OptionalDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FE22932E61C00E45836 /* OptionalDatePicker.swift */; };
+		92436FE52932F93700E45836 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FE42932F93700E45836 /* Calendar.swift */; };
 		927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91DA28F220310013B404 /* BudgeteurApp.swift */; };
 		927B91DD28F220310013B404 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91DC28F220310013B404 /* ContentView.swift */; };
 		927B91DF28F220320013B404 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 927B91DE28F220320013B404 /* Assets.xcassets */; };
@@ -99,6 +100,7 @@
 		92436FDE2931F40200E45836 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		92436FE02932C89F00E45836 /* DeleteButtonWithConfirmation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteButtonWithConfirmation.swift; sourceTree = "<group>"; };
 		92436FE22932E61C00E45836 /* OptionalDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalDatePicker.swift; sourceTree = "<group>"; };
+		92436FE42932F93700E45836 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
 		927B91D728F220310013B404 /* Budgeteur.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Budgeteur.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		927B91DA28F220310013B404 /* BudgeteurApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgeteurApp.swift; sourceTree = "<group>"; };
 		927B91DC28F220310013B404 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -162,6 +164,15 @@
 			path = Record;
 			sourceTree = "<group>";
 		};
+		92436FE62932FA3500E45836 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				92436FE42932F93700E45836 /* Calendar.swift */,
+				92436FD229319E9E00E45836 /* Sequence.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		927B91CE28F220310013B404 = {
 			isa = PBXGroup;
 			children = (
@@ -170,6 +181,8 @@
 				92E0E93929138F6100BC83E9 /* Transaction+CoreDataClass.swift */,
 				92E0E93A29138F6100BC83E9 /* Transaction+CoreDataProperties.swift */,
 				927B91D928F220310013B404 /* Budgeteur */,
+				927B91DE28F220320013B404 /* Assets.xcassets */,
+				927B91E028F220320013B404 /* Preview Content */,
 				927B91EA28F220320013B404 /* BudgeteurTests */,
 				927B91F428F220320013B404 /* BudgeteurUITests */,
 				927B91D828F220310013B404 /* Products */,
@@ -192,8 +205,7 @@
 				927B91DA28F220310013B404 /* BudgeteurApp.swift */,
 				927B920C28F22CA60013B404 /* Views */,
 				927B920D28F22CAE0013B404 /* Model */,
-				927B91DE28F220320013B404 /* Assets.xcassets */,
-				927B91E028F220320013B404 /* Preview Content */,
+				92436FE62932FA3500E45836 /* Extensions */,
 			);
 			path = Budgeteur;
 			sourceTree = "<group>";
@@ -247,7 +259,6 @@
 				92436FCE293199F100E45836 /* DateFormat.swift */,
 				92B2A0D328F66BCA00B81F0D /* Period.swift */,
 				923B7D2B28F921CE000E46BD /* RecurrencePeriod.swift */,
-				92436FD229319E9E00E45836 /* Sequence.swift */,
 				92436FC629316A9900E45836 /* Transaction.swift */,
 				927B920628F227890013B404 /* TransactionItem.swift */,
 				92436FD62931A99500E45836 /* TransactionSet.swift */,
@@ -435,6 +446,7 @@
 				923B7D2E28F923AC000E46BD /* DissmissKeyboard.swift in Sources */,
 				927B921E28F3D6C20013B404 /* Stateful.swift in Sources */,
 				92436FD129319B6400E45836 /* TransactionGroupCategory.swift in Sources */,
+				92436FE52932F93700E45836 /* Calendar.swift in Sources */,
 				92B2A0D228F667FB00B81F0D /* PeriodPicker.swift in Sources */,
 				92436FBD2930658D00E45836 /* RecordTitleBar.swift in Sources */,
 				92E0E93C29138F6100BC83E9 /* UserCategory+CoreDataProperties.swift in Sources */,

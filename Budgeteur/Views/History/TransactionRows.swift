@@ -27,13 +27,6 @@ struct TransactionRows: View {
                     selectedTransaction = transaction
                 }
         }
-        .onDelete { indexSet in
-            DispatchQueue.main.async {
-                for index in indexSet {
-                    context.delete(transactions[index].parent)
-                }
-            }
-        }
         .sheet(item: $selectedTransaction) { transaction in
             NavigationStack {
                 TransactionEditor(transaction: transaction)

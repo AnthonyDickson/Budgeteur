@@ -82,7 +82,7 @@ enum Period: String, CaseIterable, Identifiable {
             endDate = calendar.date(byAdding: DateComponents(year: 1, day: -1), to: startDate)!
         }
         
-        return DateInterval(start: startDate, end: endDate)
+        return DateInterval(start: startDate, end: Calendar.current.endOfDay(for: endDate))
     }
     
     /// Get the date increment needed such that adding the increment to another date will create a date interval corresponding to the chosen time period.
