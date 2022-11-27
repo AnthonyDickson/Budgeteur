@@ -16,7 +16,6 @@ extension Transaction {
         return NSFetchRequest<Transaction>(entityName: "Transaction")
     }
 
-    @NSManaged public var id: UUID
     @NSManaged public var amount: Double
     @NSManaged public var label: String
     @NSManaged public var date: Date
@@ -31,7 +30,6 @@ extension Transaction {
         
         self.init(entity: entity, insertInto: context)
         
-        self.id = UUID()
         self.amount = amount
         self.label = label
         self.date = date

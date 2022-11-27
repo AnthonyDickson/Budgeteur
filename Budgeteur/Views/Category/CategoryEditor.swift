@@ -12,13 +12,15 @@ import SwiftUI
 ///
 /// The parent view should ensure that the environment variable `editMode` is set to `EditMode.active`.
 struct CategoryEditor: View {
-    @Environment(\.dismiss) private var dismiss: DismissAction
-    @EnvironmentObject private var dataManager: DataManager
+    /// The name that will be used to create a new category.
+    @State private var newCategoryName = ""
+    
     /// The list of user defined categories.
     @FetchRequest(sortDescriptors: [SortDescriptor(\UserCategory.name, order: .forward)]) private var categories: FetchedResults<UserCategory>
     
-    /// The name that will be used to create a new category.
-    @State private var newCategoryName = ""
+    @Environment(\.dismiss) private var dismiss: DismissAction
+    @Environment(\.managedObjectContext) private var context
+    @EnvironmentObject private var dataManager: DataManager
     
     private func createCategoryAndReset() {
         if !newCategoryName.isEmpty {
@@ -49,15 +51,11 @@ struct CategoryEditor: View {
                     Text("No Tags")
                 } else {
                     ForEach(categories) { category in
-                        Text(category.name)
-                        // TODO: Make categories editable
-        //                TextField(category.name, text: $category.name)
+                        TextField(category.name, text: Binding<String>(get: { category.name}, set: { category.name = $0 }))
                     }
                     .onDelete { categoryIndices in
-                        DispatchQueue.main.async {
-                            categoryIndices.map{ categories[$0] }.forEach { category in
-                                dataManager.deleteUserCategory(category: category)
-                            }
+                        categoryIndices.map{ categories[$0] }.forEach { category in
+                            context.delete(category)
                         }
                     }
                 }
@@ -65,23 +63,17 @@ struct CategoryEditor: View {
         }
         .navigationTitle("Edit Tags")
         .navigationBarTitleDisplayMode(.inline)
-        // TODO: When editing, make sure we are only editing a temporary copy, and to only save the changes once the users taps save.
-//        .toolbar {
-//            ToolbarItem(placement: .navigationBarLeading){
-//                Button("Cancel", role: .cancel) {
-//                    dismiss()
-//                }
-//                .foregroundColor(.red)
-//            }
-//            ToolbarItem(placement: .navigationBarTrailing){
-//                Button("Save") {
-//                    dismiss()
-//                }
-//            }
-//        }
         .toolbar {
+            ToolbarItem(placement: .cancellationAction){
+                Button("Cancel", role: .cancel) {
+                    context.rollback()
+                    dismiss()
+                }
+                .foregroundColor(.red)
+            }
             ToolbarItem(placement: .primaryAction){
-                Button("Done") {
+                Button("Save") {
+                    dataManager.save()
                     dismiss()
                 }
             }
@@ -95,13 +87,16 @@ struct CategoryEditor_Previews: PreviewProvider {
         
         _ = m.createUserCategory(name: "Foo")
         _ = m.createUserCategory(name: "Bar")
+        m.save()
         
         return m
     }()
     
     static var previews: some View {
-        CategoryEditor()
-            .environmentObject(dataManager)
+        NavigationStack {
+            CategoryEditor()
+                .environmentObject(dataManager)
             .environment(\.managedObjectContext, dataManager.context)
+        }
     }
 }

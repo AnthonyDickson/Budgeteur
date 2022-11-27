@@ -30,7 +30,7 @@ struct TransactionSet {
         for transaction in transactions {
             if transaction.recurrencePeriod == RecurrencePeriod.never.rawValue {
                 oneOffTransactions.append(TransactionWrapper(
-                    id: transaction.id,
+                    id: UUID(),
                     amount: transaction.amount,
                     label: transaction.label,
                     date: transaction.date,

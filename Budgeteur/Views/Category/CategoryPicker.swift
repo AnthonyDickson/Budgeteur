@@ -9,8 +9,7 @@ import SwiftUI
 
 /// Displays categories as a scrollable, horizontal list of categories and an edit button.
 struct CategoryPicker: View {
-    @FetchRequest(sortDescriptors: [SortDescriptor(\UserCategory.name, order: .forward)]) private var categories: FetchedResults<UserCategory>
-    /// The ID of the category the user has tapped on.
+    /// The category the user has tapped on.
     @Binding var selectedCategory: UserCategory?
     
     /// The width of the button borders.
@@ -21,14 +20,13 @@ struct CategoryPicker: View {
     
     /// The dash style for the edit category button.
     var dashStyle: [CGFloat] = [5.0, 3.0]
+
+    @FetchRequest(sortDescriptors: [SortDescriptor(\UserCategory.name, order: .forward)]) private var categories: FetchedResults<UserCategory>
+    
+    @EnvironmentObject private var dataManager: DataManager
     
     /// Whether to display the sheet with the form to add, edit and delete categories.
     @State private var showCategoryEditor: Bool = false
-    
-    /// Dummy binding used to send to child view.
-    ///
-    /// If ``categories`` is used directly instead of this binding, it results in buggy behaviour such as the cursor jumping to the end of the line after each change.
-    @State private var draftCategories: [UserCategory] = []
     
     /// Get the color for the category label.
     ///
@@ -126,9 +124,14 @@ struct CategoryPicker: View {
                     }
                 }
             }
-            .sheet(isPresented: $showCategoryEditor, onDismiss: {
+            .sheet(isPresented: $showCategoryEditor) {
+                // This condition happens if the selected category was deleted. If we do not nullify `selectedCategory`, accessing any attributes will crash the app.
+                if selectedCategory?.isFault == true {
+                    selectedCategory = nil
+                }
+                
                 scrollTo(selectedCategory, using: proxy)
-            }) {
+            } content: {
                 NavigationStack {
                     CategoryEditor()
                 }

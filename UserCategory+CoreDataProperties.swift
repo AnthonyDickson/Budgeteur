@@ -16,7 +16,6 @@ extension UserCategory {
         return NSFetchRequest<UserCategory>(entityName: "UserCategory")
     }
 
-    @NSManaged public var id: UUID
     @NSManaged public var name: String
     @NSManaged public var transactionsWithCategory: NSSet?
     
@@ -29,7 +28,6 @@ extension UserCategory {
         
         self.init(entity: entity, insertInto: context)
         
-        self.id = UUID()
         self.name = name
     }
 }
