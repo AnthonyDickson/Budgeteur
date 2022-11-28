@@ -5,6 +5,8 @@
 //  Created by Anthony Dickson on 9/10/22.
 //
 
+//TODO: Add README with screenshots.
+
 import SwiftUI
 /// An app for tracking your expenses and income, and assisting with your budgeting efforts!
 @main

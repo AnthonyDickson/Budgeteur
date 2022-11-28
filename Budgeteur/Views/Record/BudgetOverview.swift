@@ -6,23 +6,42 @@
 //
 
 import SwiftUI
+import CoreData
 
+/// Display how much over/under budget the user is for the current period (e.g., this week).
 struct BudgetOverview: View {
-    // TODO: Fix bug where the total doesn't update when a transaction is deleted.
+    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "recurrencePeriod == %@", RecurrencePeriod.never.rawValue)) private var oneOffTransactions: FetchedResults<Transaction>
+    
+    @FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "recurrencePeriod != %@", RecurrencePeriod.never.rawValue)) private var recurringTransactions: FetchedResults<Transaction>
+    
     @Environment(\.managedObjectContext) private var context
     
     /// The user selected time period for aggregating transactions.
     @AppStorage("period") private var period: Period = .oneWeek
     
-    private func netIncome(of transactions: [Transaction]) -> Double {
-        transactions.reduce(0.0) { partialResult, transaction in
-            transaction.type == TransactionType.income.rawValue ? partialResult + transaction.amount : partialResult - transaction.amount
-        }
+    /// Calculate the net income from the one-off transactions.
+    /// - Parameter dateInterval: The date interval to sum over, transactions outside this interval will be ignored.
+    /// - Returns: The net income from one-off transactions for the specified period.
+    private func sumOneOffTransactions(in dateInterval: DateInterval) -> Double {
+        oneOffTransactions.filter { dateInterval.contains($0.date) }
+            .reduce(0.0) { $1.type == TransactionType.income.rawValue ? $0 + $1.amount : $0 - $1.amount }
     }
     
-    private func netIncome(of transactions: [TransactionWrapper]) -> Double {
-        transactions.reduce(0.0) { partialResult, transaction in
-            transaction.type == .income ? partialResult + transaction.amount : partialResult - transaction.amount
+    /// Calculate the net income from the recurring transactions.
+    /// - Parameter dateInterval: The date interval to sum over, transactions outside this interval will be ignored.
+    /// - Returns: The net income from one-off transactions for the specified period.
+    private func sumRecurringTransactions(in dateInterval: DateInterval) -> Double {
+        recurringTransactions.filter {
+            // Only consider recurring transactions that:
+            // 1) start recurring before the period ends;
+            // 2) has no end date or stop recurring after the period starts.
+            // This avoids generating the proxy transactions for recurring transactions that have already ended or have not yet started.
+            $0.date <= dateInterval.end && ($0.endDate == nil || $0.endDate! >= dateInterval.start)
+        }
+        .reduce(0.0) { partialResult, baseTransaction in
+            partialResult + baseTransaction.getRecurringTransactions(groupBy: period)
+                .filter{ dateInterval.contains($0.date) }
+                .reduce(0.0) { $1.type == .income ? $0 + $1.amount : $0 - $1.amount }
         }
     }
     
@@ -30,31 +49,7 @@ struct BudgetOverview: View {
     private var totalSpending: Double {
         let dateInterval = period.getDateInterval(for: Date.now)
         
-        let requestForOneOffTransactions = Transaction.fetchRequest()
-        requestForOneOffTransactions.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
-            NSPredicate(format: "%@ <= date AND date <= %@", dateInterval.start as NSDate, dateInterval.end as NSDate),
-            NSPredicate(format: "recurrencePeriod == %@", RecurrencePeriod.never.rawValue)
-        ])
-        
-        let requestForRecurringTransactions = Transaction.fetchRequest()
-        requestForRecurringTransactions.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
-            NSPredicate(format: "recurrencePeriod != %@", RecurrencePeriod.never.rawValue),
-            NSPredicate(format: "date <= %@", dateInterval.end as NSDate),
-            NSPredicate(format: "endDate = nil OR %@ <= endDate", dateInterval.start as NSDate)
-        ])
-        
-        do {
-            let oneOffTransactions = try context.fetch(requestForOneOffTransactions)
-            let recurringTransactions = try context.fetch(requestForRecurringTransactions)
-            
-            let sum = netIncome(of: oneOffTransactions) + recurringTransactions.reduce(0.0) { partialResult, transaction in
-                partialResult + netIncome(of: transaction.getRecurringTransactions(in: dateInterval, groupBy: period))
-            }
-            
-            return sum
-        } catch {
-            fatalError("Error fetching transactions: \(error.localizedDescription)")
-        }
+        return sumOneOffTransactions(in: dateInterval) + sumRecurringTransactions(in: dateInterval)
     }
     
     /// Convert a time period to a context-aware label.
