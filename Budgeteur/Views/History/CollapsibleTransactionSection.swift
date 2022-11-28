@@ -15,13 +15,26 @@ struct CollapsibleTransactionSection: View {
     var transactions: [TransactionWrapper]
     /// Whether to use the date or the category for the header title.
     var useDateForHeader: Bool
+    /// The total income for the current reporting period.
+    ///
+    /// Specify this if you want the section header to include text describing the percentage of the total income that the section accounts for.
+    var totalIncome: Double?
+    /// The total expenses for the current reporting period.
+    ///
+    /// Specify this if you want the section header to include text describing the percentage of the total expense that the section accounts for.
+    var totalExpenses: Double?
+    
     /// Whether to expand the transactions list. Defaults to having the list collapsed (false).
+    ///
+    /// Set this to `true` if you want the view to start with the section expanded.
     @State var showTransactions = false
     
-    var netIncome: Double {
-        transactions.reduce(0.0) { partialResult, transaction in
-            transaction.type == .expense ? partialResult - transaction.amount : partialResult + transaction.amount
-        }
+    private var netIncome: Double {
+        transactions.reduce(0.0) { $1.type == .expense ? $0 - $1.amount : $0 + $1.amount }
+    }
+    
+    private var transactionType: TransactionType {
+        netIncome >= 0 ? .income : .expense
     }
     
     var body: some View {
@@ -32,9 +45,9 @@ struct CollapsibleTransactionSection: View {
             }
         } header: {
             HStack {
-                Text(title)
+                CollapsibleTransactionSectionTitle(title: title, netIncome: netIncome, totalIncome: totalIncome, totalExpenses: totalExpenses)
                 Spacer()
-                AmountText(amount: abs(netIncome), type: netIncome > 0 ? .income : .expense)
+                AmountText(amount: abs(netIncome), type: transactionType)
                     .bold(showTransactions)
                 
                 Label("Expand Grouped Transactions", systemImage: "chevron.right")
@@ -67,11 +80,22 @@ struct CollapsibleTransactionSection_Previews: PreviewProvider {
         let (date, groupedTransactions) = transactionSet.groupOneOffByDate()[0]
         let title = DateFormat.format(date)
         
+        let (_, transactionsForGroupingByCategory) = transactionSet.groupAllByDateInterval(period: period)[0]
+        let (category, categoryTransactions) = TransactionGroupCategory.groupByCategory(transactionsForGroupingByCategory)[0]
+        
         
         List {
             Section {
                 CollapsibleTransactionSection(title: title, transactions: groupedTransactions, useDateForHeader: false)
             }
         }
+        .previewDisplayName("Grouped by Date")
+        
+        List {
+            Section {
+                CollapsibleTransactionSection(title: category?.name ?? UserCategory.defaultName, transactions: categoryTransactions, useDateForHeader: true, totalIncome: 1000, totalExpenses: 1000)
+            }
+        }
+        .previewDisplayName("Grouped by Category")
     }
 }

@@ -14,18 +14,18 @@ struct TransactionGroupCategory: View {
     /// The transactions to display.
     var transactions: [TransactionWrapper]
     
-    var sumExpenses: Double {
+    private var sumExpenses: Double {
         transactions.filter { $0.type == .expense }.sum(\.amount)
     }
     
-    var sumIncome: Double {
+    private var sumIncome: Double {
         transactions.filter { $0.type == .income }.sum(\.amount)
     }
     
     /// Groups transactions by their category.
     /// - Parameter transactions: The transactions to group.
     /// - Returns: A list of 2-tuples which each contain the category and a list of the transactions that belong to that category.
-    func groupByCategory(_ transactions: [TransactionWrapper]) -> [(key: UserCategory?, value: [TransactionWrapper])] {
+    static func groupByCategory(_ transactions: [TransactionWrapper]) -> [(key: UserCategory?, value: [TransactionWrapper])] {
         let groupedTransactions = Dictionary(grouping: transactions, by: { $0.category })
         
         var categoryTotals: Dictionary<UserCategory?, Double> = [:]
@@ -38,13 +38,18 @@ struct TransactionGroupCategory: View {
     }
     
     var body: some View {
+        // Cache these properties to avoid unnecessarily re-calculating them in the loop.
+        let totalIncome = sumIncome
+        let totalExpenses = sumExpenses
+        
         Section {
-            // TODO: Add '__% of <spending|expenses>' summary to each section header as a caption (similar to the caption for transaction rows).
-            ForEach(groupByCategory(transactions), id: \.key) { category, groupedTransactions in
+            ForEach(Self.groupByCategory(transactions), id: \.key) { category, groupedTransactions in
                 CollapsibleTransactionSection(
                     title: category?.name ?? UserCategory.defaultName,
                     transactions: groupedTransactions,
-                    useDateForHeader: true
+                    useDateForHeader: true,
+                    totalIncome: totalIncome,
+                    totalExpenses: totalExpenses
                 )
             }
         } header: {
@@ -54,8 +59,8 @@ struct TransactionGroupCategory: View {
                     .foregroundColor(Color(uiColor: .label))
                 Spacer()
                 VStack {
-                    Text(Currency.format(sumIncome))
-                    Text(Currency.format(-sumExpenses))
+                    Text(Currency.format(totalIncome))
+                    Text(Currency.format(-totalExpenses))
                 }
             }
         }
