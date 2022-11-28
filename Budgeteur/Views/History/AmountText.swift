@@ -31,6 +31,7 @@ struct AmountText: View {
     var body: some View {
         Text(Currency.format(amount))
             .foregroundColor(amountColor)
+            .monospacedDigit()
     }
 }
 

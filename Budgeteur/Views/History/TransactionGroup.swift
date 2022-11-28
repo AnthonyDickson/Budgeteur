@@ -40,16 +40,7 @@ struct TransactionGroup: View {
                 )
             }
         } header: {
-            HStack {
-                Text(title)
-                    .font(.headline)
-                    .foregroundColor(Color(uiColor: .label))
-                Spacer()
-                VStack {
-                    Text(Currency.format(transactionSet.sumIncome))
-                    Text(Currency.format(-transactionSet.sumExpenses))
-                }
-            }
+            TransactionGroupHeader(title: title, totalIncome: transactionSet.sumIncome, totalExpenses: transactionSet.sumExpenses)
         }
     }
 }
