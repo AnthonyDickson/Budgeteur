@@ -48,12 +48,12 @@ class DataManager: ObservableObject {
         ]
         let startDate = Date.now
         
-        for index in 0..<numSamples {
+        for _ in 0..<numSamples {
             let description = descriptions[rng.nextInt(upperBound: descriptions.count)]
             let amount = 100.0 * Double(rng.nextUniform())
             let date = Calendar.current.date(
                 byAdding: Calendar.Component.day,
-                value: -index * rng.nextInt(upperBound: 5),
+                value: -rng.nextInt(upperBound: 365),
                 to: startDate)!
             let category = categories[rng.nextInt(upperBound: categories.count)]
             

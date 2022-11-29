@@ -15,7 +15,7 @@ struct Settings: View {
         Form {
             Section("Sample Data") {
                 Button {
-                    dataManager.addSampleData()
+                    dataManager.addSampleData(numSamples: 500)
                     dataManager.save()
                 } label: {
                     Text("Add sample data")
