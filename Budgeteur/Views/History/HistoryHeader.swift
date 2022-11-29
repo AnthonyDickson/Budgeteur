@@ -15,6 +15,8 @@ struct HistoryHeader: View {
     @Binding var groupByCategory: Bool
     /// The selected date interval to group transactions by.
     @Binding var period: Period
+    /// Controls which transactions as shown (all, recurring only or non-recurring only).
+    @Binding var transactionFilter: TransactionFilter
     
     var body: some View {
         VStack {
@@ -23,6 +25,14 @@ struct HistoryHeader: View {
                     .font(.largeTitle)
                 
                 Spacer()
+                
+                Picker("Transaction Filter", selection: $transactionFilter) {
+                    ForEach(TransactionFilter.allCases, id: \.self) { theFilter in
+                        Text("View \(theFilter.rawValue)")
+                    }
+                }
+                // This is needed to ensure each option is rendered on one line and prevents the parent view from changing height.
+                .scaledToFill()
                 
                 Button {
                     groupByCategory.toggle()
@@ -42,7 +52,9 @@ struct HistoryHeader_Previews: PreviewProvider {
     static var previews: some View {
         Stateful(initialState: false) { $groupByCategory in
             Stateful(initialState: Period.oneWeek) { $period in
-                HistoryHeader(groupByCategory: $groupByCategory, period: $period)
+                Stateful(initialState: TransactionFilter.all) { $transactionFilter in
+                    HistoryHeader(groupByCategory: $groupByCategory, period: $period, transactionFilter: $transactionFilter)
+                }
             }
         }
     }

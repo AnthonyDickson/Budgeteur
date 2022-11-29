@@ -11,6 +11,7 @@
 		922E561A29334E300002B77C /* AmountText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E561929334E300002B77C /* AmountText.swift */; };
 		922E561F293481020002B77C /* CollapsibleTransactionSectionTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E561E293481020002B77C /* CollapsibleTransactionSectionTitle.swift */; };
 		922E56212934858F0002B77C /* TransactionGroupHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E56202934858F0002B77C /* TransactionGroupHeader.swift */; };
+		922E56232935F35C0002B77C /* TransactionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E56222935F35C0002B77C /* TransactionFilter.swift */; };
 		923B7D2C28F921CE000E46BD /* RecurrencePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D2B28F921CE000E46BD /* RecurrencePeriod.swift */; };
 		923B7D2E28F923AC000E46BD /* DissmissKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D2D28F923AC000E46BD /* DissmissKeyboard.swift */; };
 		923B7D3028F92B15000E46BD /* RecurrencePeriodPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D2F28F92B15000E46BD /* RecurrencePeriodPicker.swift */; };
@@ -82,6 +83,7 @@
 		922E561929334E300002B77C /* AmountText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountText.swift; sourceTree = "<group>"; };
 		922E561E293481020002B77C /* CollapsibleTransactionSectionTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleTransactionSectionTitle.swift; sourceTree = "<group>"; };
 		922E56202934858F0002B77C /* TransactionGroupHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionGroupHeader.swift; sourceTree = "<group>"; };
+		922E56222935F35C0002B77C /* TransactionFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionFilter.swift; sourceTree = "<group>"; };
 		923B7D2B28F921CE000E46BD /* RecurrencePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrencePeriod.swift; sourceTree = "<group>"; };
 		923B7D2D28F923AC000E46BD /* DissmissKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DissmissKeyboard.swift; sourceTree = "<group>"; };
 		923B7D2F28F92B15000E46BD /* RecurrencePeriodPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrencePeriodPicker.swift; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 				92B2A0D328F66BCA00B81F0D /* Period.swift */,
 				923B7D2B28F921CE000E46BD /* RecurrencePeriod.swift */,
 				92436FC629316A9900E45836 /* Transaction.swift */,
+				922E56222935F35C0002B77C /* TransactionFilter.swift */,
 				927B920628F227890013B404 /* TransactionWrapper.swift */,
 				92436FD62931A99500E45836 /* TransactionSet.swift */,
 				922E5617293333B50002B77C /* TransactionType.swift */,
@@ -483,6 +486,7 @@
 				922E561F293481020002B77C /* CollapsibleTransactionSectionTitle.swift in Sources */,
 				92436FC9293196C700E45836 /* TransactionListByCategory.swift in Sources */,
 				922E561A29334E300002B77C /* AmountText.swift in Sources */,
+				922E56232935F35C0002B77C /* TransactionFilter.swift in Sources */,
 				92436FC729316A9900E45836 /* Transaction.swift in Sources */,
 				922E56212934858F0002B77C /* TransactionGroupHeader.swift in Sources */,
 				92436FD329319E9E00E45836 /* Sequence.swift in Sources */,

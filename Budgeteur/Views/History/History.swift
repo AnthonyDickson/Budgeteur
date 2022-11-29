@@ -13,18 +13,19 @@ struct History: View {
     @AppStorage("groupByCategory") private var groupByCategory: Bool = false
     /// The selected date interval to group transactions by.
     @AppStorage("period") private var period: Period = .oneWeek
+    /// Controls which transactions as shown (all, recurring only or non-recurring only).
+    @AppStorage("transactionFilter") private var transactionFilter: TransactionFilter = .all
     
     var body: some View {
         VStack {
-            // TODO: Add filter to view only one-off, recurring or all transactions.
-            HistoryHeader(groupByCategory: $groupByCategory, period: $period)
+            HistoryHeader(groupByCategory: $groupByCategory, period: $period, transactionFilter: $transactionFilter)
                 .padding(.horizontal)
             
-            // TODO: Add search for transactions
+            // TODO: Add search for transactions. Create predicate in `History` view?
             if groupByCategory {
-                TransactionListByCategory(period: period)
+                TransactionListByCategory(period: period, transactionFilter: transactionFilter)
             } else {
-                TransactionListByDay(period: period)
+                TransactionListByDay(period: period, transactionFilter: transactionFilter)
             }
         }
     }

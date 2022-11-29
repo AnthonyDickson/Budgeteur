@@ -12,12 +12,14 @@ import SwiftUI
 struct TransactionListByDay: View {
     /// The selected date interval to group transactions by.
     var period: Period
+    /// Controls which transactions as shown (all, recurring only or non-recurring only).
+    var transactionFilter: TransactionFilter = .all
     
     /// All the recorded transactions.
     @FetchRequest(sortDescriptors: [SortDescriptor(\Transaction.date, order: .reverse)]) private var transactions: FetchedResults<Transaction>
     
     private var groupedTransactions: [(key: DateInterval, value: TransactionSet)] {
-        TransactionSet.fromTransactions(Array(transactions), groupBy: period)
+        TransactionSet.fromTransactions(transactionFilter.filter(transactions), groupBy: period)
             .groupByDateInterval(period: period)
     }
     
