@@ -27,17 +27,13 @@ extension Transaction {
     }
     
     /// Generate proxy transaction objects for a given base transaction.
-    /// - Parameter period: The reporting period (e.g. weekly) to group transactions into.
+    /// - Parameter period: The time period to report by (e.g. weekly)
     /// - Returns: The list of generated transactions.
     func getRecurringTransactions(groupBy period: Period) -> [TransactionWrapper] {
-        var recurringTransactions: [TransactionWrapper] = []
-        
-        let startDate =  Calendar.current.startOfDay(for: self.date)
-        let today = Calendar.current.startOfDay(for: Date.now)
-        
-        guard let endOfToday = Calendar.current.date(byAdding: DateComponents(day: 1, second: -1), to: today) else {
-            fatalError("Error: Could create date by adding \(DateComponents(day: 1, second: -1)) to \(Date.now)")
-        }
+        let isoCalendar = Calendar(identifier: .iso8601)
+        let startDate = isoCalendar.startOfDay(for: self.date)
+        let today = isoCalendar.startOfDay(for: Date.now)
+        let endOfToday = isoCalendar.date(byAdding: DateComponents(day: 1, second: -1), to: today)!
         
         let endDate: Date
         
@@ -47,47 +43,101 @@ extension Transaction {
             endDate = endOfToday
         }
         
+        let dateInterval = DateInterval(start: startDate, end: endDate)
+        
         guard let recurrencePeriod = RecurrencePeriod(rawValue: self.recurrencePeriod) else {
             fatalError("Error: Could not convert '\(self.recurrencePeriod)' to a valid enum value of RecurrencePeriod.")
         }
         
-        var multiplier: Double
+        guard recurrencePeriod != .never else {
+            return []
+        }
+        
+        let useWholeAmounts = recurrencePeriod.days <= period.days
+        
+        if useWholeAmounts {
+            return getRecurringTransactionsWholeAmounts(in: dateInterval, every: recurrencePeriod, using: isoCalendar)
+        } else {
+            return getRecurringTransactionsFractionalAmounts(in: dateInterval, every: recurrencePeriod, reportingBy: period, using: isoCalendar)
+        }
+    }
+    
+    /// Helper function for generating the proxy transaction objects for a recurring transaction using whole amounts.
+    /// - Parameters:
+    ///   - dateInterval: The start and end dates for which transactions should be generated.
+    ///   - recurrencePeriod: How often the transaction repeats.
+    ///   - calendar: The calendar to use when doing date arithmetic.
+    /// - Returns: A list of proxy transaction objects.
+    private func getRecurringTransactionsWholeAmounts(in dateInterval: DateInterval, every recurrencePeriod: RecurrencePeriod, using calendar: Calendar) -> [TransactionWrapper] {
+        let dateIncrement = recurrencePeriod.getDateIncrement()
+        
+        var transactions: [TransactionWrapper] = []
+        var date = dateInterval.start
+        
+        while date < dateInterval.end {
+            let nextDate = calendar.date(byAdding: dateIncrement, to: date)!
+            
+            transactions.append(TransactionWrapper(
+                amount: self.amount,
+                type: TransactionType(rawValue: self.type)!,
+                label: self.label,
+                date: date,
+                recurrencePeriod: recurrencePeriod,
+                category: self.category,
+                parent: self
+            ))
+            
+            date = nextDate
+        }
+        
+        return transactions
+    }
+    
+    
+    /// Helper function for generating the proxy transaction objects for a recurring transaction using fractional amounts.
+    ///
+    /// For example if a transaction repeats every month but the user has selected a reporting period of one week, a transaction is created every week using the average amount (base amount / number of day in month \* number of days in week).
+    /// This gives the user an idea of the average amount per reporting period (e.g., how much does Netflix cost me each week?).
+    /// - Parameters:
+    ///   - dateInterval: The start and end dates for which transactions should be generated.
+    ///   - recurrencePeriod: How often the transaction repeats.
+    ///   - period: The reporting period (e.g. weekly) to group transactions into.
+    ///   - calendar: The calendar to use when doing date arithmetic.
+    /// - Returns: A list of proxy transaction objects.
+    private func getRecurringTransactionsFractionalAmounts(in dateInterval: DateInterval, every recurrencePeriod: RecurrencePeriod, reportingBy period: Period, using calendar: Calendar) -> [TransactionWrapper] {
+        var recurringTransactions: [TransactionWrapper] = []
+        // TODO: Calculate year length, num weeks and num fortnights based on `date`.
+        let yearLength = 365.25
+        let dailyAmount: Double
         
         switch recurrencePeriod {
         case RecurrencePeriod.daily:
-            multiplier = 1.0
+            dailyAmount = self.amount
         case RecurrencePeriod.weekly:
-            multiplier = 52.1785/365.25
-        case RecurrencePeriod.fortnighly:
-            multiplier = 26.0892/365.25
+            dailyAmount = self.amount * 52.1785 / yearLength
+        case RecurrencePeriod.fortnightly:
+            dailyAmount = self.amount * 26.0892 / yearLength
         case RecurrencePeriod.monthly:
-            multiplier = 12/365.25
+            dailyAmount = self.amount * 12 / yearLength
         case RecurrencePeriod.quarterly:
-            multiplier = 3/365.25
+            dailyAmount = self.amount * 3 / yearLength
         case RecurrencePeriod.yearly:
-            multiplier = 1/365.25
+            dailyAmount = self.amount * 1 / yearLength
         default:
             fatalError("Given non-recurring transaction (recurrencePeriod == .never) when a recurring transaction was expected.")
         }
         
-        let dailyAmount = self.amount * multiplier
-        
-        let isoCalendar = Calendar(identifier: .iso8601)
         let dateIncrement = period.getDateIncrement()
-        var date = startDate
         
-        // TODO: Change calculation to use num times in period * base price when period <= recurrence period. When recurrence period > period, fall back to fractional calculation.
-        while date < endDate {
-            guard let nextDate = isoCalendar.date(byAdding: dateIncrement, to: date) else {
-                fatalError("Error: Could not increment date \(date) by increment \(dateIncrement)")
-            }
+        var date = dateInterval.start
+        while date < dateInterval.end {
+            let nextDate = calendar.date(byAdding: dateIncrement, to: date)!
             
             // The date intervals are closed intervals, but the .day component returns the length of the open interval so we need to add one to the result.
-            let numDays = Calendar.current.dateComponents([.day], from: date, to: nextDate).day! + 1
+            let numDays = calendar.dateComponents([.day], from: date, to: nextDate).day!
             let amountForPeriod = dailyAmount * Double(numDays)
             
             recurringTransactions.append(TransactionWrapper(
-                id: UUID(),
                 amount: amountForPeriod,
                 type: TransactionType(rawValue: self.type)!,
                 label: self.label,

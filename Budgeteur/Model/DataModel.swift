@@ -68,10 +68,12 @@ class DataManager: ObservableObject {
         
         
         if addRecurring {
+            let minusOneYear = DateComponents(year: -1)
+            
             _ = createTransaction(
                 amount: 255.0,
                 label: "Rent",
-                date: Calendar.current.date(byAdding: .month, value: -3, to: startDate)!,
+                date: Calendar.current.date(byAdding: minusOneYear, to: startDate)!,
                 recurrencePeriod: .weekly,
                 category: categories[2]
             )
@@ -79,7 +81,7 @@ class DataManager: ObservableObject {
             _ = createTransaction(
                 amount: 15.0,
                 label: "Netflix",
-                date: Calendar.current.date(byAdding: .month, value: -3, to: startDate)!,
+                date: Calendar.current.date(byAdding: minusOneYear, to: startDate)!,
                 recurrencePeriod: .monthly,
                 category: categories[3]
             )
@@ -88,7 +90,7 @@ class DataManager: ObservableObject {
                 amount: 800.0,
                 type: .income,
                 label: "Wages",
-                date: Calendar.current.date(byAdding: DateComponents(month: -3), to: startDate)!,
+                date: Calendar.current.date(byAdding: minusOneYear, to: startDate)!,
                 recurrencePeriod: .weekly,
                 category: createUserCategory(name: "Income 💰")
             )

@@ -16,6 +16,7 @@ struct History: View {
     
     var body: some View {
         VStack {
+            // TODO: Add filter to view only one-off, recurring or all transactions.
             HistoryHeader(groupByCategory: $groupByCategory, period: $period)
                 .padding(.horizontal)
             

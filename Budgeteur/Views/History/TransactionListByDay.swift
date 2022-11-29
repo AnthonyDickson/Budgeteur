@@ -22,6 +22,7 @@ struct TransactionListByDay: View {
     }
     
     var body: some View {
+        // TODO: Can we improve performance on large datasets by getting the date intervals by only fetching the earliest transaction, and then fetch the transactions from within each `TransactionGroup`?
         List {
             ForEach(groupedTransactions, id: \.key) { dateInterval, groupedTransactionSet in
                 TransactionGroup(title: period.getDateIntervalLabel(for: dateInterval), transactionSet: groupedTransactionSet, period: period)

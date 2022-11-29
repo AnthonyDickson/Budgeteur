@@ -19,6 +19,23 @@ enum Period: String, CaseIterable, Identifiable {
     case threeMonths = "3M"
     case oneYear = "1Y"
     
+    var days: Int {
+        switch self {
+        case .oneDay:
+            return 1
+        case .oneWeek:
+            return 7
+        case .twoWeeks:
+            return 14
+        case .oneMonth:
+            return 28
+        case .threeMonths:
+            return 84
+        case .oneYear:
+            return 365
+        }
+    }
+    
     /// Find the calendar quarter for a date, and return the start of the quarter.
     /// - Parameter date: A date.
     /// - Returns: The date of the first day of the calendar quarter that the given date belongs to.
@@ -47,7 +64,7 @@ enum Period: String, CaseIterable, Identifiable {
         switch(self) {
         case .oneDay:
             startDate = date
-            endDate = Calendar.current.date(byAdding: DateComponents(day: 1, second: -1), to: startDate)!
+            endDate = calendar.date(byAdding: DateComponents(day: 1, second: -1), to: startDate)!
         case .oneWeek:
             startDate = calendar.date(
                 from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: date)
@@ -81,7 +98,7 @@ enum Period: String, CaseIterable, Identifiable {
             endDate = calendar.date(byAdding: DateComponents(year: 1, day: -1), to: startDate)!
         }
         
-        return DateInterval(start: startDate, end: Calendar.current.endOfDay(for: endDate))
+        return DateInterval(start: startDate, end: calendar.endOfDay(for: endDate))
     }
     
     /// Get the date increment needed such that adding the increment to another date will create a date interval corresponding to the chosen time period.
@@ -90,17 +107,17 @@ enum Period: String, CaseIterable, Identifiable {
     func getDateIncrement() -> DateComponents {
         switch(self) {
         case .oneDay:
-            return DateComponents(day: 1, second: -1)
+            return DateComponents(day: 1)
         case .oneWeek:
-            return DateComponents(day: 6)
+            return DateComponents(day: 7)
         case .twoWeeks:
-            return DateComponents(day: 13)
+            return DateComponents(day: 14)
         case .oneMonth:
-            return DateComponents(month: 1, day: -1)
+            return DateComponents(month: 1)
         case .threeMonths:
-            return DateComponents(month: 3, day: -1)
+            return DateComponents(month: 3)
         case .oneYear:
-            return DateComponents(year: 1, day: -1)
+            return DateComponents(year: 1)
         }
     }
     
