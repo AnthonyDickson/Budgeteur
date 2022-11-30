@@ -68,7 +68,7 @@ struct CollapsibleTransactionSection: View {
 struct CollapsibleTransactionSection_Previews: PreviewProvider {
     static var dataManager: DataManager = {
         let m: DataManager = .init(inMemory: true)
-        m.addSampleData()
+        m.addSampleData(numSamples: 250)
         return m
     }()
     

@@ -12,6 +12,8 @@
 		922E561F293481020002B77C /* CollapsibleTransactionSectionTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E561E293481020002B77C /* CollapsibleTransactionSectionTitle.swift */; };
 		922E56212934858F0002B77C /* TransactionGroupHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E56202934858F0002B77C /* TransactionGroupHeader.swift */; };
 		922E56232935F35C0002B77C /* TransactionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E56222935F35C0002B77C /* TransactionFilter.swift */; };
+		922E56252937507E0002B77C /* TransactionByDateSubGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E56242937507E0002B77C /* TransactionByDateSubGroup.swift */; };
+		922E5627293750A20002B77C /* RecurringTransactionSubGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E5626293750A20002B77C /* RecurringTransactionSubGroup.swift */; };
 		923B7D2C28F921CE000E46BD /* RecurrencePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D2B28F921CE000E46BD /* RecurrencePeriod.swift */; };
 		923B7D2E28F923AC000E46BD /* DissmissKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D2D28F923AC000E46BD /* DissmissKeyboard.swift */; };
 		923B7D3028F92B15000E46BD /* RecurrencePeriodPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D2F28F92B15000E46BD /* RecurrencePeriodPicker.swift */; };
@@ -84,6 +86,8 @@
 		922E561E293481020002B77C /* CollapsibleTransactionSectionTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleTransactionSectionTitle.swift; sourceTree = "<group>"; };
 		922E56202934858F0002B77C /* TransactionGroupHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionGroupHeader.swift; sourceTree = "<group>"; };
 		922E56222935F35C0002B77C /* TransactionFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionFilter.swift; sourceTree = "<group>"; };
+		922E56242937507E0002B77C /* TransactionByDateSubGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionByDateSubGroup.swift; sourceTree = "<group>"; };
+		922E5626293750A20002B77C /* RecurringTransactionSubGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringTransactionSubGroup.swift; sourceTree = "<group>"; };
 		923B7D2B28F921CE000E46BD /* RecurrencePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrencePeriod.swift; sourceTree = "<group>"; };
 		923B7D2D28F923AC000E46BD /* DissmissKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DissmissKeyboard.swift; sourceTree = "<group>"; };
 		923B7D2F28F92B15000E46BD /* RecurrencePeriodPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrencePeriodPicker.swift; sourceTree = "<group>"; };
@@ -295,6 +299,8 @@
 				92436FC8293196C700E45836 /* TransactionListByCategory.swift */,
 				92436FCA2931974300E45836 /* TransactionListByDay.swift */,
 				92436FCC293197A500E45836 /* TransactionGroup.swift */,
+				922E56242937507E0002B77C /* TransactionByDateSubGroup.swift */,
+				922E5626293750A20002B77C /* RecurringTransactionSubGroup.swift */,
 				92436FD029319B6400E45836 /* TransactionGroupCategory.swift */,
 				922E56202934858F0002B77C /* TransactionGroupHeader.swift */,
 				92436FD42931A4CF00E45836 /* CollapsibleTransactionSection.swift */,
@@ -456,6 +462,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				922E56252937507E0002B77C /* TransactionByDateSubGroup.swift in Sources */,
 				92436FBB29305B7100E45836 /* BudgetOverview.swift in Sources */,
 				927B921A28F3B87E0013B404 /* Keypad.swift in Sources */,
 				92E0E93B29138F6100BC83E9 /* UserCategory+CoreDataClass.swift in Sources */,
@@ -503,6 +510,7 @@
 				927B920B28F22AEA0013B404 /* DataModel.swift in Sources */,
 				923B7D2C28F921CE000E46BD /* RecurrencePeriod.swift in Sources */,
 				923B7D3028F92B15000E46BD /* RecurrencePeriodPicker.swift in Sources */,
+				922E5627293750A20002B77C /* RecurringTransactionSubGroup.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

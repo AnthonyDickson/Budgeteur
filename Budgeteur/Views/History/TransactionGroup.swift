@@ -18,29 +18,20 @@ struct TransactionGroup: View {
     
     var body: some View {
         Section {
+            TransactionGroupHeader(title: title, totalIncome: transactionSet.sumIncome, totalExpenses: transactionSet.sumExpenses)
+                .listRowSeparator(.hidden)
+            
             ForEach(transactionSet.groupOneOffByDate(), id: \.key) { date, transactions in
                 if period == .oneDay {
                     TransactionRows(transactions: transactions, useDateForHeader: false)
                 } else {
-                    CollapsibleTransactionSection(
-                        title: DateFormat.format(date),
-                        transactions: transactions,
-                        useDateForHeader: false,
-                        showTransactions: true
-                    )
+                    TransactionByDateSubGroup(date: date, transactions: transactions)
                 }
             }
             
             if transactionSet.recurringTransactions.count > 0 {
-                // TODO: Sort by amount
-                CollapsibleTransactionSection(
-                    title: "Recurring Transactions",
-                    transactions: transactionSet.recurringTransactions,
-                    useDateForHeader: false
-                )
+                RecurringTransactionSubGroup(recurringTransactions: transactionSet.recurringTransactions)
             }
-        } header: {
-            TransactionGroupHeader(title: title, totalIncome: transactionSet.sumIncome, totalExpenses: transactionSet.sumExpenses)
         }
     }
 }
@@ -48,7 +39,7 @@ struct TransactionGroup: View {
 struct TransactionGroup_Previews: PreviewProvider {
     static var dataManager: DataManager = {
         let m = DataManager.init(inMemory: true)
-        m.addSampleData()
+        m.addSampleData(numSamples: 250)
         return m
     }()
     

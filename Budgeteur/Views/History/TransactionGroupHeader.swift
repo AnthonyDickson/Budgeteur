@@ -27,6 +27,8 @@ struct TransactionGroupHeader: View {
                 Text(Currency.format(totalIncome))
                 Text(Currency.format(-totalExpenses))
             }
+            .foregroundColor(Color(uiColor: .secondaryLabel))
+            .font(.footnote)
             .monospacedDigit()
         }
     }
