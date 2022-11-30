@@ -48,6 +48,7 @@ struct RecurringTransactionSubGroup: View {
        
         if showRecurringTransactions {
             // TODO: Sort by amount, descending
+            // TODO: Fix animation when rows appear, showing sharp corners while rows fade in.
             TransactionRows(transactions: recurringTransactions, useDateForHeader: false)
         }
     }

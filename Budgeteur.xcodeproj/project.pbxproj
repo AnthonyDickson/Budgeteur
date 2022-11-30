@@ -175,6 +175,26 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		922E5628293756A20002B77C /* GroupedByCategory */ = {
+			isa = PBXGroup;
+			children = (
+				92436FC8293196C700E45836 /* TransactionListByCategory.swift */,
+				92436FD029319B6400E45836 /* TransactionGroupCategory.swift */,
+			);
+			path = GroupedByCategory;
+			sourceTree = "<group>";
+		};
+		922E5629293756BC0002B77C /* GroupedByDate */ = {
+			isa = PBXGroup;
+			children = (
+				92436FCA2931974300E45836 /* TransactionListByDay.swift */,
+				92436FCC293197A500E45836 /* TransactionGroup.swift */,
+				922E56242937507E0002B77C /* TransactionByDateSubGroup.swift */,
+				922E5626293750A20002B77C /* RecurringTransactionSubGroup.swift */,
+			);
+			path = GroupedByDate;
+			sourceTree = "<group>";
+		};
 		923B7D3328F9301E000E46BD /* Record */ = {
 			isa = PBXGroup;
 			children = (
@@ -296,12 +316,8 @@
 			children = (
 				92E0E93F2915FBB300BC83E9 /* History.swift */,
 				92436FC22930851600E45836 /* HistoryHeader.swift */,
-				92436FC8293196C700E45836 /* TransactionListByCategory.swift */,
-				92436FCA2931974300E45836 /* TransactionListByDay.swift */,
-				92436FCC293197A500E45836 /* TransactionGroup.swift */,
-				922E56242937507E0002B77C /* TransactionByDateSubGroup.swift */,
-				922E5626293750A20002B77C /* RecurringTransactionSubGroup.swift */,
-				92436FD029319B6400E45836 /* TransactionGroupCategory.swift */,
+				922E5628293756A20002B77C /* GroupedByCategory */,
+				922E5629293756BC0002B77C /* GroupedByDate */,
 				922E56202934858F0002B77C /* TransactionGroupHeader.swift */,
 				92436FD42931A4CF00E45836 /* CollapsibleTransactionSection.swift */,
 				922E561E293481020002B77C /* CollapsibleTransactionSectionTitle.swift */,

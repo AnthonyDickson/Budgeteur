@@ -18,8 +18,13 @@ struct TransactionGroup: View {
     
     var body: some View {
         Section {
-            TransactionGroupHeader(title: title, totalIncome: transactionSet.sumIncome, totalExpenses: transactionSet.sumExpenses)
-                .listRowSeparator(.hidden)
+            VStack {
+                TransactionGroupHeader(title: title, totalIncome: transactionSet.sumIncome, totalExpenses: transactionSet.sumExpenses)
+                
+                if period == .oneDay {
+                    Divider()
+                }
+            }
             
             ForEach(transactionSet.groupOneOffByDate(), id: \.key) { date, transactions in
                 if period == .oneDay {
@@ -33,6 +38,7 @@ struct TransactionGroup: View {
                 RecurringTransactionSubGroup(recurringTransactions: transactionSet.recurringTransactions)
             }
         }
+        .listRowSeparator(.hidden)
     }
 }
 
@@ -44,14 +50,16 @@ struct TransactionGroup_Previews: PreviewProvider {
     }()
     
     static var previews: some View {
-        let period: Period = .oneWeek
-        let transactions = try! dataManager.context.fetch(Transaction.fetchRequest())
-        let (dateInterval, transactionSet) = TransactionSet.fromTransactions(transactions, groupBy: period)
-            .groupByDateInterval(period: period)[0]
-        let title = period.getDateIntervalLabel(for: dateInterval)
-        
-        List {
-            TransactionGroup(title: title, transactionSet: transactionSet, period: period)
+        ForEach([Period.oneWeek, Period.oneDay], id: \.self) { period in
+            let transactions = try! dataManager.context.fetch(Transaction.fetchRequest())
+            let (dateInterval, transactionSet) = TransactionSet.fromTransactions(transactions, groupBy: period)
+                .groupByDateInterval(period: period)[0]
+            let title = period.getDateIntervalLabel(for: dateInterval)
+            
+            List {
+                TransactionGroup(title: title, transactionSet: transactionSet, period: period)
+            }
+            .previewDisplayName(period.rawValue)
         }
     }
 }

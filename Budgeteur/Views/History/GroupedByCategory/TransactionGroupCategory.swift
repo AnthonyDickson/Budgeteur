@@ -43,6 +43,11 @@ struct TransactionGroupCategory: View {
         let totalExpenses = sumExpenses
         
         Section {
+            VStack {
+                TransactionGroupHeader(title: title, totalIncome: totalIncome, totalExpenses: totalExpenses)
+                Divider()
+            }
+
             ForEach(Self.groupByCategory(transactions), id: \.key) { category, groupedTransactions in
                 CollapsibleTransactionSection(
                     title: category?.name ?? UserCategory.defaultName,
@@ -52,17 +57,15 @@ struct TransactionGroupCategory: View {
                     totalExpenses: totalExpenses
                 )
             }
-        } header: {
-            TransactionGroupHeader(title: title, totalIncome: totalIncome, totalExpenses: totalExpenses)
         }
-        
+        .listRowSeparator(.hidden)
     }
 }
 
 struct TransactionGroupCategory_Previews: PreviewProvider {
     static var dataManager: DataManager = {
         let m: DataManager = .init(inMemory: true)
-        m.addSampleData()
+        m.addSampleData(numSamples: 250)
         return m
     }()
     
