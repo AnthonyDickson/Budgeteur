@@ -316,8 +316,8 @@
 			children = (
 				92E0E93F2915FBB300BC83E9 /* History.swift */,
 				92436FC22930851600E45836 /* HistoryHeader.swift */,
-				922E5628293756A20002B77C /* GroupedByCategory */,
 				922E5629293756BC0002B77C /* GroupedByDate */,
+				922E5628293756A20002B77C /* GroupedByCategory */,
 				922E56202934858F0002B77C /* TransactionGroupHeader.swift */,
 				92436FD42931A4CF00E45836 /* CollapsibleTransactionSection.swift */,
 				922E561E293481020002B77C /* CollapsibleTransactionSectionTitle.swift */,

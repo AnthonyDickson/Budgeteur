@@ -21,7 +21,7 @@ struct TransactionGroup: View {
             VStack {
                 TransactionGroupHeader(title: title, totalIncome: transactionSet.sumIncome, totalExpenses: transactionSet.sumExpenses)
                 
-                if period == .oneDay {
+                if period == .oneDay && transactionSet.oneOffTransactions.count > 0 {
                     Divider()
                 }
             }
