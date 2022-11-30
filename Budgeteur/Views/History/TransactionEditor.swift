@@ -92,8 +92,7 @@ struct TransactionEditor: View {
                 }
             }
         }
-//        .listStyle(.grouped)
-        .navigationTitle("Edit Transaction")
+        .navigationTitle("Edit \(transaction.type.rawValue)")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
