@@ -30,6 +30,15 @@ struct Record: View {
         amount <= 0
     }
     
+    /// Prompts the user to type in what they paid for or earned money from.
+    private var memoPlaceholder: String {
+        if transactionType == .expense {
+            return "What did you pay for?"
+        } else {
+            return "What did you earn money from?"
+        }
+    }
+    
     /// Add the transaction to the app's data.
     private func save() {
         _ = dataManager.createTransaction(amount: amount, type: transactionType, label: label, date: date, recurrencePeriod: recurrencePeriod, category: category)
@@ -47,6 +56,17 @@ struct Record: View {
         }
     }
     
+    /// Toggle between adding expenses and income.
+    private func toggleTransactionType() {
+        withAnimation(.easeInOut(duration: 0.3)) {
+            if transactionType == .expense {
+                transactionType = .income
+            } else {
+                transactionType = .expense
+            }
+        }
+    }
+    
     var body: some View {
         // Need GeometryReader here to prevent the keyboard from moving the views (keyboard avoidance).
         GeometryReader { _ in
@@ -56,19 +76,11 @@ struct Record: View {
                 Spacer()
 
                 AmountDisplay(amount: amount, transactionType: transactionType)
-                    .onTapGesture {
-                        withAnimation(.easeInOut(duration: 0.3)) {
-                            if transactionType == .expense {
-                                transactionType = .income
-                            } else {
-                                transactionType = .expense
-                            }
-                        }
-                    }
+                    .onTapGesture(perform: toggleTransactionType)
                 
                 Spacer()
                 
-                TextField("What did you \(transactionType == .expense ? "pay" : "earn money") for?", text: $label)
+                TextField(memoPlaceholder, text: $label)
                     .submitLabel(.done)
                     .multilineTextAlignment(.center)
                     .padding()
