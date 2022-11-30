@@ -8,20 +8,37 @@
 import SwiftUI
 import CoreData
 
+/// How to sort transactions in ``TransactionRows``.
+enum RowSortOrder {
+    /// Sort transactions by amount in descending order.
+    case amount
+    /// Sort transactions by date in descending order.
+    case date
+}
+
 /// Creates a ForEach displaying each transaction as a ``TransactionRow``.
 struct TransactionRows: View {
     /// The collection of transactions to display in this section.
     var transactions: [TransactionWrapper]
     /// Whether to use the date or the category for the header title.
     var useDateForHeader: Bool
+    /// How to sort the transactions.
+    var sortBy: RowSortOrder = .date
+    
+    private var sortedTransactions: [TransactionWrapper] {
+        switch sortBy {
+        case .amount:
+            return transactions.sorted(by: { $0.amount > $1.amount })
+        case .date:
+            return transactions.sorted(by: { $0.date > $1.date })
+        }
+    }
     
     @State private var selectedTransaction: TransactionWrapper? = nil
     
-    @Environment(\.managedObjectContext) private var context
-    
     var body: some View {
         // TODO: Enable sorting by either date or amount.
-        ForEach(transactions.sorted(by: { $0.date > $1.date })) { transaction in
+        ForEach(sortedTransactions) { transaction in
             TransactionRow(transaction: transaction, useDateForHeader: useDateForHeader)
                 .onTapGesture {
                     selectedTransaction = transaction
