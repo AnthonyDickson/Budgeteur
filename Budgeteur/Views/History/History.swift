@@ -35,13 +35,11 @@ struct History_Previews: PreviewProvider {
     static var dataManager: DataManager = .init(inMemory: true)
     
     static var previews: some View {
-        NavigationStack {
-            History()
-        }
-        .environment(\.managedObjectContext, dataManager.container.viewContext)
-        .environmentObject(dataManager)
-        .onAppear {
-            dataManager.addSampleData()
-        }
+        History()
+            .environment(\.managedObjectContext, dataManager.container.viewContext)
+            .environmentObject(dataManager)
+            .onAppear {
+                dataManager.addSampleData(numSamples: 500)
+            }
     }
 }

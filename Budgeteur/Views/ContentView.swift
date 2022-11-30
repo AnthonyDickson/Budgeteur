@@ -10,12 +10,10 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         TabView {
-            NavigationStack {
-                Record()
-            }
-            .tabItem {
-                Label("Record", systemImage: "creditcard")
-            }
+            Record()
+                .tabItem {
+                    Label("Record", systemImage: "creditcard")
+                }
             
             History()
                 .tabItem {
@@ -37,7 +35,7 @@ struct ContentView: View {
                 .environment(\.managedObjectContext, dataManager.context)
                 .environmentObject(dataManager)
                 .onAppear {
-                    dataManager.addSampleData()
+                    dataManager.addSampleData(numSamples: 500)
                 }
         }
     }
