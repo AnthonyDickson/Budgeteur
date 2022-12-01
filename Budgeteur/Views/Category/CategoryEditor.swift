@@ -42,6 +42,9 @@ struct CategoryEditor: View {
                     Button("Add") {
                         createCategoryAndReset()
                     }
+                    // The plain button style disables the distracting press animation.
+                    .buttonStyle(.plain)
+                    .foregroundColor(Color(uiColor: .systemBlue))
                     .disabled(newCategoryName.isEmpty)
                 }
             }

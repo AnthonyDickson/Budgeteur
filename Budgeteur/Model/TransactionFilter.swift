@@ -16,17 +16,25 @@ enum TransactionFilter: String, CaseIterable {
     /// Show recurring transactions only.
     case recurringOnly = "Recurring"
     
-    /// Filter a sequence of transactions based on the selected transaction filter.
-    /// - Parameter transactions: The transactions to filter.
-    /// - Returns: A list of the filtered transactions.
-    func filter(_ transactions: any Sequence<Transaction>) -> [Transaction] {
-        switch self {
-        case .all:
-            return Array(transactions)
-        case .oneOffOnly:
-            return transactions.filter { $0.recurrencePeriod == RecurrencePeriod.never.rawValue }
-        case .recurringOnly:
-            return transactions.filter { $0.recurrencePeriod != RecurrencePeriod.never.rawValue }
+    /// Create a predicate for a fetch request to a Core Data store base on the selected transaction filter.
+    /// - Parameter label: Transactions will be filtered out if neither of their `label` or `category.name` do not contain this text (case insenstive). Empty strings will be ignored.
+    /// - Returns: A `NSPredicate` object.
+    func getPredicate(with label: String = "") -> NSPredicate {
+        var predicates: [NSPredicate] = []
+        
+        if !label.isEmpty {
+            predicates.append(NSPredicate(format: "label CONTAINS[c] %@ OR category.name CONTAINS[c] %@", label, label))
         }
+        
+        switch self {
+        case .oneOffOnly:
+            predicates.append(NSPredicate(format: "recurrencePeriod == %@", RecurrencePeriod.never.rawValue))
+        case .recurringOnly:
+            predicates.append(NSPredicate(format: "recurrencePeriod != %@", RecurrencePeriod.never.rawValue))
+        default:
+            break
+        }
+        
+        return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     }
 }

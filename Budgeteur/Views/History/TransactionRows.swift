@@ -37,7 +37,6 @@ struct TransactionRows: View {
     @State private var selectedTransaction: TransactionWrapper? = nil
     
     var body: some View {
-        // TODO: Enable sorting by either date or amount.
         ForEach(sortedTransactions) { transaction in
             TransactionRow(transaction: transaction, useDateForHeader: useDateForHeader)
                 .onTapGesture {

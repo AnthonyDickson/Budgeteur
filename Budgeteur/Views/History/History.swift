@@ -16,17 +16,28 @@ struct History: View {
     /// Controls which transactions as shown (all, recurring only or non-recurring only).
     @AppStorage("transactionFilter") private var transactionFilter: TransactionFilter = .all
     
+    /// Text the user has typed into the search bar. Will be used to filter transactions by label or category name.
+    @State private var searchText: String = ""
+    /// Predicate for fetch request that filters transactions by recurrence period and/or label/category name.
+    private var predicate: NSPredicate {
+        transactionFilter.getPredicate(with: searchText)
+    }
+    
     var body: some View {
         VStack {
             HistoryHeader(groupByCategory: $groupByCategory, period: $period, transactionFilter: $transactionFilter)
                 .padding(.horizontal)
             
-            // TODO: Add search for transactions. Create predicate in `History` view?
-            if groupByCategory {
-                TransactionListByCategory(period: period, transactionFilter: transactionFilter)
-            } else {
-                TransactionListByDay(period: period, transactionFilter: transactionFilter)
+            List {
+                SearchBar(searchText: $searchText)
+                
+                if groupByCategory {
+                    TransactionListByCategory(period: period, predicate: predicate)
+                } else {
+                    TransactionListByDay(period: period, predicate: predicate)
+                }
             }
+            .listStyle(.insetGrouped)
         }
     }
 }

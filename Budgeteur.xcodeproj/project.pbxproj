@@ -53,6 +53,7 @@
 		927B921A28F3B87E0013B404 /* Keypad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921928F3B87E0013B404 /* Keypad.swift */; };
 		927B921C28F3CCE50013B404 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921B28F3CCE50013B404 /* Currency.swift */; };
 		927B921E28F3D6C20013B404 /* Stateful.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921D28F3D6C20013B404 /* Stateful.swift */; };
+		92A849172938853200922655 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A849162938853200922655 /* SearchBar.swift */; };
 		92B2A0D228F667FB00B81F0D /* PeriodPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B2A0D128F667FB00B81F0D /* PeriodPicker.swift */; };
 		92B2A0D428F66BCA00B81F0D /* Period.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B2A0D328F66BCA00B81F0D /* Period.swift */; };
 		92E0E93629138E0B00BC83E9 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 92E0E93429138E0B00BC83E9 /* Model.xcdatamodeld */; };
@@ -130,6 +131,7 @@
 		927B921928F3B87E0013B404 /* Keypad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keypad.swift; sourceTree = "<group>"; };
 		927B921B28F3CCE50013B404 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		927B921D28F3D6C20013B404 /* Stateful.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stateful.swift; sourceTree = "<group>"; };
+		92A849162938853200922655 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		92B2A0D128F667FB00B81F0D /* PeriodPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodPicker.swift; sourceTree = "<group>"; };
 		92B2A0D328F66BCA00B81F0D /* Period.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Period.swift; sourceTree = "<group>"; };
 		92E0E93529138E0B00BC83E9 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 				92436FDC2931AA0C00E45836 /* TransactionRow.swift */,
 				922E561929334E300002B77C /* AmountText.swift */,
 				92436FE22932E61C00E45836 /* OptionalDatePicker.swift */,
+				92A849162938853200922655 /* SearchBar.swift */,
 			);
 			path = History;
 			sourceTree = "<group>";
@@ -485,6 +488,7 @@
 				92436FCB2931974300E45836 /* TransactionListByDay.swift in Sources */,
 				92E0E93629138E0B00BC83E9 /* Model.xcdatamodeld in Sources */,
 				92436FE32932E61C00E45836 /* OptionalDatePicker.swift in Sources */,
+				92A849172938853200922655 /* SearchBar.swift in Sources */,
 				92436FCF293199F100E45836 /* DateFormat.swift in Sources */,
 				92436FDB2931A9F000E45836 /* TransactionRows.swift in Sources */,
 				927B91DD28F220310013B404 /* ContentView.swift in Sources */,
