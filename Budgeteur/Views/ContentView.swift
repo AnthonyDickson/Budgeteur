@@ -8,17 +8,29 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(\.horizontalSizeClass) private var sizeClass
+    
     var body: some View {
         TabView {
-            Record()
-                .tabItem {
-                    Label("Record", systemImage: "creditcard")
+            if sizeClass == .compact {
+                Record()
+                    .tabItem {
+                        Label("Record", systemImage: "creditcard")
+                    }
+                
+                History()
+                    .tabItem {
+                        Label("History", systemImage: "scroll")
+                    }
+            } else {
+                HStack {
+                    History()
+                    Record()
                 }
-            
-            History()
                 .tabItem {
-                    Label("History", systemImage: "scroll")
+                    Label("Transactions", systemImage: "scroll")
                 }
+            }
             
             Settings()
                 .tabItem {
@@ -31,12 +43,22 @@ struct ContentView: View {
         static var dataManager = DataManager(inMemory: true)
         
         static var previews: some View {
-            ContentView()
-                .environment(\.managedObjectContext, dataManager.context)
-                .environmentObject(dataManager)
-                .onAppear {
-                    dataManager.addSampleData(numSamples: 500)
-                }
+            let previewDevices = [
+                "iPhone 14 Pro",
+                "iPad mini (6th generation)"
+            ]
+            
+            ForEach(previewDevices, id: \.description) { previewDevice in
+                ContentView()
+                    .environment(\.managedObjectContext, dataManager.context)
+                    .environmentObject(dataManager)
+                    .onAppear {
+                        dataManager.addSampleData(numSamples: 500)
+                    }
+                    .previewDisplayName(previewDevice)
+                    .previewDevice(.init(rawValue: previewDevice))
+            }
+            
         }
     }
 }
