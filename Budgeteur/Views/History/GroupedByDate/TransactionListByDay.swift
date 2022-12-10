@@ -18,6 +18,8 @@ struct TransactionListByDay: View {
     /// All the recorded transactions.
     @FetchRequest private var transactions: FetchedResults<Transaction>
     
+    @Environment(\.managedObjectContext) private var context
+    
     init(period: Period, predicate: NSPredicate? = nil) {
         self.period = period
         self.predicate = predicate
@@ -33,11 +35,25 @@ struct TransactionListByDay: View {
             .groupByDateInterval(period: period)
     }
     
+    private var startDate: Date {
+        let request = Transaction.fetchRequest()
+        request.fetchLimit = 1
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \Transaction.date, ascending: true)]
+        
+        let transaction = try? context.fetch(request)
+        
+        return transaction?.first?.date ?? Date.now
+    }
+    
     var body: some View {
-        // TODO: Can we improve performance on large datasets by getting the date intervals by only fetching the earliest transaction, and then fetch the transactions from within each `TransactionGroup`?
-            ForEach(groupedTransactions, id: \.key) { dateInterval, groupedTransactionSet in
-                TransactionGroup(title: period.getDateIntervalLabel(for: dateInterval), transactionSet: groupedTransactionSet, period: period)
-            }
+        ForEach(period.getDateIntervals(from: startDate), id: \.hashValue) { dateInterval in
+            // TODO: Add transaction group which loads transactions internally
+            Text(dateInterval.description)
+        }
+        
+        ForEach(groupedTransactions, id: \.key) { dateInterval, groupedTransactionSet in
+            TransactionGroup(title: period.getDateIntervalLabel(for: dateInterval), transactionSet: groupedTransactionSet, period: period)
+        }
     }
 }
 

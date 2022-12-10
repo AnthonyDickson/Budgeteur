@@ -7,8 +7,6 @@
 
 import Foundation
 
-// TODO: Refactor similar code between ``RecurrencePeriod`` and ``Period``. Could create protocol 'Period' and rename `Period` to 'ReportingPeriod'. Enum values would be ordinal integers, with `ReportingPeriod` starting at 1 and `RecurrencePeriod` at 0. Then there would be a property called `name` defined in each conforming object that converts the enum value to a GUI friendly name (e.g., 1D, daily). The `getDateIncrement(..)` function in `RecurrencePeriod` could just override the base implementation, add a case for the `.never` enum case and default to the base implementation.
-
 /// The time period that a transaction may repeat over.
 public enum RecurrencePeriod: String, CaseIterable {
     case never = "Never"

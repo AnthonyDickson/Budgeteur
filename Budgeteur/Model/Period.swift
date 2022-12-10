@@ -121,6 +121,28 @@ enum Period: String, CaseIterable, Identifiable {
         }
     }
     
+    /// Get date intervals to group transactions into based on the selected ``Period``.
+    ///
+    /// Will generate date intervals from the specified start date until the current date.
+    /// - Parameter startDate: The date to generate date intervals from.
+    /// - Returns: A list of date intervals.
+    func getDateIntervals(from startDate: Date) -> [DateInterval] {
+        let dateIncrement = getDateIncrement()
+        var intervals: [DateInterval] = []
+        
+        let calendar = Calendar(identifier: .iso8601)
+        let today = Date.now
+        var date = startDate
+        
+        while date <= today {
+            intervals.append(getDateInterval(for: date))
+            
+            date = calendar.date(byAdding: dateIncrement, to: date)!
+        }
+        
+        return intervals
+    }
+    
     /// Format a date for section headers.
     /// - Parameters:
     ///   - date: A date.
