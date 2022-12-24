@@ -10,13 +10,40 @@ import SwiftUI
 /// Displays transactions grouped by time period and recurring transactions in their own section.
 struct TransactionGroup: View {
     /// The text that appears in the section header.
-    var title: String
-    /// The set of one-off and recurring transactions to display.
-    var transactionSet: TransactionSet
+    private var title: String
+    /// Only transactions within this date range are fetched.
+    var dateInterval: DateInterval
     /// The time interval to group transactions into (e.g., 1 day, 1 week).
     var period: Period
     
+    /// All the transactions for the specified date interval.
+    @FetchRequest private var transactions: FetchedResults<Transaction>
+    
+    @Environment(\.managedObjectContext) private var context
+    
+    init(dateInterval: DateInterval, period: Period, predicate: NSPredicate? = nil) {
+        self.title = period.getDateIntervalLabel(for: dateInterval)
+        self.dateInterval = dateInterval
+        self.period = period
+
+        var compoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [
+            NSPredicate(format: "recurrencePeriod == %@ AND date BETWEEN {%@, %@}", RecurrencePeriod.never.rawValue, dateInterval.start as NSDate, dateInterval.end as NSDate),
+            NSPredicate(format: "recurrencePeriod != %@ AND (date <= %@ AND (endDate == nil OR endDate >= %@))", RecurrencePeriod.never.rawValue, dateInterval.end as NSDate, dateInterval.start as NSDate)
+        ])
+        
+        if let predicate = predicate {
+            compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [compoundPredicate, predicate])
+        }
+        
+        _transactions = FetchRequest<Transaction>(
+            sortDescriptors: [SortDescriptor(\Transaction.date, order: .reverse)],
+            predicate: compoundPredicate
+        )
+    }
+    
     var body: some View {
+        let transactionSet = TransactionSet.fromTransactions(Array(transactions), in: dateInterval, groupBy: period)
+        
         Section {
             VStack {
                 TransactionGroupHeader(title: title, totalIncome: transactionSet.sumIncome, totalExpenses: transactionSet.sumExpenses)
@@ -51,15 +78,13 @@ struct TransactionGroup_Previews: PreviewProvider {
     
     static var previews: some View {
         ForEach([Period.oneWeek, Period.oneDay], id: \.self) { period in
-            let transactions = try! dataManager.context.fetch(Transaction.fetchRequest())
-            let (dateInterval, transactionSet) = TransactionSet.fromTransactions(transactions, groupBy: period)
-                .groupByDateInterval(period: period)[0]
-            let title = period.getDateIntervalLabel(for: dateInterval)
+            let dateInterval = period.getDateInterval(for: .now)
             
             List {
-                TransactionGroup(title: title, transactionSet: transactionSet, period: period)
+                TransactionGroup(dateInterval: dateInterval, period: period)
             }
             .previewDisplayName(period.rawValue)
         }
+        .environment(\.managedObjectContext, dataManager.context)
     }
 }

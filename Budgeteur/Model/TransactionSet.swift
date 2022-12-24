@@ -31,11 +31,12 @@ struct TransactionSet {
         oneOffTransactions.filter({ $0.type == type }).sum(\.amount) + recurringTransactions.filter({ $0.type == type }).sum(\.amount)
     }
     
-    
     /// Convert transactions from the Core Data interface class to a proxy class object that is more suited for the GUI.
     /// - Parameter transactions: The transactions from the Core Data store.
+    /// - Parameter dateInterval: (optional) The date range to limit recurring transactions to. If not specified, recurring transactions will have proxy transactions created starting from their start date to the current date.
+    /// - Parameter period: The time period to group generated recurring transactions.
     /// - Returns: The transactions as a set of one-off transactions and auto-generated recurring transactions.
-    static func fromTransactions(_ transactions: [Transaction], groupBy period: Period) -> TransactionSet {
+    static func fromTransactions(_ transactions: [Transaction], in dateInterval: DateInterval? = nil, groupBy period: Period) -> TransactionSet {
         var oneOffTransactions: [TransactionWrapper] = []
         var recurringTransactions: [TransactionWrapper] = []
         
@@ -50,6 +51,8 @@ struct TransactionSet {
                     category: transaction.category,
                     parent: transaction
                 ))
+            } else if let dateInterval = dateInterval {
+                recurringTransactions.append(contentsOf: transaction.getRecurringTransactions(in: dateInterval, groupBy: period))
             } else {
                 recurringTransactions.append(contentsOf: transaction.getRecurringTransactions(groupBy: period))
             }
