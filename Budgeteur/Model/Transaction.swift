@@ -19,17 +19,9 @@ extension Transaction {
     
     /// Generate proxy transaction objects for a given base transaction.
     /// - Parameter dateInterval: The date interval to filter the transactions by.
-    /// - Parameter period: The reporting period (e.g. weekly) to group transactions into.
-    /// - Returns: The list of generated transactions with the given date interval.
-    func getRecurringTransactions(in dateInterval: DateInterval, groupBy period: Period) -> [TransactionWrapper] {
-        return getRecurringTransactions(groupBy: period)
-            .filter { dateInterval.contains($0.date) }
-    }
-    
-    /// Generate proxy transaction objects for a given base transaction.
     /// - Parameter period: The time period to report by (e.g. weekly)
     /// - Returns: The list of generated transactions.
-    func getRecurringTransactions(groupBy period: Period) -> [TransactionWrapper] {
+    func getRecurringTransactions(in dateInterval: DateInterval? = nil, groupBy period: Period) -> [TransactionWrapper] {
         let isoCalendar = Calendar(identifier: .iso8601)
         let startDate = isoCalendar.startOfDay(for: self.date)
         let today = isoCalendar.startOfDay(for: Date.now)
@@ -43,7 +35,18 @@ extension Transaction {
             endDate = endOfToday
         }
         
-        let dateInterval = DateInterval(start: startDate, end: endDate)
+        let recurringTransactionInterval: DateInterval
+        
+        if let dateInterval = dateInterval {
+            // We want the shortest interval, so we:
+            // 1) get the latest date of `startDate` and the `dateInterval.start`;
+            let lastestStartDate = startDate > dateInterval.start ? startDate : dateInterval.start
+            // and 2) get the earliest of `endDate` and `dateInterval.end`
+            let earliestEndDate = endDate < dateInterval.end ? endDate : dateInterval.end
+            recurringTransactionInterval = DateInterval(start: lastestStartDate, end: earliestEndDate)
+        } else {
+            recurringTransactionInterval = DateInterval(start: startDate, end: endDate)
+        }
         
         guard let recurrencePeriod = RecurrencePeriod(rawValue: self.recurrencePeriod) else {
             fatalError("Error: Could not convert '\(self.recurrencePeriod)' to a valid enum value of RecurrencePeriod.")
@@ -56,9 +59,9 @@ extension Transaction {
         let useWholeAmounts = recurrencePeriod.days <= period.days
         
         if useWholeAmounts {
-            return getRecurringTransactionsWholeAmounts(in: dateInterval, every: recurrencePeriod, using: isoCalendar)
+            return getRecurringTransactionsWholeAmounts(in: recurringTransactionInterval, every: recurrencePeriod, using: isoCalendar)
         } else {
-            return getRecurringTransactionsFractionalAmounts(in: dateInterval, every: recurrencePeriod, reportingBy: period, using: isoCalendar)
+            return getRecurringTransactionsFractionalAmounts(in: recurringTransactionInterval, every: recurrencePeriod, reportingBy: period, using: isoCalendar)
         }
     }
     
