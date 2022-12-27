@@ -12,19 +12,31 @@ import SwiftUI
 ///
 /// The parent view should ensure that the environment variable `editMode` is set to `EditMode.active`.
 struct CategoryEditor: View {
+    /// The type of transactions the categories are for (income or expenses).
+    var transactionType: TransactionType
+    
     /// The name that will be used to create a new category.
     @State private var newCategoryName = ""
     
     /// The list of user defined categories.
-    @FetchRequest(sortDescriptors: [SortDescriptor(\UserCategory.name, order: .forward)]) private var categories: FetchedResults<UserCategory>
+    @FetchRequest private var categories: FetchedResults<UserCategory>
     
     @Environment(\.dismiss) private var dismiss: DismissAction
     @Environment(\.managedObjectContext) private var context
     @EnvironmentObject private var dataManager: DataManager
     
+    init(transactionType: TransactionType) {
+        self.transactionType = transactionType
+        
+        _categories = FetchRequest<UserCategory>(
+            sortDescriptors: [SortDescriptor(\UserCategory.name, order: .forward)],
+            predicate: NSPredicate(format: "type == %@", transactionType.rawValue)
+        )
+    }
+    
     private func createCategoryAndReset() {
         if !newCategoryName.isEmpty {
-            _ = dataManager.createUserCategory(name: newCategoryName)
+            _ = dataManager.createUserCategory(name: newCategoryName, type: transactionType)
             newCategoryName = ""
         }
     }
@@ -88,18 +100,28 @@ struct CategoryEditor_Previews: PreviewProvider {
     static var dataManager: DataManager = {
         let m: DataManager = .init(inMemory: true)
         
-        _ = m.createUserCategory(name: "Foo")
-        _ = m.createUserCategory(name: "Bar")
+        _ = m.createUserCategory(name: "Foo", type: .expense)
+        _ = m.createUserCategory(name: "Bar", type: .expense)
+        _ = m.createUserCategory(name: "Baz", type: .income)
         m.save()
         
         return m
     }()
     
     static var previews: some View {
-        NavigationStack {
-            CategoryEditor()
-                .environmentObject(dataManager)
-            .environment(\.managedObjectContext, dataManager.context)
+        let categories = dataManager.getUserCategories()
+        
+        ForEach([TransactionType.expense, TransactionType.income], id: \.self) { transactionType in
+            let filteredCategories = categories.filter({ $0.type == transactionType.rawValue })
+            
+            Stateful(initialState: filteredCategories.first) { $category in
+                NavigationStack {
+                    CategoryEditor(transactionType: transactionType)
+                }
+            }
+            .previewDisplayName(transactionType.rawValue + " Categories Editor")
         }
+        .environmentObject(dataManager)
+        .environment(\.managedObjectContext, dataManager.context)
     }
 }

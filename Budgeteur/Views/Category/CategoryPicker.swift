@@ -11,6 +11,8 @@ import SwiftUI
 struct CategoryPicker: View {
     /// The category the user has tapped on.
     @Binding var selectedCategory: UserCategory?
+    /// The type of transactions the categories are for (income or expenses).
+    var transactionType: TransactionType
     
     /// The width of the button borders.
     var lineWidth = 1.0
@@ -20,13 +22,26 @@ struct CategoryPicker: View {
     
     /// The dash style for the edit category button.
     var dashStyle: [CGFloat] = [5.0, 3.0]
+    
+    /// Whether to display the sheet with the form to add, edit and delete categories.
+    @State private var showCategoryEditor: Bool = false
 
     @FetchRequest(sortDescriptors: [SortDescriptor(\UserCategory.name, order: .forward)]) private var categories: FetchedResults<UserCategory>
     
     @EnvironmentObject private var dataManager: DataManager
     
-    /// Whether to display the sheet with the form to add, edit and delete categories.
-    @State private var showCategoryEditor: Bool = false
+    init(selectedCategory: Binding<UserCategory?>, transactionType: TransactionType, lineWidth: Double = 1.0, cornerRadius: Double = 5.0, dashStyle: [CGFloat] = [5.0, 3.0]) {
+        self._selectedCategory = selectedCategory
+        self.transactionType = transactionType
+        self.lineWidth = lineWidth
+        self.cornerRadius = cornerRadius
+        self.dashStyle = dashStyle
+        
+        _categories = FetchRequest<UserCategory>(
+            sortDescriptors: [SortDescriptor(\UserCategory.name, order: .forward)],
+            predicate: NSPredicate(format: "type == %@", transactionType.rawValue)
+        )
+    }
     
     /// Get the color for the category label.
     ///
@@ -133,7 +148,7 @@ struct CategoryPicker: View {
                 scrollTo(selectedCategory, using: proxy)
             } content: {
                 NavigationStack {
-                    CategoryEditor()
+                    CategoryEditor(transactionType: transactionType)
                 }
             }
         }
@@ -144,17 +159,26 @@ struct CategoryPicker_Previews: PreviewProvider {
     static var dataManager: DataManager = {
         let m: DataManager = .init(inMemory: true)
         
-        _ = m.createUserCategory(name: "Foo")
-        _ = m.createUserCategory(name: "Bar")
+        _ = m.createUserCategory(name: "Foo", type: .expense)
+        _ = m.createUserCategory(name: "Bar", type: .expense)
+        _ = m.createUserCategory(name: "Baz", type: .income)
+        m.save()
         
         return m
     }()
     
     static var previews: some View {
-        Stateful(initialState: dataManager.getUserCategories()[0]) { $category in
-            CategoryPicker(selectedCategory: $category)
-                .environmentObject(dataManager)
-                .environment(\.managedObjectContext, dataManager.context)
+        let categories = dataManager.getUserCategories()
+        
+        ForEach([TransactionType.expense, TransactionType.income], id: \.self) { transactionType in
+            let filteredCategories = categories.filter({ $0.type == transactionType.rawValue })
+            
+            Stateful(initialState: filteredCategories.first) { $category in
+                CategoryPicker(selectedCategory: $category, transactionType: transactionType)
+                    .previewDisplayName(transactionType.rawValue + " Categories")
+            }
         }
+        .environmentObject(dataManager)
+        .environment(\.managedObjectContext, dataManager.context)
     }
 }

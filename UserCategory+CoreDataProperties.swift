@@ -17,11 +17,12 @@ extension UserCategory {
     }
 
     @NSManaged public var name: String
+    @NSManaged public var type: String
     @NSManaged public var transactionsWithCategory: NSSet?
     
     static let defaultName = "Untagged"
     
-    public convenience init(insertInto context: NSManagedObjectContext, name: String) {
+    public convenience init(insertInto context: NSManagedObjectContext, name: String, type: TransactionType) {
         guard let entity = NSEntityDescription.entity(forEntityName: "UserCategory", in: context) else {
             fatalError("Could not get entity description for 'UserCategory'.")
         }
@@ -29,6 +30,7 @@ extension UserCategory {
         self.init(entity: entity, insertInto: context)
         
         self.name = name
+        self.type = type.rawValue
     }
 }
 

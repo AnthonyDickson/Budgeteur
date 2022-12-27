@@ -84,9 +84,8 @@ struct Record: View {
                     .submitLabel(.done)
                     .multilineTextAlignment(.center)
                     .padding()
-                
-                // TODO: Different set of categories for expenses/income? Could add ``TransactionType` as an attribute.
-                CategoryPicker(selectedCategory: $category)
+
+                CategoryPicker(selectedCategory: $category, transactionType: transactionType)
                 
                 Keypad(amount: $amount, onSave: save)
             }

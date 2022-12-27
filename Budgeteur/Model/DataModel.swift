@@ -30,11 +30,11 @@ class DataManager: ObservableObject {
     
     func addSampleData(numSamples: Int = 50, addRecurring: Bool = true) {
         let categories = [
-            createUserCategory(name: "Groceries 🛒"),
-            createUserCategory(name: "Eating Out 🍔"),
-            createUserCategory(name: "Home Expenses 🏡"),
-            createUserCategory(name: "Entertainment 🎶"),
-            createUserCategory(name: "Donation ❤️")
+            createUserCategory(name: "Groceries 🛒", type: .expense),
+            createUserCategory(name: "Eating Out 🍔", type: .expense),
+            createUserCategory(name: "Home Expenses 🏡", type: .expense),
+            createUserCategory(name: "Entertainment 🎶", type: .expense),
+            createUserCategory(name: "Donation ❤️", type: .expense)
         ]
         
         let rng = GKMersenneTwisterRandomSource(seed: 42)
@@ -92,7 +92,7 @@ class DataManager: ObservableObject {
                 label: "Wages",
                 date: Calendar.current.date(byAdding: minusOneYear, to: startDate)!,
                 recurrencePeriod: .weekly,
-                category: createUserCategory(name: "Income 💰")
+                category: createUserCategory(name: "Income 💰", type: .income)
             )
         }
     }
@@ -119,8 +119,8 @@ class DataManager: ObservableObject {
         }
     }
     
-    func createUserCategory(name: String) -> UserCategory {
-        return UserCategory(insertInto: context, name: name)
+    func createUserCategory(name: String, type: TransactionType) -> UserCategory {
+        return UserCategory(insertInto: context, name: name, type: type)
     }
     
     func createTransaction(amount: Double, type: TransactionType = .expense, label: String = "", date: Date = Date.now, recurrencePeriod: RecurrencePeriod = .never, category: UserCategory? = nil) -> Transaction {
@@ -138,26 +138,6 @@ class DataManager: ObservableObject {
         }
         
         return fetchedUserCategories
-    }
-    
-    func getTransactions(category: UserCategory?) -> [Transaction] {
-        let request: NSFetchRequest<Transaction> = Transaction.fetchRequest()
-        
-        if let category = category {
-            request.predicate = NSPredicate(format: "categoryOfTransaction = %@", category)
-        }
-        
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \Transaction.date, ascending: false)]
-        
-        var fetchedTransactions: [Transaction] = []
-        
-        do {
-            fetchedTransactions = try context.fetch(request)
-        } catch let error {
-            print("Error fetching transactions \(error)")
-        }
-        
-        return fetchedTransactions
     }
     
     func updateTransaction(transaction: Transaction, amount: Double, type: TransactionType, label: String, date: Date, recurrencePeriod: RecurrencePeriod, category: UserCategory?) {
