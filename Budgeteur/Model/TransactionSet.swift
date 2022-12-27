@@ -14,6 +14,11 @@ struct TransactionSet {
     /// A list of the transactions that happen regularly.
     let recurringTransactions: [TransactionWrapper]
     
+    /// All of the one-off and recurring transactions in the set.
+    var all: [TransactionWrapper] {
+        oneOffTransactions + recurringTransactions
+    }
+    
     /// The sum of all transactions in the set.
     var sumAll: Double {
         oneOffTransactions.sum(\.amount) + recurringTransactions.sum(\.amount)
@@ -29,36 +34,6 @@ struct TransactionSet {
     
     private func sum(type: TransactionType) -> Double {
         oneOffTransactions.filter({ $0.type == type }).sum(\.amount) + recurringTransactions.filter({ $0.type == type }).sum(\.amount)
-    }
-    
-    /// Convert transactions from the Core Data interface class to a proxy class object that is more suited for the GUI.
-    /// - Parameter transactions: The transactions from the Core Data store.
-    /// - Parameter dateInterval: (optional) The date range to limit recurring transactions to. If not specified, recurring transactions will have proxy transactions created starting from their start date to the current date.
-    /// - Parameter period: The time period to group generated recurring transactions.
-    /// - Returns: The transactions as a set of one-off transactions and auto-generated recurring transactions.
-    static func fromTransactions(_ transactions: [Transaction], in dateInterval: DateInterval? = nil, groupBy period: Period) -> TransactionSet {
-        var oneOffTransactions: [TransactionWrapper] = []
-        var recurringTransactions: [TransactionWrapper] = []
-        
-        for transaction in transactions {
-            if transaction.recurrencePeriod == RecurrencePeriod.never.rawValue {
-                oneOffTransactions.append(TransactionWrapper(
-                    amount: transaction.amount,
-                    type: TransactionType(rawValue: transaction.type)!,
-                    label: transaction.label,
-                    date: transaction.date,
-                    recurrencePeriod: .never,
-                    category: transaction.category,
-                    parent: transaction
-                ))
-            } else if let dateInterval = dateInterval {
-                recurringTransactions.append(contentsOf: transaction.getRecurringTransactions(in: dateInterval, groupBy: period))
-            } else {
-                recurringTransactions.append(contentsOf: transaction.getRecurringTransactions(groupBy: period))
-            }
-        }
-        
-        return TransactionSet(oneOffTransactions: oneOffTransactions, recurringTransactions: recurringTransactions)
     }
     
     /// Groups all of the one-off transactions by date (day).
@@ -123,5 +98,27 @@ struct TransactionSet {
         
         return result
             .sorted(by: { $0.key > $1.key })
+    }
+    
+    /// Convert transactions from the Core Data interface class to a proxy class object that is more suited for the GUI.
+    /// - Parameter transactions: The transactions from the Core Data store.
+    /// - Parameter dateInterval: (optional) The date range to limit recurring transactions to. If not specified, recurring transactions will have proxy transactions created starting from their start date to the current date.
+    /// - Parameter period: The time period to group generated recurring transactions.
+    /// - Returns: The transactions as a set of one-off transactions and auto-generated recurring transactions.
+    static func fromTransactions(_ transactions: [Transaction], in dateInterval: DateInterval? = nil, groupBy period: Period) -> TransactionSet {
+        var oneOffTransactions: [TransactionWrapper] = []
+        var recurringTransactions: [TransactionWrapper] = []
+        
+        for transaction in transactions {
+            if transaction.recurrencePeriod == RecurrencePeriod.never.rawValue {
+                oneOffTransactions.append(TransactionWrapper.fromTransaction(transaction))
+            } else if let dateInterval = dateInterval {
+                recurringTransactions.append(contentsOf: transaction.getRecurringTransactions(in: dateInterval, groupBy: period))
+            } else {
+                recurringTransactions.append(contentsOf: transaction.getRecurringTransactions(groupBy: period))
+            }
+        }
+        
+        return TransactionSet(oneOffTransactions: oneOffTransactions, recurringTransactions: recurringTransactions)
     }
 }

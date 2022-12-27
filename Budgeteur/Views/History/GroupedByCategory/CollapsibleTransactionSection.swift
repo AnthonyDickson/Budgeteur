@@ -74,26 +74,14 @@ struct CollapsibleTransactionSection_Previews: PreviewProvider {
     
     static var previews: some View {
         let period: Period = .oneWeek
-        let transactions = try! dataManager.context.fetch(Transaction.fetchRequest())
-        let (_, transactionSet) = TransactionSet.fromTransactions(transactions, groupBy: period)
-            .groupByDateInterval(period: period)[0]
-        let (date, groupedTransactions) = transactionSet.groupOneOffByDate()[0]
-        let title = DateFormat.format(date)
-        
-        let (_, transactionsForGroupingByCategory) = transactionSet.groupAllByDateInterval(period: period)[0]
-        let (category, categoryTransactions) = TransactionGroupCategory.groupByCategory(transactionsForGroupingByCategory)[0]
-        
-        
+        let categories = try! dataManager.context.fetch(UserCategory.fetchRequest())
+        let category = categories[0]
+        let transactions = category.transactionsWithCategory!.allObjects as! [Transaction]
+        let transactionSet = TransactionSet.fromTransactions(Array(transactions.prefix(upTo: 10)), groupBy: period)
+
         List {
             Section {
-                CollapsibleTransactionSection(title: title, transactions: groupedTransactions, useDateForHeader: false)
-            }
-        }
-        .previewDisplayName("Grouped by Date")
-        
-        List {
-            Section {
-                CollapsibleTransactionSection(title: category?.name ?? UserCategory.defaultName, transactions: categoryTransactions, useDateForHeader: true, totalIncome: 1000, totalExpenses: 1000)
+                CollapsibleTransactionSection(title: category.name, transactions: transactionSet.all, useDateForHeader: true, totalIncome: transactionSet.sumIncome, totalExpenses: transactionSet.sumExpenses)
             }
         }
         .previewDisplayName("Grouped by Category")

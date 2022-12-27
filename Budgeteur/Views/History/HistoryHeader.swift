@@ -9,7 +9,7 @@ import SwiftUI
 
 
 
-/// Displays a title, a button for toggling how the transactions are grouped and a picker the time period grouping.
+/// Displays a title, a picker to filter the type of transactions shown, a button for toggling how the transactions are grouped and a picker the time period grouping.
 struct HistoryHeader: View {
     /// Whether to group transactions by date interval or category.
     @Binding var groupByCategory: Bool

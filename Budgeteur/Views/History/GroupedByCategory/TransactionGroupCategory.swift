@@ -9,48 +9,70 @@ import SwiftUI
 
 /// Displays transactions grouped by time period and recurring transactions in their own section.
 struct TransactionGroupCategory: View {
+    /// Only transactions within this date range are fetched.
+    var dateInterval: DateInterval
+    /// The time interval to group transactions into (e.g., 1 day, 1 week).
+    var period: Period
+    
     /// The text that appears in the section header.
-    var title: String
-    /// The transactions to display.
-    var transactions: [TransactionWrapper]
-    
-    private var sumExpenses: Double {
-        transactions.filter { $0.type == .expense }.sum(\.amount)
+    private var title: String {
+        period.getDateIntervalLabel(for: dateInterval)
     }
     
-    private var sumIncome: Double {
-        transactions.filter { $0.type == .income }.sum(\.amount)
-    }
+    /// All the transactions for the specified date interval.
+    @FetchRequest private var transactions: FetchedResults<Transaction>
     
-    /// Groups transactions by their category.
-    /// - Parameter transactions: The transactions to group.
-    /// - Returns: A list of 2-tuples which each contain the category and a list of the transactions that belong to that category.
-    static func groupByCategory(_ transactions: [TransactionWrapper]) -> [(key: UserCategory?, value: [TransactionWrapper])] {
-        let groupedTransactions = Dictionary(grouping: transactions, by: { $0.category })
+    @Environment(\.managedObjectContext) private var context
+    
+    init(dateInterval: DateInterval, period: Period, predicate: NSPredicate? = nil) {
+        self.dateInterval = dateInterval
+        self.period = period
+
+        var compoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [
+            NSPredicate(format: "recurrencePeriod == %@ AND date BETWEEN {%@, %@}", RecurrencePeriod.never.rawValue, dateInterval.start as NSDate, dateInterval.end as NSDate),
+            NSPredicate(format: "recurrencePeriod != %@ AND (date <= %@ AND (endDate == nil OR endDate >= %@))", RecurrencePeriod.never.rawValue, dateInterval.end as NSDate, dateInterval.start as NSDate)
+        ])
         
-        var categoryTotals: Dictionary<UserCategory?, Double> = [:]
-        
-        for (category, transactions) in groupedTransactions {
-            categoryTotals[category] = transactions.sum(\.amount)
+        if let predicate = predicate {
+            compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [compoundPredicate, predicate])
         }
         
-        return groupedTransactions.sorted(by: { categoryTotals[$0.key]! > categoryTotals[$1.key]! })
+        _transactions = FetchRequest<Transaction>(
+            sortDescriptors: [SortDescriptor(\Transaction.date, order: .reverse)],
+            predicate: compoundPredicate
+        )
+    }
+    
+    func groupAndSort(transactionSet: TransactionSet) -> [Dictionary<String?, [TransactionWrapper]>.Element] {
+        let transactions = transactionSet.all
+
+        let sortedTransactions = transactions.sorted(by: { $1.date > $0.date })
+
+        let groupedTransactons = Dictionary(grouping: sortedTransactions, by: { $0.category?.name })
+
+        let sortedGroupedTransactions = groupedTransactons.sorted(by: { $0.value.sum(\.amount) > $1.value.sum(\.amount) })
+        
+        return sortedGroupedTransactions
     }
     
     var body: some View {
         // Cache these properties to avoid unnecessarily re-calculating them in the loop.
-        let totalIncome = sumIncome
-        let totalExpenses = sumExpenses
-        
+        let transactionSet = TransactionSet
+            .fromTransactions(Array(transactions), in: dateInterval, groupBy: period)
+        let totalIncome = transactionSet.sumIncome
+        let totalExpenses = transactionSet.sumExpenses
+        let transactionsByCategory = groupAndSort(transactionSet: transactionSet)
+
         Section {
             VStack {
                 TransactionGroupHeader(title: title, totalIncome: totalIncome, totalExpenses: totalExpenses)
+                
                 Divider()
             }
-
-            ForEach(Self.groupByCategory(transactions), id: \.key) { category, groupedTransactions in
+            
+            ForEach(transactionsByCategory, id: \.key) { categoryName, groupedTransactions in
                 CollapsibleTransactionSection(
-                    title: category?.name ?? UserCategory.defaultName,
+                    title: categoryName ?? UserCategory.defaultName,
                     transactions: groupedTransactions,
                     useDateForHeader: true,
                     totalIncome: totalIncome,
@@ -71,13 +93,12 @@ struct TransactionGroupCategory_Previews: PreviewProvider {
     
     static var previews: some View {
         let period: Period = .oneWeek
-        let transactions = try! dataManager.context.fetch(Transaction.fetchRequest())
-        let (dateInterval, groupedTransactions) = TransactionSet.fromTransactions(transactions, groupBy: period)
-            .groupAllByDateInterval(period: period)[0]
-        let title = period.getDateIntervalLabel(for: dateInterval)
+        let dateInterval = period.getDateInterval(for: .now)
         
         List {
-            TransactionGroupCategory(title: title, transactions: groupedTransactions)
+            TransactionGroupCategory(dateInterval: dateInterval, period: period)
         }
+        .environment(\.managedObjectContext, dataManager.context)
+        
     }
 }

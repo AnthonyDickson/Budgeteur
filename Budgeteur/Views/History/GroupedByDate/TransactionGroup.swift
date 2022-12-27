@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// TODO: Refactor out common code between ``TransactionGroup`` and ``TransactionGroupCategory``. Use protocol to hold common functionality?
+
 /// Displays transactions grouped by time period and recurring transactions in their own section.
 struct TransactionGroup: View {
     /// The text that appears in the section header.

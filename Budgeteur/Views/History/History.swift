@@ -31,11 +31,7 @@ struct History: View {
             List {
                 SearchBar(searchText: $searchText)
                 
-                if groupByCategory {
-                    TransactionListByCategory(period: period, predicate: predicate)
-                } else {
-                    TransactionListByDay(period: period, predicate: predicate)
-                }
+                TransactionList(period: period, groupByCategory: groupByCategory, predicate: predicate)
             }
             .listStyle(.insetGrouped)
         }
