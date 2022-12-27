@@ -17,9 +17,12 @@ struct RecordTitleBar: View {
     /// Whether to show the date/repitition controls.
     @State private var showControls: Bool = false
     
+    /// The user selected time period for aggregating transactions.
+    @AppStorage("period") private var period: Period = .oneWeek
+    
     var body: some View {
         ZStack {
-            BudgetOverview()
+            BudgetOverview(period: period)
             
             HStack {
                 Spacer()

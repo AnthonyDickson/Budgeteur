@@ -28,10 +28,7 @@ struct TransactionGroup: View {
         self.dateInterval = dateInterval
         self.period = period
 
-        var compoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [
-            NSPredicate(format: "recurrencePeriod == %@ AND date BETWEEN {%@, %@}", RecurrencePeriod.never.rawValue, dateInterval.start as NSDate, dateInterval.end as NSDate),
-            NSPredicate(format: "recurrencePeriod != %@ AND (date <= %@ AND (endDate == nil OR endDate >= %@))", RecurrencePeriod.never.rawValue, dateInterval.end as NSDate, dateInterval.start as NSDate)
-        ])
+        var compoundPredicate = Transaction.getPredicateForAllTransactions(in: dateInterval)
         
         if let predicate = predicate {
             compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [compoundPredicate, predicate])

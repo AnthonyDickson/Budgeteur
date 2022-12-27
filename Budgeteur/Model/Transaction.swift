@@ -155,4 +155,41 @@ extension Transaction {
         
         return recurringTransactions
     }
+    
+    /// Get the predicate to get either one-off or recurring transactions, optionally within a date interval.
+    /// - Parameters:
+    ///   - recurring: Whether to get recurring transactions (true) or one-off transactions (false).
+    ///   - dateInterval: If specified, only fetch the transactions that occur within this range of dates.
+    /// - Returns: A predicate that can be used to query the Core Data store for transactions.
+    static func getPredicate(recurring: Bool, in dateInterval: DateInterval?) -> NSPredicate {
+        var predicates: [NSPredicate] = []
+        
+        if recurring {
+            predicates.append(NSPredicate(format: "recurrencePeriod != %@", RecurrencePeriod.never.rawValue))
+            
+            if let dateInterval = dateInterval {
+                predicates.append(
+                    NSPredicate(format: "date <= %@ AND (endDate == nil OR endDate >= %@)", dateInterval.end as NSDate, dateInterval.start as NSDate))
+            }
+        } else {
+            predicates.append(NSPredicate(format: "recurrencePeriod == %@", RecurrencePeriod.never.rawValue))
+            
+            if let dateInterval = dateInterval {
+                predicates.append(
+                    NSPredicate(format: "date BETWEEN {%@, %@}", dateInterval.start as NSDate, dateInterval.end as NSDate))
+            }
+        }
+        
+        return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+    }
+    
+    /// Get the predicate to get all transactions, optionally within a given date interval.
+    /// - Parameter dateInterval: If specified, only fetch the transactions that occur within this range of dates.
+    /// - Returns: A predicate that can be used to query the Core Data store for transactions.
+    static func getPredicateForAllTransactions(in dateInterval: DateInterval? = nil) -> NSPredicate {
+        return NSCompoundPredicate(orPredicateWithSubpredicates: [
+            Self.getPredicate(recurring: false, in: dateInterval),
+            Self.getPredicate(recurring: true, in: dateInterval)
+        ])
+    }
 }
