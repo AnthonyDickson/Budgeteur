@@ -55,7 +55,7 @@
 		92B2A0D228F667FB00B81F0D /* PeriodPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B2A0D128F667FB00B81F0D /* PeriodPicker.swift */; };
 		92B2A0D428F66BCA00B81F0D /* Period.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B2A0D328F66BCA00B81F0D /* Period.swift */; };
 		92B2F313295A826000E3AA07 /* TransactionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B2F312295A826000E3AA07 /* TransactionList.swift */; };
-		92E0E93629138E0B00BC83E9 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 92E0E93429138E0B00BC83E9 /* Model.xcdatamodeld */; };
+		92E0E93629138E0B00BC83E9 /* Budgeteur.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 92E0E93429138E0B00BC83E9 /* Budgeteur.xcdatamodeld */; };
 		92E0E93B29138F6100BC83E9 /* UserCategory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E0E93729138F6100BC83E9 /* UserCategory+CoreDataClass.swift */; };
 		92E0E93C29138F6100BC83E9 /* UserCategory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E0E93829138F6100BC83E9 /* UserCategory+CoreDataProperties.swift */; };
 		92E0E93D29138F6100BC83E9 /* Transaction+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E0E93929138F6100BC83E9 /* Transaction+CoreDataClass.swift */; };
@@ -309,7 +309,7 @@
 				927B920628F227890013B404 /* TransactionWrapper.swift */,
 				92436FD62931A99500E45836 /* TransactionSet.swift */,
 				922E5617293333B50002B77C /* TransactionType.swift */,
-				92E0E93429138E0B00BC83E9 /* Model.xcdatamodeld */,
+				92E0E93429138E0B00BC83E9 /* Budgeteur.xcdatamodeld */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -493,7 +493,7 @@
 				92436FBB29305B7100E45836 /* BudgetOverview.swift in Sources */,
 				927B921A28F3B87E0013B404 /* Keypad.swift in Sources */,
 				92E0E93B29138F6100BC83E9 /* UserCategory+CoreDataClass.swift in Sources */,
-				92E0E93629138E0B00BC83E9 /* Model.xcdatamodeld in Sources */,
+				92E0E93629138E0B00BC83E9 /* Budgeteur.xcdatamodeld in Sources */,
 				92436FE32932E61C00E45836 /* OptionalDatePicker.swift in Sources */,
 				92A849172938853200922655 /* SearchBar.swift in Sources */,
 				92436FCF293199F100E45836 /* DateFormat.swift in Sources */,
@@ -871,13 +871,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		92E0E93429138E0B00BC83E9 /* Model.xcdatamodeld */ = {
+		92E0E93429138E0B00BC83E9 /* Budgeteur.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				92E0E93529138E0B00BC83E9 /* Model.xcdatamodel */,
 			);
 			currentVersion = 92E0E93529138E0B00BC83E9 /* Model.xcdatamodel */;
-			path = Model.xcdatamodeld;
+			path = Budgeteur.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

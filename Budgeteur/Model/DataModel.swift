@@ -10,7 +10,7 @@ import GameplayKit
 import CoreData
 
 class DataManager: ObservableObject {
-    let container = NSPersistentContainer(name: "Model")
+    let container = NSPersistentContainer(name: "Budgeteur")
     
     var context: NSManagedObjectContext {
         container.viewContext
