@@ -58,7 +58,12 @@ struct TransactionEditor: View {
                     .keyboardType(.decimalPad)
             }
             
-            
+            if transaction.type == .income {
+                Section("Budget") {
+                    SavingsEditor(amount: transaction.amount, savings: $transaction.savings)
+                }
+            }
+
             Section(dateSectionLabel) {
                 DatePicker(dateSectionLabel, selection: $transaction.date, in: ...Date.now, displayedComponents: .date)
                     .labelsHidden()
@@ -125,6 +130,9 @@ struct TransactionEditor_Previews: PreviewProvider {
     
     static var previews: some View {
         let transactionOneOff = TransactionWrapper.fromTransaction(dataManager.createTransaction(amount: 420.69, label: "Foo", date: Date.now, recurrencePeriod: .never))
+
+        let transactionOneOffIncome = TransactionWrapper.fromTransaction(dataManager.createTransaction(amount: 420.69, savings: 0.2, type: .income, label: "Baz", date: Date.now, recurrencePeriod: .never))
+
         let transactionRecurring = TransactionWrapper.fromTransaction(dataManager.createTransaction(amount: 420.69, label: "Bar", date: Date.now, recurrencePeriod: .weekly))
         
     
@@ -132,6 +140,11 @@ struct TransactionEditor_Previews: PreviewProvider {
             TransactionEditor(transaction: transactionOneOff)
         }
         .previewDisplayName("One-Off Transaction")
+
+        NavigationStack {
+            TransactionEditor(transaction: transactionOneOffIncome)
+        }
+        .previewDisplayName("One-Off Transaction (Income)")
         
         
         NavigationStack {

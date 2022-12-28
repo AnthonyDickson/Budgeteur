@@ -14,6 +14,13 @@ struct RecordTitleBar: View {
     /// How often the transaction repeats, if ever.
     @Binding var recurrencePeriod: RecurrencePeriod
     
+    /// How much money was spent/earned.
+    var amount: Double
+    /// What percent of the amount is put aside as savings. **Note:** Only applicable to income transactions.
+    @Binding var savings: Double
+    /// Whether money was spent or earned.
+    var transactionType: TransactionType
+    
     /// Whether to show the date/repitition controls.
     @State private var showControls: Bool = false
     
@@ -37,10 +44,18 @@ struct RecordTitleBar: View {
             }
             .padding(.horizontal)
             .sheet(isPresented: $showControls) {
-                DateRepeatSheet(date: $date, recurrencePeriod: $recurrencePeriod)
+                RecordDetailSheet(date: $date, recurrencePeriod: $recurrencePeriod, amount: amount, savings: $savings, transactionType: transactionType)
             }
         }
     }
+}
+
+fileprivate struct PreviewData {
+    var date: Date
+    var recurrencePeriod: RecurrencePeriod
+    var amount: Double
+    var savings: Double
+    var transactionType: TransactionType
 }
 
 struct RecordTitleBar_Previews: PreviewProvider {
@@ -54,11 +69,11 @@ struct RecordTitleBar_Previews: PreviewProvider {
     }()
     
     static var previews: some View {
-        Stateful(initialState: Date.now) { $date in
-            Stateful(initialState: RecurrencePeriod.weekly) { $recurrencePeriod in
-                RecordTitleBar(date: $date, recurrencePeriod: $recurrencePeriod)
-                    .environment(\.managedObjectContext, dataManager.context)
-            }
+        let previewData = PreviewData(date: .now, recurrencePeriod: .weekly, amount: 40, savings: 0.2, transactionType: .income)
+        
+        Stateful(initialState: previewData) { $data in
+            RecordTitleBar(date: $data.date, recurrencePeriod: $data.recurrencePeriod, amount: data.amount, savings: $data.savings, transactionType: data.transactionType)
+                .environment(\.managedObjectContext, dataManager.context)
         }
     }
 }

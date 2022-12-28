@@ -34,7 +34,7 @@ struct BudgetOverview: View {
         let transactionSet = TransactionSet.fromTransactions(Array(transactions), in: dateInterval, groupBy: period)
         
         return transactionSet.all
-            .reduce(0.0) { $1.type == .income ? $0 + $1.amount : $0 - $1.amount }
+            .reduce(0.0) { $1.type == .income ? $0 + $1.amount * (1 - $1.savings) : $0 - $1.amount }
     }
     
     /// Convert a time period to a context-aware label.

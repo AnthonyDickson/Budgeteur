@@ -17,7 +17,7 @@
 		923B7D2C28F921CE000E46BD /* RecurrencePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D2B28F921CE000E46BD /* RecurrencePeriod.swift */; };
 		923B7D2E28F923AC000E46BD /* DissmissKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D2D28F923AC000E46BD /* DissmissKeyboard.swift */; };
 		923B7D3028F92B15000E46BD /* RecurrencePeriodPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D2F28F92B15000E46BD /* RecurrencePeriodPicker.swift */; };
-		923B7D3228F92FA6000E46BD /* DateRepeatSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D3128F92FA6000E46BD /* DateRepeatSheet.swift */; };
+		923B7D3228F92FA6000E46BD /* RecordDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D3128F92FA6000E46BD /* RecordDetailSheet.swift */; };
 		923B7D3728F937E6000E46BD /* AmountDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D3628F937E6000E46BD /* AmountDisplay.swift */; };
 		92436FB9292F46B400E45836 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FB8292F46B400E45836 /* Record.swift */; };
 		92436FBB29305B7100E45836 /* BudgetOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FBA29305B7100E45836 /* BudgetOverview.swift */; };
@@ -61,6 +61,7 @@
 		92E0E93D29138F6100BC83E9 /* Transaction+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E0E93929138F6100BC83E9 /* Transaction+CoreDataClass.swift */; };
 		92E0E93E29138F6100BC83E9 /* Transaction+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E0E93A29138F6100BC83E9 /* Transaction+CoreDataProperties.swift */; };
 		92E0E9402915FBB300BC83E9 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E0E93F2915FBB300BC83E9 /* History.swift */; };
+		92F7B1C3295BDA6900D39216 /* SavingsEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F7B1C2295BDA6900D39216 /* SavingsEditor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,7 +92,7 @@
 		923B7D2B28F921CE000E46BD /* RecurrencePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrencePeriod.swift; sourceTree = "<group>"; };
 		923B7D2D28F923AC000E46BD /* DissmissKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DissmissKeyboard.swift; sourceTree = "<group>"; };
 		923B7D2F28F92B15000E46BD /* RecurrencePeriodPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrencePeriodPicker.swift; sourceTree = "<group>"; };
-		923B7D3128F92FA6000E46BD /* DateRepeatSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRepeatSheet.swift; sourceTree = "<group>"; };
+		923B7D3128F92FA6000E46BD /* RecordDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDetailSheet.swift; sourceTree = "<group>"; };
 		923B7D3628F937E6000E46BD /* AmountDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountDisplay.swift; sourceTree = "<group>"; };
 		92436FB8292F46B400E45836 /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		92436FBA29305B7100E45836 /* BudgetOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetOverview.swift; sourceTree = "<group>"; };
@@ -138,6 +139,7 @@
 		92E0E93929138F6100BC83E9 /* Transaction+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transaction+CoreDataClass.swift"; sourceTree = "<group>"; };
 		92E0E93A29138F6100BC83E9 /* Transaction+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transaction+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		92E0E93F2915FBB300BC83E9 /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
+		92F7B1C2295BDA6900D39216 /* SavingsEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingsEditor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -201,7 +203,7 @@
 				92436FB8292F46B400E45836 /* Record.swift */,
 				92436FBC2930658D00E45836 /* RecordTitleBar.swift */,
 				92436FBA29305B7100E45836 /* BudgetOverview.swift */,
-				923B7D3128F92FA6000E46BD /* DateRepeatSheet.swift */,
+				923B7D3128F92FA6000E46BD /* RecordDetailSheet.swift */,
 				923B7D3628F937E6000E46BD /* AmountDisplay.swift */,
 				927B921928F3B87E0013B404 /* Keypad.swift */,
 			);
@@ -286,6 +288,7 @@
 				92436FDE2931F40200E45836 /* Settings.swift */,
 				927B922328F4E9120013B404 /* Category */,
 				92B2A0D028F667E900B81F0D /* Period */,
+				92F7B1C1295BDA2500D39216 /* Savings */,
 				923B7D3328F9301E000E46BD /* Record */,
 				927B921628F27AFD0013B404 /* History */,
 				922E561D293351760002B77C /* Helpers */,
@@ -346,6 +349,14 @@
 				923B7D2F28F92B15000E46BD /* RecurrencePeriodPicker.swift */,
 			);
 			path = Period;
+			sourceTree = "<group>";
+		};
+		92F7B1C1295BDA2500D39216 /* Savings */ = {
+			isa = PBXGroup;
+			children = (
+				92F7B1C2295BDA6900D39216 /* SavingsEditor.swift */,
+			);
+			path = Savings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -514,8 +525,9 @@
 				92436FD329319E9E00E45836 /* Sequence.swift in Sources */,
 				92436FDD2931AA0C00E45836 /* TransactionRow.swift in Sources */,
 				92436FE12932C89F00E45836 /* DeleteButtonWithConfirmation.swift in Sources */,
+				92F7B1C3295BDA6900D39216 /* SavingsEditor.swift in Sources */,
 				92B2A0D428F66BCA00B81F0D /* Period.swift in Sources */,
-				923B7D3228F92FA6000E46BD /* DateRepeatSheet.swift in Sources */,
+				923B7D3228F92FA6000E46BD /* RecordDetailSheet.swift in Sources */,
 				927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */,
 				92E0E93E29138F6100BC83E9 /* Transaction+CoreDataProperties.swift in Sources */,
 				92436FC32930851600E45836 /* HistoryHeader.swift in Sources */,

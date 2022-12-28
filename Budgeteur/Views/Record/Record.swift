@@ -14,6 +14,8 @@ struct Record: View {
     
     /// The amount of money spent.
     @State private var amount = 0.0
+    /// What percent of the amount is put aside as savings. 
+    @State private var savings = 0.0
     /// A description of the transaction.
     @State private var label = ""
     /// When the transaction occured.
@@ -41,7 +43,7 @@ struct Record: View {
     
     /// Add the transaction to the app's data.
     private func save() {
-        _ = dataManager.createTransaction(amount: amount, type: transactionType, label: label, date: date, recurrencePeriod: recurrencePeriod, category: category)
+        _ = dataManager.createTransaction(amount: amount, savings: savings, type: transactionType, label: label, date: date, recurrencePeriod: recurrencePeriod, category: category)
         reset()
     }
     
@@ -71,11 +73,11 @@ struct Record: View {
         // Need GeometryReader here to prevent the keyboard from moving the views (keyboard avoidance).
         GeometryReader { _ in
             VStack(alignment: .center) {
-                RecordTitleBar(date: $date, recurrencePeriod: $recurrencePeriod)
+                RecordTitleBar(date: $date, recurrencePeriod: $recurrencePeriod, amount: amount, savings: $savings, transactionType: transactionType)
                 
                 Spacer()
 
-                AmountDisplay(amount: amount, transactionType: transactionType)
+                AmountDisplay(amount: amount, savings: savings, transactionType: transactionType)
                     .onTapGesture(perform: toggleTransactionType)
                 
                 Spacer()

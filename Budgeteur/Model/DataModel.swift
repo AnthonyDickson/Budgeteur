@@ -88,6 +88,7 @@ class DataManager: ObservableObject {
             
             _ = createTransaction(
                 amount: 800.0,
+                savings: 0.25,
                 type: .income,
                 label: "Wages",
                 date: Calendar.current.date(byAdding: minusOneYear, to: startDate)!,
@@ -123,8 +124,8 @@ class DataManager: ObservableObject {
         return UserCategory(insertInto: context, name: name, type: type)
     }
     
-    func createTransaction(amount: Double, type: TransactionType = .expense, label: String = "", date: Date = Date.now, recurrencePeriod: RecurrencePeriod = .never, category: UserCategory? = nil) -> Transaction {
-        return Transaction(insertInto: context, amount: amount, type: type, label: label, date: date, recurrencePeriod: recurrencePeriod, userCategory: category)
+    func createTransaction(amount: Double, savings: Double = 0.0, type: TransactionType = .expense, label: String = "", date: Date = Date.now, recurrencePeriod: RecurrencePeriod = .never, category: UserCategory? = nil) -> Transaction {
+        return Transaction(insertInto: context, amount: amount, savings: savings, type: type, label: label, date: date, recurrencePeriod: recurrencePeriod, userCategory: category)
     }
     
     func getUserCategories() -> [UserCategory] {

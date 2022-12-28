@@ -82,6 +82,7 @@ extension Transaction {
             
             transactions.append(TransactionWrapper(
                 amount: self.amount,
+                savings: self.savings,
                 type: TransactionType(rawValue: self.type)!,
                 label: self.label,
                 date: date,
@@ -109,7 +110,7 @@ extension Transaction {
     /// - Returns: A list of proxy transaction objects.
     private func getRecurringTransactionsFractionalAmounts(in dateInterval: DateInterval, every recurrencePeriod: RecurrencePeriod, reportingBy period: Period, using calendar: Calendar) -> [TransactionWrapper] {
         var recurringTransactions: [TransactionWrapper] = []
-        // TODO: Calculate year length, num weeks and num fortnights based on `date`.
+        // TODO: Calculate year length, num weeks and num fortnights based on `date`. Make sure to account for leap years.
         let yearLength = 365.25
         let dailyAmount: Double
         
@@ -142,6 +143,7 @@ extension Transaction {
             
             recurringTransactions.append(TransactionWrapper(
                 amount: amountForPeriod,
+                savings: self.savings,
                 type: TransactionType(rawValue: self.type)!,
                 label: self.label,
                 date: date,

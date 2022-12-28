@@ -17,8 +17,11 @@ extension Color {
 
 /// Displays a currency amount with a money coloured backbround.
 struct AmountDisplay: View {
-    /// The currency amount.
+    /// How much money was spent/earned.
     var amount: Double
+    /// What percent of the amount is put aside as savings. **Note:** Only applicable to income transactions.
+    var savings: Double
+    /// Whether money was spent or earned.
     var transactionType: TransactionType
     
     /// Whether the user's device has light or dark mode enabled.
@@ -59,16 +62,30 @@ struct AmountDisplay: View {
         .degrees(transactionType == .expense ? 0 : -180)
     }
     
+    private var spendingMoney: Double {
+        (1.0 - savings) * amount
+    }
+    
+    private var savingsPercent: String {
+        savings.formatted(.percent.precision(.fractionLength(0)))
+    }
+    
     var body: some View {
         // TODO: Handle case where text overflows. Make text smaller?
         VStack {
             Text(titleText)
+            
             Text(Currency.format(amount))
-                .font(.title)
+                .font(.largeTitle)
                 .bold()
+            
+            if transactionType == .income {
+                Text(Currency.format(spendingMoney) + " after " + savingsPercent + " saved")
+                    .font(.caption)
+            }
         }
         .padding()
-        .frame(maxWidth: 180, maxHeight: 110)
+        .frame(maxWidth: 256)
         .background(amountBackground)
         .cornerRadius(10)
         .shadow(color: .black.opacity(0.2), radius: 4)
@@ -79,10 +96,10 @@ struct AmountDisplay: View {
 
 struct AmountDisplay_Previews: PreviewProvider {
     static var previews: some View {
-        AmountDisplay(amount: 123.45, transactionType: .expense)
+        AmountDisplay(amount: 123.45, savings: 0.0, transactionType: .expense)
             .previewDisplayName("Expense View")
         
-        AmountDisplay(amount: 123.45, transactionType: .income)
+        AmountDisplay(amount: 123.45, savings: 0.1, transactionType: .income)
             .previewDisplayName("Income View")
     }
 }

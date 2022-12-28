@@ -13,6 +13,8 @@ struct TransactionWrapper: Identifiable {
     let id: UUID = .init()
     /// How much money was spent/earned.
     var amount: Double
+    /// What percent of the amount is put aside as savings. **Note:** Only applicable to income transactions.
+    var savings: Double
     /// Whether money was spent or earned.
     var type: TransactionType
     /// A description of the cash flow.
@@ -41,6 +43,7 @@ struct TransactionWrapper: Identifiable {
     /// **Note**: Does not save changes to the Core Data store.
     func update() {
         parent.amount = amount
+        parent.savings = savings
         parent.type = type.rawValue
         parent.label = label
         parent.date = date
@@ -55,6 +58,7 @@ struct TransactionWrapper: Identifiable {
     static func fromTransaction(_ parent: Transaction) -> TransactionWrapper {
         return TransactionWrapper(
             amount: parent.amount,
+            savings: parent.savings,
             type: TransactionType(rawValue: parent.type)!,
             label: parent.label,
             date: parent.date,
