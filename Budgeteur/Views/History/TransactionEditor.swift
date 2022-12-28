@@ -83,7 +83,7 @@ struct TransactionEditor: View {
             }
             
             DeleteButtonWithConfirmation {
-                dataManager.deleteTransaction(transaction: transaction.parent)
+                dataManager.delete(transaction.parent)
                 dataManager.save()
                 dismiss()
             } label: {
@@ -108,7 +108,8 @@ struct TransactionEditor: View {
             }
             ToolbarItem(placement: .confirmationAction) {
                 Button("Save") {
-                    dataManager.updateTransaction(transaction: transaction)
+                    transaction.update()
+                    dataManager.save()
                     dismiss()
                 }
             }
@@ -134,8 +135,7 @@ struct TransactionEditor_Previews: PreviewProvider {
         let transactionOneOffIncome = TransactionWrapper.fromTransaction(dataManager.createTransaction(amount: 420.69, savings: 0.2, type: .income, label: "Baz", date: Date.now, recurrencePeriod: .never))
 
         let transactionRecurring = TransactionWrapper.fromTransaction(dataManager.createTransaction(amount: 420.69, label: "Bar", date: Date.now, recurrencePeriod: .weekly))
-        
-    
+
         NavigationStack {
             TransactionEditor(transaction: transactionOneOff)
         }

@@ -50,14 +50,6 @@ struct RecordTitleBar: View {
     }
 }
 
-fileprivate struct PreviewData {
-    var date: Date
-    var recurrencePeriod: RecurrencePeriod
-    var amount: Double
-    var savings: Double
-    var transactionType: TransactionType
-}
-
 struct RecordTitleBar_Previews: PreviewProvider {
     static var dataManager: DataManager = {
         let m: DataManager = .init(inMemory: true)
@@ -67,6 +59,14 @@ struct RecordTitleBar_Previews: PreviewProvider {
         
         return m
     }()
+    
+    private struct PreviewData {
+        var date: Date
+        var recurrencePeriod: RecurrencePeriod
+        var amount: Double
+        var savings: Double
+        var transactionType: TransactionType
+    }
     
     static var previews: some View {
         let previewData = PreviewData(date: .now, recurrencePeriod: .weekly, amount: 40, savings: 0.2, transactionType: .income)

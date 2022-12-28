@@ -52,13 +52,7 @@ struct TransactionRows: View {
     }
 }
 
-struct TransactionRows_Previews: PreviewProvider {
-    static var dataManager: DataManager = {
-        let m: DataManager = .init(inMemory: true)
-        m.addSampleData()
-        return m
-    }()
-    
+struct TransactionRows_Previews: PreviewProvider {    
     static var fetchRequest: NSFetchRequest<Transaction> {
         let request = Transaction.fetchRequest()
         request.fetchLimit = 10
@@ -67,7 +61,7 @@ struct TransactionRows_Previews: PreviewProvider {
     
     static var previews: some View {
         let period: Period = .oneWeek
-        let transactions = try! dataManager.context.fetch(fetchRequest)
+        let transactions = try! DataManager.preview.context.fetch(fetchRequest)
         let transactionSet = TransactionSet.fromTransactions(transactions, groupBy: period)
         
         List {

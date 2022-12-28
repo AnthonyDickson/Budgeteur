@@ -42,12 +42,6 @@ struct TransactionList: View {
 }
 
 struct TransactionList_Previews: PreviewProvider {
-    static var dataManager: DataManager = {
-        let m: DataManager = .init(inMemory: true)
-        m.addSampleData(numSamples: 250)
-        return m
-    }()
-    
     static var previews: some View {
         ForEach([true, false], id: \.self) { groupByCategory in
             List {
@@ -55,6 +49,6 @@ struct TransactionList_Previews: PreviewProvider {
             }
             .previewDisplayName("Grouped by " + (groupByCategory ? "Category" : "Date"))
         }
-        .environment(\.managedObjectContext, dataManager.context)
+        .environment(\.managedObjectContext, DataManager.preview.context)
     }
 }

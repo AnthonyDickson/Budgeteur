@@ -97,19 +97,8 @@ struct CategoryEditor: View {
 }
 
 struct CategoryEditor_Previews: PreviewProvider {
-    static var dataManager: DataManager = {
-        let m: DataManager = .init(inMemory: true)
-        
-        _ = m.createUserCategory(name: "Foo", type: .expense)
-        _ = m.createUserCategory(name: "Bar", type: .expense)
-        _ = m.createUserCategory(name: "Baz", type: .income)
-        m.save()
-        
-        return m
-    }()
-    
     static var previews: some View {
-        let categories = dataManager.getUserCategories()
+        let categories = DataManager.preview.getUserCategories()
         
         ForEach([TransactionType.expense, TransactionType.income], id: \.self) { transactionType in
             let filteredCategories = categories.filter({ $0.type == transactionType.rawValue })
@@ -121,7 +110,7 @@ struct CategoryEditor_Previews: PreviewProvider {
             }
             .previewDisplayName(transactionType.rawValue + " Categories Editor")
         }
-        .environmentObject(dataManager)
-        .environment(\.managedObjectContext, dataManager.context)
+        .environmentObject(DataManager.preview)
+        .environment(\.managedObjectContext, DataManager.preview.context)
     }
 }

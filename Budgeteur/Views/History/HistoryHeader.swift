@@ -49,13 +49,17 @@ struct HistoryHeader: View {
 }
 
 struct HistoryHeader_Previews: PreviewProvider {
+    private struct PreviewData {
+        var groupByCategory: Bool
+        var period: Period
+        var transactionFilter: TransactionFilter
+    }
+    
     static var previews: some View {
-        Stateful(initialState: false) { $groupByCategory in
-            Stateful(initialState: Period.oneWeek) { $period in
-                Stateful(initialState: TransactionFilter.all) { $transactionFilter in
-                    HistoryHeader(groupByCategory: $groupByCategory, period: $period, transactionFilter: $transactionFilter)
-                }
-            }
+        let previewData = PreviewData(groupByCategory: false, period: .oneWeek, transactionFilter: .all)
+        
+        Stateful(initialState: previewData) { $data in
+            HistoryHeader(groupByCategory: $data.groupByCategory, period: $data.period, transactionFilter: $data.transactionFilter)
         }
     }
 }

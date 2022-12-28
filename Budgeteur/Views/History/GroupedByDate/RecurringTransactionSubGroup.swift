@@ -54,15 +54,9 @@ struct RecurringTransactionSubGroup: View {
 }
 
 struct RecurringTransactionSubGroup_Previews: PreviewProvider {
-    static var dataManager: DataManager = {
-        let m = DataManager.init(inMemory: true)
-        m.addSampleData(numSamples: 250)
-        return m
-    }()
-    
     static var previews: some View {
         let period: Period = .oneWeek
-        let transactions = try! dataManager.context.fetch(Transaction.fetchRequest())
+        let transactions = try! DataManager.preview.context.fetch(Transaction.fetchRequest())
         let (_, transactionSet) = TransactionSet.fromTransactions(transactions, groupBy: period)
             .groupByDateInterval(period: period)[0]
         

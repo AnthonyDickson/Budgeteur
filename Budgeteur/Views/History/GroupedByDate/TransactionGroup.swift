@@ -69,12 +69,6 @@ struct TransactionGroup: View {
 }
 
 struct TransactionGroup_Previews: PreviewProvider {
-    static var dataManager: DataManager = {
-        let m = DataManager.init(inMemory: true)
-        m.addSampleData(numSamples: 250)
-        return m
-    }()
-    
     static var previews: some View {
         ForEach([Period.oneWeek, Period.oneDay], id: \.self) { period in
             let dateInterval = period.getDateInterval(for: .now)
@@ -84,6 +78,6 @@ struct TransactionGroup_Previews: PreviewProvider {
             }
             .previewDisplayName(period.rawValue)
         }
-        .environment(\.managedObjectContext, dataManager.context)
+        .environment(\.managedObjectContext, DataManager.preview.context)
     }
 }

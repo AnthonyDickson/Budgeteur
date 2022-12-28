@@ -58,16 +58,17 @@ struct RecordDetailSheet: View {
     }
 }
 
-fileprivate struct PreviewData {
-    var date: Date
-    var recurrencePeriod: RecurrencePeriod
-    var amount: Double
-    var savings: Double
-}
-
 struct RecordDetailSheet_Previews: PreviewProvider {
+    private struct PreviewData {
+        var date: Date
+        var recurrencePeriod: RecurrencePeriod
+        var amount: Double
+        var savings: Double
+    }
+    
     static var previews: some View {
         let previewData = PreviewData(date: .now, recurrencePeriod: .weekly, amount: 69.0, savings: 0.5)
+
         Stateful(initialState: previewData) { $data in
             ForEach([TransactionType.expense, TransactionType.income], id: \.self) { transactionType in
                 RecordDetailSheet(date: $data.date, recurrencePeriod: $data.recurrencePeriod, amount: data.amount, savings: $data.savings, transactionType: transactionType)

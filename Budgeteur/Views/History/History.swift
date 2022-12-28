@@ -39,14 +39,9 @@ struct History: View {
 }
 
 struct History_Previews: PreviewProvider {
-    static var dataManager: DataManager = .init(inMemory: true)
-    
     static var previews: some View {
         History()
-            .environment(\.managedObjectContext, dataManager.container.viewContext)
-            .environmentObject(dataManager)
-            .onAppear {
-                dataManager.addSampleData(numSamples: 500)
-            }
+            .environment(\.managedObjectContext, DataManager.preview.context)
+            .environmentObject(DataManager.preview)
     }
 }

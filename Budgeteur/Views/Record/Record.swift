@@ -102,14 +102,9 @@ struct Record: View {
 }
 
 struct Record_Previews: PreviewProvider {
-    static var dataManager: DataManager = .init(inMemory: true)
-    
     static var previews: some View {
         Record()
-            .environment(\.managedObjectContext, dataManager.container.viewContext)
-            .environmentObject(dataManager)
-            .onAppear {
-                dataManager.addSampleData()
-            }
+            .environment(\.managedObjectContext, DataManager.preview.context)
+            .environmentObject(DataManager.preview)
     }
 }

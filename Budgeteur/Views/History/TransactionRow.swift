@@ -45,12 +45,10 @@ struct TransactionRow: View {
 }
 
 struct TransactionRow_Previews: PreviewProvider {
-    static var dataManager: DataManager = .init(inMemory: true)
-    
     static var previews: some View {
-        let category = dataManager.createUserCategory(name: "Category", type: .expense)
+        let category = DataManager.preview.createUserCategory(name: "Category", type: .expense)
         let transaction = TransactionWrapper.fromTransaction(
-            dataManager.createTransaction(
+            DataManager.preview.createTransaction(
                 amount: 420.69,
                 label: "Item Description",
                 date: Date.distantPast,

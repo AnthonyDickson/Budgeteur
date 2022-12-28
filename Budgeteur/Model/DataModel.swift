@@ -10,11 +10,21 @@ import GameplayKit
 import CoreData
 
 class DataManager: ObservableObject {
+    /// The Core Data stack.
     let container = NSPersistentContainer(name: "Budgeteur")
-    
+    /// The view context of the ``DataManager``'s ``container``.
     var context: NSManagedObjectContext {
         container.viewContext
     }
+    /// A ``DataManager`` instance that contains mock data.
+    static var preview: DataManager = {
+       let m = DataManager(inMemory: true)
+        
+        m.addSampleData(numSamples: 500, addRecurring: true)
+        m.save()
+        
+        return m
+    }()
     
     init(inMemory: Bool = false) {
         if inMemory {
@@ -28,6 +38,12 @@ class DataManager: ObservableObject {
         }
     }
     
+    /// Add mock data (categories and transactions) to the context.
+    ///
+    /// This function does not save the changes, call ``save()`` to make the added transactions and categories permanent.
+    /// - Parameters:
+    ///   - numSamples: How many transactions to add.
+    ///   - addRecurring: Whether to add recurring transactions.
     func addSampleData(numSamples: Int = 50, addRecurring: Bool = true) {
         let categories = [
             createUserCategory(name: "Groceries 🛒", type: .expense),
@@ -68,12 +84,12 @@ class DataManager: ObservableObject {
         
         
         if addRecurring {
-            let minusOneYear = DateComponents(year: -1)
+            let minusOneYear = Calendar.current.date(byAdding: DateComponents(year: -1), to: startDate)!
             
             _ = createTransaction(
                 amount: 255.0,
                 label: "Rent",
-                date: Calendar.current.date(byAdding: minusOneYear, to: startDate)!,
+                date: minusOneYear,
                 recurrencePeriod: .weekly,
                 category: categories[2]
             )
@@ -81,7 +97,7 @@ class DataManager: ObservableObject {
             _ = createTransaction(
                 amount: 15.0,
                 label: "Netflix",
-                date: Calendar.current.date(byAdding: minusOneYear, to: startDate)!,
+                date: minusOneYear,
                 recurrencePeriod: .monthly,
                 category: categories[3]
             )
@@ -91,14 +107,20 @@ class DataManager: ObservableObject {
                 savings: 0.25,
                 type: .income,
                 label: "Wages",
-                date: Calendar.current.date(byAdding: minusOneYear, to: startDate)!,
+                date: minusOneYear,
                 recurrencePeriod: .weekly,
                 category: createUserCategory(name: "Income 💰", type: .income)
             )
         }
     }
     
+    func delete(_ object: NSManagedObject) {
+        context.delete(object)
+    }
+    
     /// Delete everything in the Core Data store.
+    ///
+    /// This function does not save the changes, call ``save()`` to make the changes permanent.
     func deleteAll() {
         let categories = try? context.fetch(UserCategory.fetchRequest())
         let transactions = try? context.fetch(Transaction.fetchRequest())
@@ -139,31 +161,5 @@ class DataManager: ObservableObject {
         }
         
         return fetchedUserCategories
-    }
-    
-    func updateTransaction(transaction: Transaction, amount: Double, type: TransactionType, label: String, date: Date, recurrencePeriod: RecurrencePeriod, category: UserCategory?) {
-        transaction.amount = amount
-        transaction.type = type.rawValue
-        transaction.label = label
-        transaction.date = date
-        transaction.recurrencePeriod = recurrencePeriod.rawValue
-        transaction.category = category
-        
-        save()
-    }
-    
-    func updateTransaction(transaction: TransactionWrapper) {
-        transaction.update()
-        save()
-    }
-    
-    func deleteUserCategory(category: UserCategory) {
-        context.delete(category)
-        save()
-    }
-    
-    func deleteTransaction(transaction: Transaction) {
-        context.delete(transaction)
-        save()
     }
 }
