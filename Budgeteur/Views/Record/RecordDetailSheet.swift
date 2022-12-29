@@ -37,6 +37,7 @@ struct RecordDetailSheet: View {
                 }
                 .gridCellColumns(2)
                 .padding(.horizontal)
+                .padding(.bottom)
             }
             
             GridRow {

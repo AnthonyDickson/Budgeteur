@@ -24,12 +24,24 @@ struct SavingsEditor: View {
     
     var body: some View {
         VStack {
+            Slider(value: $savings, in: 0...1, step: 0.01)
+            
             HStack {
                 VStack {
-                    Text("Spending Money")
+                    Text("Spending")
                         .font(.headline)
                     Text(Currency.format((1 - savings) * amount))
                 }
+                .frame(minWidth: 80)
+                
+                Spacer()
+                
+                VStack {
+                    Text("Save")
+                        .font(.headline)
+                    Text(Self.percentFormatter.string(for: savings) ?? "NaN")
+                }
+                .frame(minWidth: 80)
                 
                 Spacer()
                 
@@ -38,20 +50,18 @@ struct SavingsEditor: View {
                         .font(.headline)
                     Text(Currency.format(savings * amount))
                 }
-            }
-            
-            VStack {
-                Slider(value: $savings, in: 0...1, step: 0.01)
-                Text("Saving " + (Self.percentFormatter.string(for: savings) ?? "NaN"))
+                .frame(minWidth: 80)
             }
         }
+        .monospacedDigit()
     }
 }
 
 struct SavingsEditor_Previews: PreviewProvider {
     static var previews: some View {
         Stateful(initialState: 0.3) { $savings in
-            SavingsEditor(amount: 420, savings: $savings)
+            SavingsEditor(amount: 1234, savings: $savings)
+                .padding()
         }
     }
 }
