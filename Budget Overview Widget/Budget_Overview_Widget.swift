@@ -9,33 +9,28 @@ import WidgetKit
 import SwiftUI
 
 struct Provider: TimelineProvider {
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date())
+    func placeholder(in context: Context) -> BudgetOverviewEntry {
+        BudgetOverviewEntry(date: .now, period: .oneWeek, income: 1000, expenses: 800)
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date())
-        completion(entry)
+    func getSnapshot(in context: Context, completion: @escaping (BudgetOverviewEntry) -> ()) {
+        if context.isPreview {
+            let entry = BudgetOverviewEntry(date: .now, period: .oneWeek, income: 1000, expenses: 800)
+            completion(entry)
+        } else {
+            let entry = BudgetOverviewEntry.from(date: .now)
+            completion(entry)
+        }
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
+        let entry = BudgetOverviewEntry.from(date: .now)
+        
+        let nextUpdate = Calendar.current.date(byAdding: .minute, value: 15, to: .now)!
 
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate)
-            entries.append(entry)
-        }
-
-        let timeline = Timeline(entries: entries, policy: .atEnd)
+        let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
         completion(timeline)
     }
-}
-
-struct SimpleEntry: TimelineEntry {
-    let date: Date
 }
 
 struct BudgetOverviewEntry: TimelineEntry {
@@ -71,6 +66,19 @@ struct BudgetOverviewEntry: TimelineEntry {
     var absoluteBudget: Double {
         return abs(income - expenses)
     }
+    
+    static func from(date: Date) -> BudgetOverviewEntry {
+        let period: Period = .oneWeek
+        let dateInterval = period.getDateInterval(for: date)
+        let request = Transaction.fetchRequest()
+        request.predicate = Transaction.getPredicateForAllTransactions(in: dateInterval)
+        let transactions = (try? DataManager.preview.context.fetch(request)) ?? []
+        let transactionSet = TransactionSet.fromTransactions(transactions, in: dateInterval, groupBy: period)
+        
+        let entry = BudgetOverviewEntry(date: date, period: period, income: transactionSet.sumIncomeLessSavings, expenses: transactionSet.sumExpenses)
+        
+        return entry
+    }
 }
 
 struct Budget_Overview_WidgetEntryView : View {
@@ -79,10 +87,8 @@ struct Budget_Overview_WidgetEntryView : View {
     /// Whether the user's device has light or dark mode enabled.
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
     
-    static let previewEntry: BudgetOverviewEntry = BudgetOverviewEntry(date: .now, period: .oneWeek, income: 100, expenses: 31)
-    
     var colour: Color {
-        if Self.previewEntry.underBudget {
+        if entry.underBudget {
             return colorScheme == .light ? .moneyGreen : .moneyGreenDarker
         } else {
             return colorScheme == .light ? .grapefruitRed : .bloodOrange
@@ -94,7 +100,7 @@ struct Budget_Overview_WidgetEntryView : View {
     }
     
     var foregroundHeight: CGFloat {
-        Self.previewEntry.underBudget ? 165 * Self.previewEntry.percentUnder : 165
+        entry.underBudget ? 166 * entry.percentUnder : 166
     }
     
     var foreground: some View {
@@ -114,24 +120,24 @@ struct Budget_Overview_WidgetEntryView : View {
     var percentUnderOverText: String {
         let percentFormat = FloatingPointFormatStyle<Double>.Percent().precision(.fractionLength(0))
         
-        if Self.previewEntry.underBudget {
-            return "\(Self.previewEntry.percentUnder.formatted(percentFormat)) remaining"
+        if entry.underBudget {
+            return "\(entry.percentUnder.formatted(percentFormat)) remaining"
         } else {
-            return "\(Self.previewEntry.percentOver.formatted(percentFormat)) over"
+            return "\(entry.percentOver.formatted(percentFormat)) over"
         }
     }
     
     var underOverText: String {
-        Self.previewEntry.underBudget ? "under" : "over"
+        entry.underBudget ? "under" : "over"
     }
 
     var body: some View {
         ZStack(alignment: .leading) {
            foreground
             VStack(alignment: .leading) {
-                Text(Currency.formatAsWhole(Self.previewEntry.absoluteBudget))
+                Text(Currency.formatAsWhole(entry.absoluteBudget))
                     .font(.title)
-                Text("\(underOverText) \(Self.previewEntry.period.contextLabel)")
+                Text("\(underOverText) \(entry.period.contextLabel)")
                     .font(.callout)
                 Spacer()
                 Text(percentUnderOverText)
@@ -158,7 +164,15 @@ struct Budget_Overview_Widget: Widget {
 
 struct Budget_Overview_Widget_Previews: PreviewProvider {
     static var previews: some View {
-        Budget_Overview_WidgetEntryView(entry: SimpleEntry(date: Date()))
+        let entryUnder = BudgetOverviewEntry(date: .now, period: .oneWeek, income: 100, expenses: 31)
+        let entryOver = BudgetOverviewEntry(date: .now, period: .oneWeek, income: 100, expenses: 169)
+        
+        Budget_Overview_WidgetEntryView(entry: entryUnder)
             .previewContext(WidgetPreviewContext(family: .systemSmall))
+            .previewDisplayName("Widget Under Budget")
+        
+        Budget_Overview_WidgetEntryView(entry: entryOver)
+            .previewContext(WidgetPreviewContext(family: .systemSmall))
+            .previewDisplayName("Widget Over Budget")
     }
 }

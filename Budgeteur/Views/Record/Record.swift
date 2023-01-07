@@ -44,6 +44,7 @@ struct Record: View {
     /// Add the transaction to the app's data.
     private func save() {
         _ = dataManager.createTransaction(amount: amount, savings: savings, type: transactionType, label: label, date: date, recurrencePeriod: recurrencePeriod, category: category)
+        dataManager.save()
         reset()
     }
     

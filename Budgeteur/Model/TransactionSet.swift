@@ -32,6 +32,11 @@ struct TransactionSet {
         sum(type: .income)
     }
     
+    var sumIncomeLessSavings: Double {
+        all.filter { $0.type == .income }
+            .reduce(0.0) { $0 + $1.amount * (1 - $1.savings) }
+    }
+    
     private func sum(type: TransactionType) -> Double {
         oneOffTransactions.filter({ $0.type == type }).sum(\.amount) + recurringTransactions.filter({ $0.type == type }).sum(\.amount)
     }

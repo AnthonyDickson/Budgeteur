@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct ContentView: View {
     @Environment(\.horizontalSizeClass) private var sizeClass
-    
+    @Environment(\.scenePhase) private var scenePhase
+
     var body: some View {
         TabView {
             if sizeClass == .compact {
@@ -37,11 +39,15 @@ struct ContentView: View {
                     Label("Settings", systemImage: "gear")
                 }
         }
+        // TODO: Fix this not updating widget (at least in simulator).
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .background {
+                WidgetCenter.shared.reloadAllTimelines()
+            }
+        }
     }
     
     struct ContentView_Previews: PreviewProvider {
-        static var dataManager = DataManager(inMemory: true)
-        
         static var previews: some View {
             let previewDevices = [
                 "iPhone 14 Pro",
@@ -50,11 +56,8 @@ struct ContentView: View {
             
             ForEach(previewDevices, id: \.description) { previewDevice in
                 ContentView()
-                    .environment(\.managedObjectContext, dataManager.context)
-                    .environmentObject(dataManager)
-                    .onAppear {
-                        dataManager.addSampleData(numSamples: 500)
-                    }
+                    .environment(\.managedObjectContext, DataManager.preview.context)
+                    .environmentObject(DataManager.preview)
                     .previewDisplayName(previewDevice)
                     .previewDevice(.init(rawValue: previewDevice))
             }

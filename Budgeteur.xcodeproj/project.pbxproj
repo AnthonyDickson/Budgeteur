@@ -27,6 +27,9 @@
 		922BBA4A2968EB3A00634713 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921B28F3CCE50013B404 /* Currency.swift */; };
 		922BBA4C2968ECEC00634713 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922BBA4B2968ECEC00634713 /* Color.swift */; };
 		922BBA4D2968ECEC00634713 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922BBA4B2968ECEC00634713 /* Color.swift */; };
+		922BBA4E296A1D8600634713 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B920A28F22AEA0013B404 /* DataModel.swift */; };
+		922BBA4F296A1FD300634713 /* TransactionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FD62931A99500E45836 /* TransactionSet.swift */; };
+		922BBA50296A2B4400634713 /* Budgeteur.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 92E0E93429138E0B00BC83E9 /* Budgeteur.xcdatamodeld */; };
 		922E5618293333B50002B77C /* TransactionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E5617293333B50002B77C /* TransactionType.swift */; };
 		922E561A29334E300002B77C /* AmountText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E561929334E300002B77C /* AmountText.swift */; };
 		922E561F293481020002B77C /* CollapsibleTransactionSectionTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922E561E293481020002B77C /* CollapsibleTransactionSectionTitle.swift */; };
@@ -606,7 +609,9 @@
 				922BBA402968EA3300634713 /* UserCategory+CoreDataClass.swift in Sources */,
 				922BBA452968EA3300634713 /* TransactionType.swift in Sources */,
 				922BBA432968EA3300634713 /* Transaction+CoreDataProperties.swift in Sources */,
+				922BBA4F296A1FD300634713 /* TransactionSet.swift in Sources */,
 				922BBA442968EA3300634713 /* Transaction.swift in Sources */,
+				922BBA4E296A1D8600634713 /* DataModel.swift in Sources */,
 				922BBA322968E9D200634713 /* Budget_Overview_WidgetBundle.swift in Sources */,
 				922BBA492968EA7B00634713 /* Sequence.swift in Sources */,
 				922BBA3F2968EA3300634713 /* RecurrencePeriod.swift in Sources */,
@@ -617,6 +622,7 @@
 				922BBA422968EA3300634713 /* Transaction+CoreDataClass.swift in Sources */,
 				922BBA4A2968EB3A00634713 /* Currency.swift in Sources */,
 				922BBA412968EA3300634713 /* UserCategory+CoreDataProperties.swift in Sources */,
+				922BBA50296A2B4400634713 /* Budgeteur.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
