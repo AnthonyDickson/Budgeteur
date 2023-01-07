@@ -7,14 +7,6 @@
 
 import SwiftUI
 
-extension Color {
-    static let moneyGreen = Color(red: 0.49, green: 0.96, blue: 0.49)
-    static let moneyGreenDarker = Color(red: 0.38, green: 0.72, blue: 0.38)
-    
-    static let grapefruitRed = Color(red: 1, green: 0.6, blue: 0.6)
-    static let bloodOrange = Color(red: 0.76, green: 0.39, blue: 0.39)
-}
-
 /// Displays a currency amount with a money coloured backbround.
 struct AmountDisplay: View {
     /// How much money was spent/earned.

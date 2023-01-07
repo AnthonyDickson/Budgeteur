@@ -37,30 +37,12 @@ struct BudgetOverview: View {
             .reduce(0.0) { $1.type == .income ? $0 + $1.amount * (1 - $1.savings) : $0 - $1.amount }
     }
     
-    /// Convert a time period to a context-aware label.
-    private var timePeriodLabel: String {
-        switch(period) {
-        case .oneDay:
-            return "today"
-        case .oneWeek:
-            return "this week"
-        case .twoWeeks:
-            return "this fortnight"
-        case .oneMonth:
-            return "this month"
-        case .threeMonths:
-            return "this quarter"
-        case .oneYear:
-            return "this year"
-        }
-    }
-    
     /// A label with the total amount spent and the aggregation period.
     private var spendingSummary: String {
         let amount = getTotalSpending()
         let underOver = amount < 0 ? "over" : "under"
 
-        return "\(Currency.format(abs(amount))) \(underOver) budget \(timePeriodLabel)"
+        return "\(Currency.format(abs(amount))) \(underOver) budget \(period.contextLabel)"
     }
     
     var body: some View {

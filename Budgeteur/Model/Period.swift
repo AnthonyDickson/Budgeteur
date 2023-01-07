@@ -36,6 +36,24 @@ enum Period: String, CaseIterable, Identifiable {
         }
     }
     
+    /// Convert a time period to a context-aware label such as 'today' or 'this week'.
+    var contextLabel: String {
+        switch(self) {
+        case .oneDay:
+            return "today"
+        case .oneWeek:
+            return "this week"
+        case .twoWeeks:
+            return "this fortnight"
+        case .oneMonth:
+            return "this month"
+        case .threeMonths:
+            return "this quarter"
+        case .oneYear:
+            return "this year"
+        }
+    }
+    
     /// Find the calendar quarter for a date, and return the start of the quarter.
     /// - Parameter date: A date.
     /// - Returns: The date of the first day of the calendar quarter that the given date belongs to.

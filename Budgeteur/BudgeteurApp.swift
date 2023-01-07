@@ -6,6 +6,10 @@
 //
 
 // TODO: Add README with screenshots.
+// TODO: Add Homescreen widget
+// TODO: Add Lockscreen widget
+// TODO: Add Watch App
+// TODO: Add Watch Complication
 
 import SwiftUI
 /// An app for tracking your expenses and income, and assisting with your budgeting efforts!
