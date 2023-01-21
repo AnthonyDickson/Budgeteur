@@ -78,8 +78,6 @@ extension Transaction {
         var date = dateInterval.start
         
         while date < dateInterval.end {
-            let nextDate = calendar.date(byAdding: dateIncrement, to: date)!
-            
             transactions.append(TransactionWrapper(
                 amount: self.amount,
                 savings: self.savings,
@@ -91,7 +89,7 @@ extension Transaction {
                 parent: self
             ))
             
-            date = nextDate
+            date = calendar.date(byAdding: dateIncrement, to: date)!
         }
         
         return transactions
@@ -115,20 +113,20 @@ extension Transaction {
         let dailyAmount: Double
         
         switch recurrencePeriod {
-        case RecurrencePeriod.daily:
-            dailyAmount = self.amount
-        case RecurrencePeriod.weekly:
-            dailyAmount = self.amount * 52.1785 / yearLength
-        case RecurrencePeriod.fortnightly:
-            dailyAmount = self.amount * 26.0892 / yearLength
-        case RecurrencePeriod.monthly:
-            dailyAmount = self.amount * 12 / yearLength
-        case RecurrencePeriod.quarterly:
-            dailyAmount = self.amount * 3 / yearLength
-        case RecurrencePeriod.yearly:
-            dailyAmount = self.amount * 1 / yearLength
-        default:
+        case .never:
             fatalError("Given non-recurring transaction (recurrencePeriod == .never) when a recurring transaction was expected.")
+        case .daily:
+            dailyAmount = self.amount
+        case .weekly:
+            dailyAmount = self.amount * 52.1785 / yearLength
+        case .fortnightly:
+            dailyAmount = self.amount * 26.0892 / yearLength
+        case .monthly:
+            dailyAmount = self.amount * 12 / yearLength
+        case .quarterly:
+            dailyAmount = self.amount * 3 / yearLength
+        case .yearly:
+            dailyAmount = self.amount * 1 / yearLength
         }
         
         let dateIncrement = period.getDateIncrement()

@@ -6,6 +6,7 @@
 //
 
 // TODO: Add README with screenshots.
+// TODO: Add tests.
 // TODO: Add Lockscreen widget
 // TODO: Add Watch App
 // TODO: Add Watch Complication
