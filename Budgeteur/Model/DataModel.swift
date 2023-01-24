@@ -11,7 +11,7 @@ import CoreData
 
 class DataManager: ObservableObject {
     /// The Core Data stack.
-    let container = NSPersistentContainer(name: "Budgeteur")
+    let container = NSPersistentCloudKitContainer(name: "Budgeteur")
     /// The view context of the ``DataManager``'s ``container``.
     var context: NSManagedObjectContext {
         container.viewContext
