@@ -54,8 +54,8 @@ struct RecordTitleBar_Previews: PreviewProvider {
     static var dataManager: DataManager = {
         let m: DataManager = .init(inMemory: true)
         
-        _ = m.createTransaction(amount: 405, date: Date.now)
-        _ = m.createTransaction(amount: 15, date: Date.distantPast, recurrencePeriod: .weekly)
+        _ = Transaction(insertInto: m.context, amount: 405, date: Date.now)
+        _ = Transaction(insertInto: m.context, amount: 15, date: Date.distantPast, recurrencePeriod: .weekly)
         
         return m
     }()

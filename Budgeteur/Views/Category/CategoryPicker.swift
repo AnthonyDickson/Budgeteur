@@ -157,7 +157,7 @@ struct CategoryPicker: View {
 
 struct CategoryPicker_Previews: PreviewProvider {
     static var previews: some View {
-        let categories = DataManager.preview.getUserCategories()
+        let categories = try! DataManager.preview.context.fetch(UserCategory.fetchRequest())
         
         ForEach([TransactionType.expense, TransactionType.income], id: \.self) { transactionType in
             let filteredCategories = categories.filter({ $0.type == transactionType.rawValue })

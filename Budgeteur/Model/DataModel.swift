@@ -9,6 +9,7 @@ import Foundation
 import GameplayKit
 import CoreData
 
+/// Loads and saves the Core Data store and also handles de
 class DataManager: ObservableObject {
     /// The Core Data stack.
     let container = NSPersistentCloudKitContainer(name: "Budgeteur")
@@ -46,11 +47,11 @@ class DataManager: ObservableObject {
     ///   - addRecurring: Whether to add recurring transactions.
     func addSampleData(numSamples: Int = 50, addRecurring: Bool = true) {
         let categories = [
-            createUserCategory(name: "Groceries 🛒", type: .expense),
-            createUserCategory(name: "Eating Out 🍔", type: .expense),
-            createUserCategory(name: "Home Expenses 🏡", type: .expense),
-            createUserCategory(name: "Entertainment 🎶", type: .expense),
-            createUserCategory(name: "Donation ❤️", type: .expense)
+            UserCategory(insertInto: context, name: "🛒 Groceries", type: .expense),
+            UserCategory(insertInto: context, name: "🍔 Eating Out", type: .expense),
+            UserCategory(insertInto: context, name: "🏡 Home Expenses", type: .expense),
+            UserCategory(insertInto: context, name: "🎶 Entertainment", type: .expense),
+            UserCategory(insertInto: context, name: "❤️ Donation", type: .expense)
         ]
         
         let rng = GKMersenneTwisterRandomSource(seed: 42)
@@ -73,12 +74,13 @@ class DataManager: ObservableObject {
                 to: startDate)!
             let category = categories[rng.nextInt(upperBound: categories.count)]
             
-            _ = createTransaction(
+            _ = Transaction(
+                insertInto: context,
                 amount: amount,
                 type: .expense,
                 label: description,
                 date: date,
-                category: category
+                userCategory: category
             )
         }
         
@@ -86,36 +88,35 @@ class DataManager: ObservableObject {
         if addRecurring {
             let minusOneYear = Calendar.current.date(byAdding: DateComponents(year: -1), to: startDate)!
             
-            _ = createTransaction(
+            _ = Transaction(
+                insertInto: context,
                 amount: 255.0,
                 label: "Rent",
                 date: minusOneYear,
                 recurrencePeriod: .weekly,
-                category: categories[2]
+                userCategory: categories[2]
             )
             
-            _ = createTransaction(
+            _ = Transaction(
+                insertInto: context,
                 amount: 15.0,
                 label: "Netflix",
                 date: minusOneYear,
                 recurrencePeriod: .monthly,
-                category: categories[3]
+                userCategory: categories[3]
             )
             
-            _ = createTransaction(
+            _ = Transaction(
+                insertInto: context,
                 amount: 800.0,
                 savings: 0.25,
                 type: .income,
                 label: "Wages",
                 date: minusOneYear,
                 recurrencePeriod: .weekly,
-                category: createUserCategory(name: "Income 💰", type: .income)
+                userCategory: UserCategory(insertInto: context, name: "💰 Income", type: .income)
             )
         }
-    }
-    
-    func delete(_ object: NSManagedObject) {
-        context.delete(object)
     }
     
     /// Delete everything in the Core Data store.
@@ -140,26 +141,5 @@ class DataManager: ObservableObject {
             let error = error as NSError
             fatalError("Unresolved error \(error), \(error.userInfo)")
         }
-    }
-    
-    func createUserCategory(name: String, type: TransactionType) -> UserCategory {
-        return UserCategory(insertInto: context, name: name, type: type)
-    }
-    
-    func createTransaction(amount: Double, savings: Double = 0.0, type: TransactionType = .expense, label: String = "", date: Date = Date.now, recurrencePeriod: RecurrencePeriod = .never, category: UserCategory? = nil) -> Transaction {
-        return Transaction(insertInto: context, amount: amount, savings: savings, type: type, label: label, date: date, recurrencePeriod: recurrencePeriod, userCategory: category)
-    }
-    
-    func getUserCategories() -> [UserCategory] {
-        let request: NSFetchRequest<UserCategory> = UserCategory.fetchRequest()
-        var fetchedUserCategories: [UserCategory] = []
-        
-        do {
-            fetchedUserCategories = try context.fetch(request)
-        } catch let error {
-            print("Error fetching user categories \(error)")
-        }
-        
-        return fetchedUserCategories
     }
 }

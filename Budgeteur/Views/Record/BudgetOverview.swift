@@ -54,8 +54,8 @@ struct BudgetOverview_Previews: PreviewProvider {
     static var dataManager: DataManager = {
         let m: DataManager = .init(inMemory: true)
         
-        _ = m.createTransaction(amount: 405, date: .now)
-        _ = m.createTransaction(amount: 15, date: .distantPast, recurrencePeriod: .weekly)
+        _ = Transaction(insertInto: m.context, amount: 405, date: .now)
+        _ = Transaction(insertInto: m.context, amount: 15, date: .distantPast, recurrencePeriod: .weekly)
         
         return m
     }()

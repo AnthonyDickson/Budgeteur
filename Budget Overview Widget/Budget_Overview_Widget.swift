@@ -72,6 +72,7 @@ struct BudgetOverviewEntry: TimelineEntry {
         let dateInterval = period.getDateInterval(for: date)
         let request = Transaction.fetchRequest()
         request.predicate = Transaction.getPredicateForAllTransactions(in: dateInterval)
+        // TODO: Replace DataManager.preview with a proper DataManager instance that loads the store. Does this fix the widget not updating?
         let transactions = (try? DataManager.preview.context.fetch(request)) ?? []
         let transactionSet = TransactionSet.fromTransactions(transactions, in: dateInterval, groupBy: period)
         

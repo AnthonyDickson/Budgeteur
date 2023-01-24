@@ -25,7 +25,7 @@ extension Transaction {
     @NSManaged public var recurrencePeriod: String
     @NSManaged public var category: UserCategory?
     
-    public convenience init(insertInto context: NSManagedObjectContext, amount: Double, savings: Double = 0.0, type: TransactionType = .expense, label: String = "", date: Date = .now, endDate: Date? = nil, recurrencePeriod: RecurrencePeriod = .never, userCategory: UserCategory?) {
+    public convenience init(insertInto context: NSManagedObjectContext, amount: Double, savings: Double = 0.0, type: TransactionType = .expense, label: String = "", date: Date = .now, endDate: Date? = nil, recurrencePeriod: RecurrencePeriod = .never, userCategory: UserCategory? = nil) {
         guard let entity = NSEntityDescription.entity(forEntityName: "Transaction", in: context) else {
             fatalError("Could not get entity description for 'Transaction'.")
         }

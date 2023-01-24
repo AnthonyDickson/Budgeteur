@@ -83,7 +83,7 @@ struct TransactionEditor: View {
             }
             
             DeleteButtonWithConfirmation {
-                dataManager.delete(transaction.parent)
+                dataManager.context.delete(transaction.parent)
                 dataManager.save()
                 dismiss()
             } label: {
@@ -130,11 +130,11 @@ struct TransactionEditor_Previews: PreviewProvider {
     static var dataManager: DataManager = .init(inMemory: true)
     
     static var previews: some View {
-        let transactionOneOff = TransactionWrapper.fromTransaction(dataManager.createTransaction(amount: 420.69, label: "Foo", date: Date.now, recurrencePeriod: .never))
+        let transactionOneOff = TransactionWrapper.fromTransaction(Transaction(insertInto: dataManager.context, amount: 420.69, label: "Foo", date: Date.now, recurrencePeriod: .never))
 
-        let transactionOneOffIncome = TransactionWrapper.fromTransaction(dataManager.createTransaction(amount: 420.69, savings: 0.2, type: .income, label: "Baz", date: Date.now, recurrencePeriod: .never))
+        let transactionOneOffIncome = TransactionWrapper.fromTransaction(Transaction(insertInto: dataManager.context, amount: 420.69, savings: 0.2, type: .income, label: "Baz", date: Date.now, recurrencePeriod: .never))
 
-        let transactionRecurring = TransactionWrapper.fromTransaction(dataManager.createTransaction(amount: 420.69, label: "Bar", date: Date.now, recurrencePeriod: .weekly))
+        let transactionRecurring = TransactionWrapper.fromTransaction(Transaction(insertInto: dataManager.context, amount: 420.69, label: "Bar", date: Date.now, recurrencePeriod: .weekly))
 
         NavigationStack {
             TransactionEditor(transaction: transactionOneOff)

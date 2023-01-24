@@ -36,7 +36,7 @@ struct CategoryEditor: View {
     
     private func createCategoryAndReset() {
         if !newCategoryName.isEmpty {
-            _ = dataManager.createUserCategory(name: newCategoryName, type: transactionType)
+            _ = UserCategory(insertInto: dataManager.context, name: newCategoryName, type: transactionType)
             newCategoryName = ""
         }
     }
@@ -98,7 +98,7 @@ struct CategoryEditor: View {
 
 struct CategoryEditor_Previews: PreviewProvider {
     static var previews: some View {
-        let categories = DataManager.preview.getUserCategories()
+        let categories = try! DataManager.preview.context.fetch(UserCategory.fetchRequest())
         
         ForEach([TransactionType.expense, TransactionType.income], id: \.self) { transactionType in
             let filteredCategories = categories.filter({ $0.type == transactionType.rawValue })
