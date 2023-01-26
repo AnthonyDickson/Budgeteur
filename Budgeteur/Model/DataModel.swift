@@ -11,12 +11,34 @@ import CoreData
 
 /// Loads and saves the Core Data store and also handles de
 class DataManager: ObservableObject {
+    static private let groupIdentifier = "group.com.dican732.Budgeteur"
+    
     /// The Core Data stack.
     let container = NSPersistentCloudKitContainer(name: "Budgeteur")
     /// The view context of the ``DataManager``'s ``container``.
     var context: NSManagedObjectContext {
         container.viewContext
     }
+    
+    private static var groupStoreUrl: URL? {
+        let groupContainerUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Self.groupIdentifier)
+        return groupContainerUrl?.appending(path: "Budgeteur.sqlite")
+    }
+    
+    init(inMemory: Bool = false) {
+        if inMemory {
+            container.persistentStoreDescriptions = [NSPersistentStoreDescription(url: URL(filePath: "/dev/null"))]
+        }
+
+        container.persistentStoreDescriptions = [NSPersistentStoreDescription(url: Self.groupStoreUrl!)]
+        
+        container.loadPersistentStores { storeDescription, error in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        }
+    }
+
     /// A ``DataManager`` instance that contains mock data.
     static var preview: DataManager = {
        let m = DataManager(inMemory: true)
@@ -26,18 +48,6 @@ class DataManager: ObservableObject {
         
         return m
     }()
-    
-    init(inMemory: Bool = false) {
-        if inMemory {
-            container.persistentStoreDescriptions = [NSPersistentStoreDescription(url: URL(filePath: "/dev/null"))]
-        }
-        
-        container.loadPersistentStores { storeDescription, error in
-            if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        }
-    }
     
     /// Add mock data (categories and transactions) to the context.
     ///

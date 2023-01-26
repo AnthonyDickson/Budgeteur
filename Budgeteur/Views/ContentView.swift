@@ -39,7 +39,6 @@ struct ContentView: View {
                     Label("Settings", systemImage: "gear")
                 }
         }
-        // TODO: Fix this not updating widget (at least in simulator).
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .background {
                 WidgetCenter.shared.reloadAllTimelines()

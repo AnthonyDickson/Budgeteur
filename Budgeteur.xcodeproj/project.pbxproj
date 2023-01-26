@@ -185,6 +185,8 @@
 		92B2A0D128F667FB00B81F0D /* PeriodPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodPicker.swift; sourceTree = "<group>"; };
 		92B2A0D328F66BCA00B81F0D /* Period.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Period.swift; sourceTree = "<group>"; };
 		92B2F312295A826000E3AA07 /* TransactionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionList.swift; sourceTree = "<group>"; };
+		92BF917D298251260082EBBF /* Budgeteur.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Budgeteur.entitlements; sourceTree = "<group>"; };
+		92BF917E298251F80082EBBF /* Budget Overview WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Budget Overview WidgetExtension.entitlements"; sourceTree = "<group>"; };
 		92E0E93529138E0B00BC83E9 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		92E0E93729138F6100BC83E9 /* UserCategory+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserCategory+CoreDataClass.swift"; sourceTree = "<group>"; };
 		92E0E93829138F6100BC83E9 /* UserCategory+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserCategory+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 		922BBA302968E9D200634713 /* Budget Overview Widget */ = {
 			isa = PBXGroup;
 			children = (
+				92BF917E298251F80082EBBF /* Budget Overview WidgetExtension.entitlements */,
 				922BBA312968E9D200634713 /* Budget_Overview_WidgetBundle.swift */,
 				922BBA332968E9D200634713 /* Budget_Overview_Widget.swift */,
 				922BBA352968E9D300634713 /* Assets.xcassets */,
@@ -332,6 +335,7 @@
 		927B91D928F220310013B404 /* Budgeteur */ = {
 			isa = PBXGroup;
 			children = (
+				92BF917D298251260082EBBF /* Budgeteur.entitlements */,
 				927B91DA28F220310013B404 /* BudgeteurApp.swift */,
 				927B920C28F22CA60013B404 /* Views */,
 				927B920D28F22CAE0013B404 /* Model */,
@@ -727,6 +731,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "Budget Overview Widget/Budget Overview WidgetExtension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ND56MQ9FUB;
@@ -755,6 +760,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "Budget Overview Widget/Budget Overview WidgetExtension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ND56MQ9FUB;
@@ -898,6 +904,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Budgeteur/Budgeteur.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Budgeteur/Preview Content\"";
@@ -931,6 +938,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Budgeteur/Budgeteur.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Budgeteur/Preview Content\"";
