@@ -28,9 +28,9 @@ class DataManager: ObservableObject {
     init(inMemory: Bool = false) {
         if inMemory {
             container.persistentStoreDescriptions = [NSPersistentStoreDescription(url: URL(filePath: "/dev/null"))]
+        } else {
+            container.persistentStoreDescriptions = [NSPersistentStoreDescription(url: Self.groupStoreUrl!)]
         }
-
-        container.persistentStoreDescriptions = [NSPersistentStoreDescription(url: Self.groupStoreUrl!)]
         
         container.loadPersistentStores { storeDescription, error in
             if let error = error as NSError? {
