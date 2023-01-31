@@ -62,6 +62,11 @@
 		92436FE12932C89F00E45836 /* DeleteButtonWithConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FE02932C89F00E45836 /* DeleteButtonWithConfirmation.swift */; };
 		92436FE32932E61C00E45836 /* OptionalDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FE22932E61C00E45836 /* OptionalDatePicker.swift */; };
 		92436FE52932F93700E45836 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FE42932F93700E45836 /* Calendar.swift */; };
+		925D2AEA2988D5B9006F7ABC /* BudgeteurWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925D2AE92988D5B9006F7ABC /* BudgeteurWatchApp.swift */; };
+		925D2AEC2988D5B9006F7ABC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925D2AEB2988D5B9006F7ABC /* ContentView.swift */; };
+		925D2AEE2988D5BA006F7ABC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 925D2AED2988D5BA006F7ABC /* Assets.xcassets */; };
+		925D2AF12988D5BA006F7ABC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 925D2AF02988D5BA006F7ABC /* Preview Assets.xcassets */; };
+		925D2AF42988D5BA006F7ABC /* Budgeteur.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 925D2AE72988D5B9006F7ABC /* Budgeteur.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91DA28F220310013B404 /* BudgeteurApp.swift */; };
 		927B91DD28F220310013B404 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91DC28F220310013B404 /* ContentView.swift */; };
 		927B91DF28F220320013B404 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 927B91DE28F220320013B404 /* Assets.xcassets */; };
@@ -95,6 +100,13 @@
 			remoteGlobalIDString = 922BBA292968E9D100634713;
 			remoteInfo = "Budget Overview WidgetExtension";
 		};
+		925D2AF22988D5BA006F7ABC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 927B91CF28F220310013B404 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 925D2AE62988D5B9006F7ABC;
+			remoteInfo = "BudgeteurWatch Watch App";
+		};
 		927B91E828F220320013B404 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 927B91CF28F220310013B404 /* Project object */;
@@ -121,6 +133,17 @@
 				922BBA3A2968E9D300634713 /* Budget Overview WidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		925D2AF52988D5BA006F7ABC /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				925D2AF42988D5BA006F7ABC /* Budgeteur.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -166,6 +189,11 @@
 		92436FE02932C89F00E45836 /* DeleteButtonWithConfirmation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteButtonWithConfirmation.swift; sourceTree = "<group>"; };
 		92436FE22932E61C00E45836 /* OptionalDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalDatePicker.swift; sourceTree = "<group>"; };
 		92436FE42932F93700E45836 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
+		925D2AE72988D5B9006F7ABC /* Budgeteur.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Budgeteur.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		925D2AE92988D5B9006F7ABC /* BudgeteurWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgeteurWatchApp.swift; sourceTree = "<group>"; };
+		925D2AEB2988D5B9006F7ABC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		925D2AED2988D5BA006F7ABC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		925D2AF02988D5BA006F7ABC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		927B91D728F220310013B404 /* Budgeteur.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Budgeteur.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		927B91DA28F220310013B404 /* BudgeteurApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgeteurApp.swift; sourceTree = "<group>"; };
 		927B91DC28F220310013B404 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -203,6 +231,13 @@
 			files = (
 				922BBA2F2968E9D200634713 /* SwiftUI.framework in Frameworks */,
 				922BBA2D2968E9D200634713 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		925D2AE42988D5B9006F7ABC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,6 +339,25 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		925D2AE82988D5B9006F7ABC /* Budgeteur Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				925D2AE92988D5B9006F7ABC /* BudgeteurWatchApp.swift */,
+				925D2AEB2988D5B9006F7ABC /* ContentView.swift */,
+				925D2AED2988D5BA006F7ABC /* Assets.xcassets */,
+				925D2AEF2988D5BA006F7ABC /* Preview Content */,
+			);
+			path = "Budgeteur Watch App";
+			sourceTree = "<group>";
+		};
+		925D2AEF2988D5BA006F7ABC /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				925D2AF02988D5BA006F7ABC /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
 		927B91CE28F220310013B404 = {
 			isa = PBXGroup;
 			children = (
@@ -316,6 +370,7 @@
 				927B91EA28F220320013B404 /* BudgeteurTests */,
 				927B91F428F220320013B404 /* BudgeteurUITests */,
 				922BBA302968E9D200634713 /* Budget Overview Widget */,
+				925D2AE82988D5B9006F7ABC /* Budgeteur Watch App */,
 				922BBA2B2968E9D100634713 /* Frameworks */,
 				927B91D828F220310013B404 /* Products */,
 			);
@@ -328,6 +383,7 @@
 				927B91E728F220320013B404 /* BudgeteurTests.xctest */,
 				927B91F128F220320013B404 /* BudgeteurUITests.xctest */,
 				922BBA2A2968E9D100634713 /* Budget Overview WidgetExtension.appex */,
+				925D2AE72988D5B9006F7ABC /* Budgeteur.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -468,6 +524,23 @@
 			productReference = 922BBA2A2968E9D100634713 /* Budget Overview WidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		925D2AE62988D5B9006F7ABC /* BudgeteurWatch Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 925D2AF82988D5BA006F7ABC /* Build configuration list for PBXNativeTarget "BudgeteurWatch Watch App" */;
+			buildPhases = (
+				925D2AE32988D5B9006F7ABC /* Sources */,
+				925D2AE42988D5B9006F7ABC /* Frameworks */,
+				925D2AE52988D5B9006F7ABC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "BudgeteurWatch Watch App";
+			productName = "BudgeteurWatch Watch App";
+			productReference = 925D2AE72988D5B9006F7ABC /* Budgeteur.app */;
+			productType = "com.apple.product-type.application";
+		};
 		927B91D628F220310013B404 /* Budgeteur */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 927B91FB28F220320013B404 /* Build configuration list for PBXNativeTarget "Budgeteur" */;
@@ -476,11 +549,13 @@
 				927B91D428F220310013B404 /* Frameworks */,
 				927B91D528F220310013B404 /* Resources */,
 				922BBA3B2968E9D300634713 /* Embed Foundation Extensions */,
+				925D2AF52988D5BA006F7ABC /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				922BBA392968E9D300634713 /* PBXTargetDependency */,
+				925D2AF32988D5BA006F7ABC /* PBXTargetDependency */,
 			);
 			name = Budgeteur;
 			productName = Budgeteur;
@@ -536,6 +611,9 @@
 					922BBA292968E9D100634713 = {
 						CreatedOnToolsVersion = 14.2;
 					};
+					925D2AE62988D5B9006F7ABC = {
+						CreatedOnToolsVersion = 14.2;
+					};
 					927B91D628F220310013B404 = {
 						CreatedOnToolsVersion = 14.0.1;
 					};
@@ -566,6 +644,7 @@
 				927B91E628F220320013B404 /* BudgeteurTests */,
 				927B91F028F220320013B404 /* BudgeteurUITests */,
 				922BBA292968E9D100634713 /* Budget Overview WidgetExtension */,
+				925D2AE62988D5B9006F7ABC /* BudgeteurWatch Watch App */,
 			);
 		};
 /* End PBXProject section */
@@ -576,6 +655,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				922BBA362968E9D300634713 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		925D2AE52988D5B9006F7ABC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				925D2AF12988D5BA006F7ABC /* Preview Assets.xcassets in Resources */,
+				925D2AEE2988D5BA006F7ABC /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -627,6 +715,15 @@
 				922BBA4A2968EB3A00634713 /* Currency.swift in Sources */,
 				922BBA412968EA3300634713 /* UserCategory+CoreDataProperties.swift in Sources */,
 				922BBA50296A2B4400634713 /* Budgeteur.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		925D2AE32988D5B9006F7ABC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				925D2AEC2988D5B9006F7ABC /* ContentView.swift in Sources */,
+				925D2AEA2988D5B9006F7ABC /* BudgeteurWatchApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -713,6 +810,11 @@
 			target = 922BBA292968E9D100634713 /* Budget Overview WidgetExtension */;
 			targetProxy = 922BBA382968E9D300634713 /* PBXContainerItemProxy */;
 		};
+		925D2AF32988D5BA006F7ABC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 925D2AE62988D5B9006F7ABC /* BudgeteurWatch Watch App */;
+			targetProxy = 925D2AF22988D5BA006F7ABC /* PBXContainerItemProxy */;
+		};
 		927B91E928F220320013B404 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 927B91D628F220310013B404 /* Budgeteur */;
@@ -781,6 +883,64 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		925D2AF62988D5BA006F7ABC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Budgeteur Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = ND56MQ9FUB;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.dican732.Budgeteur;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dican732.Budgeteur.watchkitapp;
+				PRODUCT_NAME = Budgeteur;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 9.1;
+			};
+			name = Debug;
+		};
+		925D2AF72988D5BA006F7ABC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Budgeteur Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = ND56MQ9FUB;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.dican732.Budgeteur;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dican732.Budgeteur.watchkitapp;
+				PRODUCT_NAME = Budgeteur;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 9.1;
 			};
 			name = Release;
 		};
@@ -1050,6 +1210,15 @@
 			buildConfigurations = (
 				922BBA3C2968E9D300634713 /* Debug */,
 				922BBA3D2968E9D300634713 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		925D2AF82988D5BA006F7ABC /* Build configuration list for PBXNativeTarget "BudgeteurWatch Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				925D2AF62988D5BA006F7ABC /* Debug */,
+				925D2AF72988D5BA006F7ABC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
