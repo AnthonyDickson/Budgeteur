@@ -52,32 +52,37 @@ struct TransactionGroupCategory: View {
         return sortedGroupedTransactions
     }
     
-    var body: some View {
+    // Need `@ViewBuilder` so that we can return empty view if the transaction set is empty.
+    @ViewBuilder var body: some View {
         // Cache these properties to avoid unnecessarily re-calculating them in the loop.
         let transactionSet = TransactionSet
             .fromTransactions(Array(transactions), in: dateInterval, groupBy: period)
         let totalIncome = transactionSet.sumIncome
         let totalExpenses = transactionSet.sumExpenses
         let transactionsByCategory = groupAndSort(transactionSet: transactionSet)
-
-        Section {
-            VStack {
-                TransactionGroupHeader(title: title, totalIncome: totalIncome, totalExpenses: totalExpenses)
+        
+        if transactionSet.isEmpty {
+            EmptyView()
+        } else {
+            Section {
+                VStack {
+                    TransactionGroupHeader(title: title, totalIncome: totalIncome, totalExpenses: totalExpenses)
+                    
+                    Divider()
+                }
                 
-                Divider()
+                ForEach(transactionsByCategory, id: \.key) { categoryName, groupedTransactions in
+                    CollapsibleTransactionSection(
+                        title: categoryName ?? UserCategory.defaultName,
+                        transactions: groupedTransactions,
+                        useDateForHeader: true,
+                        totalIncome: totalIncome,
+                        totalExpenses: totalExpenses
+                    )
+                }
             }
-            
-            ForEach(transactionsByCategory, id: \.key) { categoryName, groupedTransactions in
-                CollapsibleTransactionSection(
-                    title: categoryName ?? UserCategory.defaultName,
-                    transactions: groupedTransactions,
-                    useDateForHeader: true,
-                    totalIncome: totalIncome,
-                    totalExpenses: totalExpenses
-                )
-            }
+            .listRowSeparator(.hidden)
         }
-        .listRowSeparator(.hidden)
     }
 }
 

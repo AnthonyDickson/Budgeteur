@@ -40,31 +40,36 @@ struct TransactionGroup: View {
         )
     }
     
-    var body: some View {
+    // Need `@ViewBuilder` so that we can return empty view if the transaction set is empty.
+    @ViewBuilder var body: some View {
         let transactionSet = TransactionSet.fromTransactions(Array(transactions), in: dateInterval, groupBy: period)
         
-        Section {
-            VStack {
-                TransactionGroupHeader(title: title, totalIncome: transactionSet.sumIncome, totalExpenses: transactionSet.sumExpenses)
+        if transactionSet.isEmpty {
+            EmptyView()
+        } else {
+            Section {
+                VStack {
+                    TransactionGroupHeader(title: title, totalIncome: transactionSet.sumIncome, totalExpenses: transactionSet.sumExpenses)
+                    
+                    if period == .oneDay && transactionSet.oneOffTransactions.count > 0 {
+                        Divider()
+                    }
+                }
                 
-                if period == .oneDay && transactionSet.oneOffTransactions.count > 0 {
-                    Divider()
+                ForEach(transactionSet.groupOneOffByDate(), id: \.key) { date, transactions in
+                    if period == .oneDay {
+                        TransactionRows(transactions: transactions, useDateForHeader: false)
+                    } else {
+                        TransactionByDateSubGroup(date: date, transactions: transactions)
+                    }
+                }
+                
+                if transactionSet.recurringTransactions.count > 0 {
+                    RecurringTransactionSubGroup(recurringTransactions: transactionSet.recurringTransactions)
                 }
             }
-            
-            ForEach(transactionSet.groupOneOffByDate(), id: \.key) { date, transactions in
-                if period == .oneDay {
-                    TransactionRows(transactions: transactions, useDateForHeader: false)
-                } else {
-                    TransactionByDateSubGroup(date: date, transactions: transactions)
-                }
-            }
-            
-            if transactionSet.recurringTransactions.count > 0 {
-                RecurringTransactionSubGroup(recurringTransactions: transactionSet.recurringTransactions)
-            }
+            .listRowSeparator(.hidden)
         }
-        .listRowSeparator(.hidden)
     }
 }
 

@@ -14,6 +14,11 @@ struct TransactionSet {
     /// A list of the transactions that happen regularly.
     let recurringTransactions: [TransactionWrapper]
     
+    /// Whether this transaction set contains any transactions.
+    var isEmpty: Bool {
+        return oneOffTransactions.isEmpty && recurringTransactions.isEmpty
+    }
+    
     /// All of the one-off and recurring transactions in the set.
     var all: [TransactionWrapper] {
         oneOffTransactions + recurringTransactions
