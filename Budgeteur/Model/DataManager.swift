@@ -6,8 +6,17 @@
 //
 
 import Foundation
-import GameplayKit
 import CoreData
+
+struct RandomNumberGeneratorWithSeed: RandomNumberGenerator {
+    init(seed: Int) {
+        srand48(seed)
+    }
+    
+    func next() -> UInt64 {
+        return UInt64(drand48() * Double(UInt64.max))
+    }
+}
 
 /// Loads and saves the Core Data store and also handles de
 class DataManager: ObservableObject {
@@ -64,7 +73,6 @@ class DataManager: ObservableObject {
             UserCategory(insertInto: context, name: "❤️ Donation", type: .expense)
         ]
         
-        let rng = GKMersenneTwisterRandomSource(seed: 42)
         let descriptions = [
             "Foo",
             "Bar",
@@ -74,15 +82,22 @@ class DataManager: ObservableObject {
             "Pop"
         ]
         let startDate = Date.now
+        var rng = RandomNumberGeneratorWithSeed(seed: 42)
         
         for _ in 0..<numSamples {
-            let description = descriptions[rng.nextInt(upperBound: descriptions.count)]
-            let amount = 100.0 * Double(rng.nextUniform())
+            let amount = Double.random(in: 0...100, using: &rng)
+            
+            let descriptionIndex = Int.random(in: 0..<descriptions.count, using: &rng)
+            let description = descriptions[descriptionIndex]
+            
+            let dayOffset = -Int.random(in: 0...365, using: &rng)
             let date = Calendar.current.date(
                 byAdding: Calendar.Component.day,
-                value: -rng.nextInt(upperBound: 365),
+                value: dayOffset,
                 to: startDate)!
-            let category = categories[rng.nextInt(upperBound: categories.count)]
+            
+            let categoryIndex = Int.random(in: 0..<categories.count, using: &rng)
+            let category = categories[categoryIndex]
             
             _ = Transaction(
                 insertInto: context,
