@@ -89,9 +89,9 @@ struct Budget_Overview_WidgetEntryView : View {
     
     var colour: Color {
         if entry.underBudget {
-            return colorScheme == .light ? .moneyGreen : .moneyGreenDarker
+            return .budgeteurGreen(colorScheme: colorScheme)
         } else {
-            return colorScheme == .light ? .grapefruitRed : .bloodOrange
+            return .budgeteurRed(colorScheme: colorScheme)
         }
     }
     
@@ -135,7 +135,7 @@ struct Budget_Overview_WidgetEntryView : View {
         ZStack(alignment: .leading) {
            foreground
             VStack(alignment: .leading) {
-                Text(Currency.formatAsWhole(entry.absoluteBudget))
+                Text(Currency.formatAsInt(entry.absoluteBudget))
                     .font(.title)
                 Text("\(underOverText) \(entry.period.contextLabel)")
                     .font(.callout)

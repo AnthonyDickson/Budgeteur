@@ -18,4 +18,12 @@ extension Color {
     static let grapefruitRed = Color(red: 1, green: 0.6, blue: 0.6)
     /// A red colour suited for backgrounds in `dark` colour schemes.
     static let bloodOrange = Color(red: 0.76, green: 0.39, blue: 0.39)
+    
+    static func budgeteurGreen(colorScheme: ColorScheme) -> Color {
+        colorScheme == .light ? moneyGreen : moneyGreenDarker
+    }
+    
+    static func budgeteurRed(colorScheme: ColorScheme) -> Color {
+        colorScheme == .light ? grapefruitRed : bloodOrange
+    }
 }

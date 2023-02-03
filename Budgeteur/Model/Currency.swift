@@ -41,7 +41,7 @@ final class Currency {
     /// Rounds number to the nearest integer and formats it as a currency.
     /// - Parameter number: A floating point number.
     /// - Returns: The formatted currency string. Returns "NaN" if `number` could not be converted to a `NSNumber`.
-    static func formatAsWhole(_ number: Double) -> String {
+    static func formatAsInt(_ number: Double) -> String {
         wholeFormatter.string(for: number as NSNumber) ?? "NaN"
     }
 }

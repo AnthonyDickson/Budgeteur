@@ -28,18 +28,17 @@ struct BudgetOverview: View {
         )
     }
     
-    /// Get the total amount of all transactions in the current time period (e.g. this week, this month).
-    private func getTotalSpending() -> Double {
+    /// The total amount of all transactions in the current time period (e.g. this week, this month).
+    private var netSpending: Double {
         let dateInterval = period.getDateInterval(for: .now)
         let transactionSet = TransactionSet.fromTransactions(Array(transactions), in: dateInterval, groupBy: period)
         
-        return transactionSet.all
-            .reduce(0.0) { $1.type == .income ? $0 + $1.amount * (1 - $1.savings) : $0 - $1.amount }
+        return transactionSet.netSpending
     }
     
     /// A label with the total amount spent and the aggregation period.
     private var spendingSummary: String {
-        let amount = getTotalSpending()
+        let amount = netSpending
         let underOver = amount < 0 ? "over" : "under"
 
         return "\(Currency.format(abs(amount))) \(underOver) budget \(period.contextLabel)"

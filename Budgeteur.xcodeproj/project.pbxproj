@@ -62,6 +62,7 @@
 		92436FE12932C89F00E45836 /* DeleteButtonWithConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FE02932C89F00E45836 /* DeleteButtonWithConfirmation.swift */; };
 		92436FE32932E61C00E45836 /* OptionalDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FE22932E61C00E45836 /* OptionalDatePicker.swift */; };
 		92436FE52932F93700E45836 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FE42932F93700E45836 /* Calendar.swift */; };
+		92445E86298CCF4600E6BB0C /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922BBA4B2968ECEC00634713 /* Color.swift */; };
 		925D2AEA2988D5B9006F7ABC /* BudgeteurWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925D2AE92988D5B9006F7ABC /* BudgeteurWatchApp.swift */; };
 		925D2AEC2988D5B9006F7ABC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925D2AEB2988D5B9006F7ABC /* ContentView.swift */; };
 		925D2AEE2988D5BA006F7ABC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 925D2AED2988D5BA006F7ABC /* Assets.xcassets */; };
@@ -79,6 +80,9 @@
 		925D2B032988FB16006F7ABC /* RecurrencePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923B7D2B28F921CE000E46BD /* RecurrencePeriod.swift */; };
 		925D2B042988FB2A006F7ABC /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FE42932F93700E45836 /* Calendar.swift */; };
 		925D2B052988FB2A006F7ABC /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FD229319E9E00E45836 /* Sequence.swift */; };
+		925D2B06298905F9006F7ABC /* Budgeteur.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 92E0E93429138E0B00BC83E9 /* Budgeteur.xcdatamodeld */; };
+		925D2B082989069D006F7ABC /* TransactionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FD62931A99500E45836 /* TransactionSet.swift */; };
+		925D2B092989069D006F7ABC /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921B28F3CCE50013B404 /* Currency.swift */; };
 		927B91DB28F220310013B404 /* BudgeteurApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91DA28F220310013B404 /* BudgeteurApp.swift */; };
 		927B91DD28F220310013B404 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B91DC28F220310013B404 /* ContentView.swift */; };
 		927B91DF28F220320013B404 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 927B91DE28F220320013B404 /* Assets.xcassets */; };
@@ -538,9 +542,9 @@
 			productReference = 922BBA2A2968E9D100634713 /* Budget Overview WidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		925D2AE62988D5B9006F7ABC /* BudgeteurWatch Watch App */ = {
+		925D2AE62988D5B9006F7ABC /* Budgeteur Watch App */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 925D2AF82988D5BA006F7ABC /* Build configuration list for PBXNativeTarget "BudgeteurWatch Watch App" */;
+			buildConfigurationList = 925D2AF82988D5BA006F7ABC /* Build configuration list for PBXNativeTarget "Budgeteur Watch App" */;
 			buildPhases = (
 				925D2AE32988D5B9006F7ABC /* Sources */,
 				925D2AE42988D5B9006F7ABC /* Frameworks */,
@@ -550,7 +554,7 @@
 			);
 			dependencies = (
 			);
-			name = "BudgeteurWatch Watch App";
+			name = "Budgeteur Watch App";
 			productName = "BudgeteurWatch Watch App";
 			productReference = 925D2AE72988D5B9006F7ABC /* Budgeteur.app */;
 			productType = "com.apple.product-type.application";
@@ -658,7 +662,7 @@
 				927B91E628F220320013B404 /* BudgeteurTests */,
 				927B91F028F220320013B404 /* BudgeteurUITests */,
 				922BBA292968E9D100634713 /* Budget Overview WidgetExtension */,
-				925D2AE62988D5B9006F7ABC /* BudgeteurWatch Watch App */,
+				925D2AE62988D5B9006F7ABC /* Budgeteur Watch App */,
 			);
 		};
 /* End PBXProject section */
@@ -736,9 +740,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				925D2B092989069D006F7ABC /* Currency.swift in Sources */,
 				925D2B012988FB16006F7ABC /* Period.swift in Sources */,
 				925D2AFF2988FAFB006F7ABC /* UserCategory+CoreDataProperties.swift in Sources */,
 				925D2B052988FB2A006F7ABC /* Sequence.swift in Sources */,
+				925D2B082989069D006F7ABC /* TransactionSet.swift in Sources */,
 				925D2B002988FB08006F7ABC /* TransactionType.swift in Sources */,
 				925D2AFE2988FAFB006F7ABC /* Transaction.swift in Sources */,
 				925D2AFC2988FAFB006F7ABC /* Transaction+CoreDataProperties.swift in Sources */,
@@ -750,6 +756,8 @@
 				925D2AFD2988FAFB006F7ABC /* Transaction+CoreDataClass.swift in Sources */,
 				925D2B032988FB16006F7ABC /* RecurrencePeriod.swift in Sources */,
 				925D2AEA2988D5B9006F7ABC /* BudgeteurWatchApp.swift in Sources */,
+				925D2B06298905F9006F7ABC /* Budgeteur.xcdatamodeld in Sources */,
+				92445E86298CCF4600E6BB0C /* Color.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -838,7 +846,7 @@
 		};
 		925D2AF32988D5BA006F7ABC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 925D2AE62988D5B9006F7ABC /* BudgeteurWatch Watch App */;
+			target = 925D2AE62988D5B9006F7ABC /* Budgeteur Watch App */;
 			targetProxy = 925D2AF22988D5BA006F7ABC /* PBXContainerItemProxy */;
 		};
 		927B91E928F220320013B404 /* PBXTargetDependency */ = {
@@ -1246,7 +1254,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		925D2AF82988D5BA006F7ABC /* Build configuration list for PBXNativeTarget "BudgeteurWatch Watch App" */ = {
+		925D2AF82988D5BA006F7ABC /* Build configuration list for PBXNativeTarget "Budgeteur Watch App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				925D2AF62988D5BA006F7ABC /* Debug */,

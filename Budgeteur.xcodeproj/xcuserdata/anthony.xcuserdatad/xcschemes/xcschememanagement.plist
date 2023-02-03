@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>Budgeteur Watch App.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 		<key>Budgeteur.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -21,15 +26,15 @@
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
-		<key>BudgeteurWatch Watch App.xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>3</integer>
-		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>922BBA292968E9D100634713</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>925D2AE62988D5B9006F7ABC</key>
 		<dict>
 			<key>primary</key>
 			<true/>

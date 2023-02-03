@@ -24,26 +24,29 @@ struct TransactionSet {
         oneOffTransactions + recurringTransactions
     }
     
-    /// The sum of all transactions in the set.
-    var sumAll: Double {
-        oneOffTransactions.sum(\.amount) + recurringTransactions.sum(\.amount)
-    }
-    
+    /// The sum of all transactions marked as an expense.
     var sumExpenses: Double {
-        sum(type: .expense)
+        sumBy(type: .expense)
     }
     
+    /// The sum of all transactions marked as income ignoring savings.
     var sumIncome: Double {
-        sum(type: .income)
+        sumBy(type: .income)
     }
     
+    private func sumBy(type: TransactionType) -> Double {
+        oneOffTransactions.filter({ $0.type == type }).sum(\.amount) + recurringTransactions.filter({ $0.type == type }).sum(\.amount)
+    }
+    
+    /// The sum of all transactions marked as income minus savings.
     var sumIncomeLessSavings: Double {
         all.filter { $0.type == .income }
             .reduce(0.0) { $0 + $1.amount * (1 - $1.savings) }
     }
     
-    private func sum(type: TransactionType) -> Double {
-        oneOffTransactions.filter({ $0.type == type }).sum(\.amount) + recurringTransactions.filter({ $0.type == type }).sum(\.amount)
+    /// The sum of all income less savings, minus all expenses.
+    var netSpending: Double {
+        all.reduce(0.0) { $1.type == .income ? $0 + $1.amount * (1 - $1.savings) : $0 - $1.amount }
     }
     
     /// Groups all of the one-off transactions by date (day).

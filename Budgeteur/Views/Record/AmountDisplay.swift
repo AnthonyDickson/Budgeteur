@@ -23,18 +23,10 @@ struct AmountDisplay: View {
     private var amountBackground: Color {
         switch transactionType {
         case .expense:
-            return expenseBackground
+            return .budgeteurRed(colorScheme: colorScheme)
         case .income:
-            return incomeBackground
+            return .budgeteurGreen(colorScheme: colorScheme)
         }
-    }
-    
-    private var incomeBackground: Color {
-        colorScheme == .light ? .moneyGreen : .moneyGreenDarker
-    }
-    
-    private var expenseBackground: Color {
-        colorScheme == .light ? .grapefruitRed : .bloodOrange
     }
     
     private var titleText: String {
