@@ -24,7 +24,7 @@ struct Keypad: View {
         ["7", "8", "9"],
         ["4", "5", "6"],
         ["1", "2", "3"],
-        [Keypad.backspaceSymbol, "0", Keypad.checkSymbol],
+        [Keypad.backspaceSymbol, "0"],
     ]
     
     /// Removes the last digit of the amount and shifts the decimal point left one place, e.g. 123.45 -> 12.34.
@@ -53,48 +53,6 @@ struct Keypad: View {
     }
     
     var body: some View {
-//        VStack {
-//            ForEach(Keypad.rows, id: \.self) { row in
-//                HStack {
-//                    Spacer()
-//
-//                    ForEach(row, id: \.self) { value in
-//                        switch(value) {
-//                        case Keypad.backspaceSymbol:
-//                            Button {
-//                                removeLastDigit()
-//                            } label: {
-//                                Label("backspace", systemImage: "delete.backward")
-//                                    .labelStyle(.iconOnly)
-//                            }
-//                            .disabled(invalidAmount)
-//                            .foregroundColor(invalidAmount ? .gray : .red)
-//
-//                        case Keypad.checkSymbol:
-//                            Button {
-//                                onSave()
-//                            } label: {
-//                                Label("save", systemImage: "checkmark.circle")
-//                                    .labelStyle(.iconOnly)
-//                            }
-//                            .disabled(invalidAmount)
-//
-//                        default:
-//                            Button {
-//                                addDigit(digit: value)
-//                            } label: {
-//                                Text(value)
-//                            }
-//                            .foregroundColor(.primary)
-//                        }
-//
-//                        Spacer()
-//                    }
-//                    .bold()
-//                    .padding()
-//                }
-//            }
-//        }
         Grid {
             ForEach(Keypad.rows, id: \.self) { row in
                 GridRow {
@@ -128,27 +86,65 @@ struct Keypad: View {
                             .foregroundColor(.primary)
                         }
                     }
-                    .bold()
-                    .padding(.vertical, 1)
+                    .padding(.vertical, 2.5)
                 }
+                // This makes the view fill the width of the container.
                 .frame(maxWidth: .infinity)
             }
         }
+        .bold()
+        // This button style (.plain or .borderless) is needed otherwise tapping one button activates all buttons at once.
+        .buttonStyle(.plain)
     }
 }
 
+/// Holds the three attributes of a transaction that the user can set in the watch app.
+struct DraftTransaction {
+    var amount: Double = 0.0
+    var label: String = ""
+    var userCategory: UserCategory? = nil
+}
 
-struct TransactionModal: View {
-    @State var amount: Double = 0.0
-    @State var name: String = ""
-    @State var category: UserCategory? = nil
+/// The sheet view for adding a new expense.
+struct ExpenseModal: View {
+    @Binding var draftTransaction: DraftTransaction
+    
+    @Environment(\.managedObjectContext) private var context
+
+    private var categories: [UserCategory] {
+        // Using a `@FetchRequest` data member crashes the preview, but this works fine for some reason...
+        let request = UserCategory.fetchRequest()
+        request.predicate = NSPredicate(format: "type == %@", TransactionType.expense.rawValue)
+        
+        return try! context.fetch(request)
+    }
 
     var body: some View {
+        let categories = Array(categories)
+        
         Form {
             Section("Amount") {
-//                TextField("Amount", text: $name, prompt: Text("Amount"))
-                Text(Currency.format(amount))
-                Keypad(amount: $amount)
+                Text(Currency.format(draftTransaction.amount))
+                Keypad(amount: $draftTransaction.amount)
+            }
+            
+            Section("Description") {
+                TextField("description", text: $draftTransaction.label, prompt: Text("Description"))
+            }
+            
+            Section("Category") {
+                Picker("Category", selection: $draftTransaction.userCategory) {
+                    // To support an optional selection type and an empty selection (`nil`), we need to add an option here that is selected
+                    Text(UserCategory.defaultName)
+                        .tag(nil as UserCategory?)
+                    
+                    ForEach(categories, id: \.id) { theCategory in
+                        Text(theCategory.name)
+                            // Must cast to optional to match the type of `selection`, otherwise tapping on items in the picker does nothing.
+                            .tag(theCategory as UserCategory?)
+                    }
+                }
+                .labelsHidden()
             }
         }
     }
@@ -158,9 +154,11 @@ struct ContentView: View {
     var period: Period = .oneWeek
     
     @State private var showEditor = false
+    @State private var draftTransaction = DraftTransaction()
     
     @Environment(\.managedObjectContext) private var context
     @Environment(\.colorScheme) private var colorScheme
+    @EnvironmentObject private var dataManager: DataManager
     
     private var transactions: TransactionSet {
         let dateInterval = period.getDateInterval(for: .now)
@@ -183,7 +181,21 @@ struct ContentView: View {
         
         return Text("\(amount) \(underOver) budget \(period.contextLabel)")
             .padding()
-            .foregroundColor(isOverBudget ? .red : .primary)
+    }
+    
+    private func addExpense() {
+        _ = Transaction(
+            insertInto: context,
+            amount: draftTransaction.amount,
+            type: .expense,
+            label: draftTransaction.label,
+            userCategory: draftTransaction.userCategory
+        )
+        
+        dataManager.save()
+        // TODO: Add haptic feedback when successfully adding a transaction? https://developer.apple.com/design/human-interface-guidelines/patterns/playing-haptics/
+
+        draftTransaction = DraftTransaction()
     }
 
     var body: some View {
@@ -199,12 +211,15 @@ struct ContentView: View {
         }
         .padding()
         .sheet(isPresented: $showEditor) {
-            TransactionModal()
+            ExpenseModal(draftTransaction: $draftTransaction)
                 .toolbar {
                     ToolbarItem(placement: .confirmationAction) {
                         Button("Done") {
                             showEditor = false
+                            // TODO: Fix view not updating after a transaction is added. Probably need to use a  `@FetchRequest` variable similar to `TransactionGroup`, but it crashes the preview (this works in the simulator).
+                            addExpense()
                         }
+                        .foregroundColor(.blue)
                     }
                 }
         }
@@ -216,5 +231,19 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
             .environment(\.managedObjectContext, DataManager.preview.context)
             .environmentObject(DataManager.preview)
+            .previewDisplayName("Overview")
+
+        Stateful(initialState: DraftTransaction()) { $transaction in
+            ExpenseModal(draftTransaction: $transaction)
+                .environment(\.managedObjectContext, DataManager.preview.context)
+                .environmentObject(DataManager.preview)
+                .toolbar {
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("Done") {
+                        }
+                    }
+                }
+                .previewDisplayName("Add Transaction View")
+        }
     }
 }

@@ -63,6 +63,7 @@
 		92436FE32932E61C00E45836 /* OptionalDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FE22932E61C00E45836 /* OptionalDatePicker.swift */; };
 		92436FE52932F93700E45836 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92436FE42932F93700E45836 /* Calendar.swift */; };
 		92445E86298CCF4600E6BB0C /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922BBA4B2968ECEC00634713 /* Color.swift */; };
+		92445E88298F412600E6BB0C /* Stateful.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927B921D28F3D6C20013B404 /* Stateful.swift */; };
 		925D2AEA2988D5B9006F7ABC /* BudgeteurWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925D2AE92988D5B9006F7ABC /* BudgeteurWatchApp.swift */; };
 		925D2AEC2988D5B9006F7ABC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925D2AEB2988D5B9006F7ABC /* ContentView.swift */; };
 		925D2AEE2988D5BA006F7ABC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 925D2AED2988D5BA006F7ABC /* Assets.xcassets */; };
@@ -756,6 +757,7 @@
 				925D2AFD2988FAFB006F7ABC /* Transaction+CoreDataClass.swift in Sources */,
 				925D2B032988FB16006F7ABC /* RecurrencePeriod.swift in Sources */,
 				925D2AEA2988D5B9006F7ABC /* BudgeteurWatchApp.swift in Sources */,
+				92445E88298F412600E6BB0C /* Stateful.swift in Sources */,
 				925D2B06298905F9006F7ABC /* Budgeteur.xcdatamodeld in Sources */,
 				92445E86298CCF4600E6BB0C /* Color.swift in Sources */,
 			);
