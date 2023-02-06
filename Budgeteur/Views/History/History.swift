@@ -24,7 +24,6 @@ struct History: View {
     }
     
     var body: some View {
-        // TODO: Add pagination (infinite scrolling). Start by loading the current year's transactions (and maybe the previous year's ones too?), then when the using reaches the bottom load in the next year's data. This will help reduce the length of hangs when opening the history view when there are many transactions in the CoreData store (e.g., 5K+).
         VStack {
             HistoryHeader(groupByCategory: $groupByCategory, period: $period, transactionFilter: $transactionFilter)
                 .padding(.horizontal)

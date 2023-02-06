@@ -20,6 +20,9 @@ struct TransactionList: View {
     
     @Environment(\.managedObjectContext) private var context
     
+    /// Controls how many transaction groups are shown in the infinite scrolling list.
+    @State private var stopIndex = 1
+    
     private var startDate: Date {
         let request = Transaction.fetchRequest()
         request.fetchLimit = 1
@@ -31,11 +34,35 @@ struct TransactionList: View {
     }
     
     var body: some View {
-        ForEach(period.getDateIntervals(from: startDate).reversed(), id: \.hashValue) { dateInterval in
-            if groupByCategory {
-                TransactionGroupCategory(dateInterval: dateInterval, period: period, predicate: predicate)
-            } else {
-                TransactionGroup(dateInterval: dateInterval, period: period, predicate: predicate)
+        // TODO: Make `stopIndex` reset to 1 when the period is changed.
+        let dateIntervals = Array(period.getDateIntervals(from: startDate).reversed())
+        
+        // TODO: Fix 'Non-constant range: argument must be an integer literal' warning.
+        // TODO: Fix warning when changing period: "ForEach<Range<Int>, Int, Optional<ModifiedContent<Group<_ConditionalContent<TransactionGroupCategory, TransactionGroup>>, _AppearanceActionModifier>>> count (53) != its initial count (13). `ForEach(_:content:)` should only be used for *constant* data. Instead conform data to `Identifiable` or use `ForEach(_:id:content:)` and provide an explicit `id`!"
+        ForEach(0..<dateIntervals.count) { index in
+            if index < stopIndex && index < dateIntervals.count {
+                let dateInterval = dateIntervals[index]
+
+                Group {
+                    if groupByCategory {
+                        TransactionGroupCategory(dateInterval: dateInterval, period: period, predicate: predicate)
+                    } else {
+                        TransactionGroup(dateInterval: dateInterval, period: period, predicate: predicate)
+                    }
+                }
+                .onAppear {
+                    let nextIndex = stopIndex + 1
+                    
+                    if nextIndex < dateIntervals.count {
+                        stopIndex = nextIndex
+                    }
+                }
+            }
+        }
+        
+        if stopIndex < dateIntervals.count {
+            Button("Load More") {
+                stopIndex += 1
             }
         }
     }

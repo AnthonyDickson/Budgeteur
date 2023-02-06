@@ -11,11 +11,21 @@ import SwiftUI
 struct Settings: View {
     @EnvironmentObject private var dataManager: DataManager
     
+    @State private var sampleCount = 500.0
+    @State private var addRecurring = true
+    
     var body: some View {
         Form {
             Section("Sample Data") {
+                Text("Samples: \(Int(sampleCount))")
+                Slider(value: $sampleCount, in: 100...50000, step: 100) {
+                    Text("Sample Count")
+                }
+                
+                Toggle("Add Recurring Transactions", isOn: $addRecurring)
+                
                 Button {
-                    dataManager.addSampleData(numSamples: 500)
+                    dataManager.addSampleData(numSamples: Int(sampleCount), addRecurring: addRecurring)
                     dataManager.save()
                 } label: {
                     Text("Add sample data")
