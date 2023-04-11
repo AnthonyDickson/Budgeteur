@@ -34,6 +34,11 @@ struct ContentView: View {
                 }
             }
             
+            NetWorth(assets: Assets.preview, liabilities: Liabilities.preview)
+            .tabItem {
+                Label("Net Worth", systemImage: "dollarsign.square")
+            }
+            
             Settings()
                 .tabItem {
                     Label("Settings", systemImage: "gear")
@@ -60,7 +65,6 @@ struct ContentView: View {
                     .previewDisplayName(previewDevice)
                     .previewDevice(.init(rawValue: previewDevice))
             }
-            
         }
     }
 }
