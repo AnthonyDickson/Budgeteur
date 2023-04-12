@@ -45,7 +45,7 @@ struct NetWorth: View {
                         Text(Currency.formatAsInt(assets.totalLiquid))
                         
                         NavigationLink {
-                            NetWorthCategoryDetail()
+                            NetWorthCategoryDetail(title: "Liquid Assets", description: Assets.liquidAssetDescription, items: assets.liquidAssets)
                         } label: {
                             Label("Edit", systemImage: "info.circle")
                                 .labelStyle(.iconOnly)
@@ -60,7 +60,7 @@ struct NetWorth: View {
                         Text(Currency.formatAsInt(assets.totalFixed))
                         
                         NavigationLink {
-                            NetWorthCategoryDetail()
+                            NetWorthCategoryDetail(title: "Large and Fixed Assets", description: Assets.fixedAssetDescription, items: assets.fixedAssets)
                         } label: {
                             Label("Large and Fixed Assets List", systemImage: "info.circle")
                                 .labelStyle(.iconOnly)
@@ -75,7 +75,7 @@ struct NetWorth: View {
                         Text(Currency.formatAsInt(assets.totalPersonalItems))
                         
                         NavigationLink {
-                            NetWorthCategoryDetail()
+                            NetWorthCategoryDetail(title: "Personal Items", description: Assets.personalItemDescription, items: assets.personalItems)
                         } label: {
                             Label("Personal Items List", systemImage: "info.circle")
                                 .labelStyle(.iconOnly)
@@ -118,7 +118,7 @@ struct NetWorth: View {
                         Text(Currency.formatAsInt(liabilities.shortTermTotal))
                         
                         NavigationLink {
-                            NetWorthCategoryDetail()
+                            NetWorthCategoryDetail(title: "Short-Term Liabilities", description: Liabilities.shortTermDescription, items: liabilities.shortTermLiabilities)
                         } label: {
                             Label("Edit", systemImage: "info.circle")
                                 .labelStyle(.iconOnly)
@@ -133,7 +133,7 @@ struct NetWorth: View {
                         Text(Currency.formatAsInt(liabilities.longTermTotal))
                         
                         NavigationLink {
-                            NetWorthCategoryDetail()
+                            NetWorthCategoryDetail(title: "Long-Term Liabilities", description: Liabilities.longTermDescrription, items: liabilities.longTermLiabilities)
                         } label: {
                             Label("Edit", systemImage: "info.circle")
                                 .labelStyle(.iconOnly)
@@ -167,9 +167,10 @@ struct NetWorth: View {
                 // TODO: Integrate assets and liabilities records into CoreData store.
                 if sizeClass == .compact {
                     assetsTable
+                    Spacer()
                     liabilitiesTable
+                    Spacer()
                 } else {
-                    // TODO: Fix heading rows not lining up due to liabilities table having one less row.
                     HStack {
                         assetsTable
                         Spacer()
@@ -180,6 +181,11 @@ struct NetWorth: View {
                 Text("Net Worth: \(Currency.formatAsInt(netWorth))")
                     .font(.title)
                 Text("Short-Term Liquity: \(Currency.formatAsInt(shortTermLiquidity))")
+                
+                // This keeps the above text elements from touching the tab selection bar below in iOS.
+                if sizeClass == .compact {
+                    Spacer()
+                }
             }
         }
     }

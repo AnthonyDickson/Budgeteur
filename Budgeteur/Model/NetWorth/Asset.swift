@@ -23,6 +23,10 @@ struct Assets {
     /// Personal belongings such as phone, musical instruments, jewelry.
     let personalItems: [Asset]
     
+    static let liquidAssetDescription = "Things that can be quickly converted into cash or are cash equivalent, e.g., cash, savings, stocks."
+    static let fixedAssetDescription = "Large and non-liquid things such as vehicles, houses."
+    static let personalItemDescription = "Personal belongings such as phone, musical instruments, jewelry."
+    
     /// The total value of all liquid assets.
     var totalLiquid: Double {
         liquidAssets.sum(\.value)
@@ -45,7 +49,7 @@ struct Assets {
     
     static var preview: Assets {
         Assets(
-            liquidAssets: [Asset(description: "Savings", value: 12345.67)],
+            liquidAssets: [Asset(description: "Savings", value: 12345.67), Asset(description: "Stocks", value: 3245.34)],
             fixedAssets: [Asset(description: "Car", value: 25000)],
             personalItems: [Asset(description: "iPhone", value: 2000)]
         )
