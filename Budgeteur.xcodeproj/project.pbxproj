@@ -10,6 +10,7 @@
 		92089EB429E3DC7000CAC33E /* NetWorth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92089EB329E3DC7000CAC33E /* NetWorth.swift */; };
 		92089EB629E4DA2F00CAC33E /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92089EB529E4DA2F00CAC33E /* Asset.swift */; };
 		92089EB829E4DA5300CAC33E /* Liability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92089EB729E4DA5300CAC33E /* Liability.swift */; };
+		92089EBD29E6225D00CAC33E /* NetWorthCategoryDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92089EBC29E6225D00CAC33E /* NetWorthCategoryDetail.swift */; };
 		922BBA2D2968E9D200634713 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 922BBA2C2968E9D100634713 /* WidgetKit.framework */; };
 		922BBA2F2968E9D200634713 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 922BBA2E2968E9D200634713 /* SwiftUI.framework */; };
 		922BBA322968E9D200634713 /* Budget_Overview_WidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922BBA312968E9D200634713 /* Budget_Overview_WidgetBundle.swift */; };
@@ -172,6 +173,7 @@
 		92089EB329E3DC7000CAC33E /* NetWorth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWorth.swift; sourceTree = "<group>"; };
 		92089EB529E4DA2F00CAC33E /* Asset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
 		92089EB729E4DA5300CAC33E /* Liability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Liability.swift; sourceTree = "<group>"; };
+		92089EBC29E6225D00CAC33E /* NetWorthCategoryDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWorthCategoryDetail.swift; sourceTree = "<group>"; };
 		922BBA2A2968E9D100634713 /* Budget Overview WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Budget Overview WidgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		922BBA2C2968E9D100634713 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		922BBA2E2968E9D200634713 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -466,6 +468,7 @@
 				927B91DC28F220310013B404 /* ContentView.swift */,
 				92436FDE2931F40200E45836 /* Settings.swift */,
 				92089EB329E3DC7000CAC33E /* NetWorth.swift */,
+				92089EBC29E6225D00CAC33E /* NetWorthCategoryDetail.swift */,
 				927B922328F4E9120013B404 /* Category */,
 				92B2A0D028F667E900B81F0D /* Period */,
 				92F7B1C1295BDA2500D39216 /* Savings */,
@@ -814,6 +817,7 @@
 				92E0E9402915FBB300BC83E9 /* History.swift in Sources */,
 				92436FC129307FC600E45836 /* CategoryEditor.swift in Sources */,
 				92436FD52931A4CF00E45836 /* CollapsibleTransactionSection.swift in Sources */,
+				92089EBD29E6225D00CAC33E /* NetWorthCategoryDetail.swift in Sources */,
 				922E561F293481020002B77C /* CollapsibleTransactionSectionTitle.swift in Sources */,
 				922E561A29334E300002B77C /* AmountText.swift in Sources */,
 				922E56232935F35C0002B77C /* TransactionFilter.swift in Sources */,

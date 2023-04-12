@@ -35,21 +35,52 @@ struct NetWorth: View {
                         .gridColumnAlignment(.trailing)
                 }
                 .font(.headline)
-                .foregroundColor(.accentColor)
+                
+                Divider()
                 
                 GridRow {
                     Text("Liquid Assets: ")
-                    Text(Currency.formatAsInt(assets.totalLiquid))
+                    
+                    HStack {
+                        Text(Currency.formatAsInt(assets.totalLiquid))
+                        
+                        NavigationLink {
+                            NetWorthCategoryDetail()
+                        } label: {
+                            Label("Edit", systemImage: "info.circle")
+                                .labelStyle(.iconOnly)
+                        }
+                    }
                 }
-                
+
                 GridRow {
                     Text("Large and Fixed Assets: ")
-                    Text(Currency.formatAsInt(assets.totalFixed))
+                    
+                    HStack {
+                        Text(Currency.formatAsInt(assets.totalFixed))
+                        
+                        NavigationLink {
+                            NetWorthCategoryDetail()
+                        } label: {
+                            Label("Large and Fixed Assets List", systemImage: "info.circle")
+                                .labelStyle(.iconOnly)
+                        }
+                    }
                 }
-                
+
                 GridRow {
                     Text("Personal Items: ")
-                    Text(Currency.formatAsInt(assets.totalPersonalItems))
+                    
+                    HStack {
+                        Text(Currency.formatAsInt(assets.totalPersonalItems))
+                        
+                        NavigationLink {
+                            NetWorthCategoryDetail()
+                        } label: {
+                            Label("Personal Items List", systemImage: "info.circle")
+                                .labelStyle(.iconOnly)
+                        }
+                    }
                 }
                 
                 Divider()
@@ -77,16 +108,44 @@ struct NetWorth: View {
                         .gridColumnAlignment(.trailing)
                 }
                 .font(.headline)
-                .foregroundColor(.accentColor)
+                
+                Divider()
                 
                 GridRow {
-                    Text("Short Term Liabilities: ")
-                    Text(Currency.formatAsInt(liabilities.shortTermTotal))
+                    Text("Short-Term Liabilities: ")
+                    
+                    HStack {
+                        Text(Currency.formatAsInt(liabilities.shortTermTotal))
+                        
+                        NavigationLink {
+                            NetWorthCategoryDetail()
+                        } label: {
+                            Label("Edit", systemImage: "info.circle")
+                                .labelStyle(.iconOnly)
+                        }
+                    }
                 }
                 
                 GridRow {
-                    Text("Long Term Liabilities: ")
-                    Text(Currency.formatAsInt(liabilities.longTermTotal))
+                    Text("Long-Term Liabilities: ")
+                    
+                    HStack {
+                        Text(Currency.formatAsInt(liabilities.longTermTotal))
+                        
+                        NavigationLink {
+                            NetWorthCategoryDetail()
+                        } label: {
+                            Label("Edit", systemImage: "info.circle")
+                                .labelStyle(.iconOnly)
+                        }
+                    }
+                }
+                
+                // Regular sized displays show the assets and liabilities tables side-by-side, so we need to add another row so that the totals rows line up.
+                if sizeClass == .regular {
+                    GridRow {
+                        Text(" ")
+                    }
                 }
                 
                 Divider()
@@ -97,29 +156,31 @@ struct NetWorth: View {
                 }
                 .bold()
             }
-            .padding()
         }
+        .padding()
     }
     
     var body: some View {
-        VStack {
-            // TODO: Add navigation links to table rows that shows list of items for the category and allows them to be edited.
-            // TODO: Integrate assets and liabilities records into CoreData store.
-            if sizeClass == .compact {
-                assetsTable
-                liabilitiesTable
-            } else {
-                // TODO: Fix heading rows not lining up due to liabilities table having one less row.
-                HStack {
+        NavigationStack {
+            VStack {
+                // TODO: Add navigation links to table rows that shows list of items for the category and allows them to be edited.
+                // TODO: Integrate assets and liabilities records into CoreData store.
+                if sizeClass == .compact {
                     assetsTable
-                    Spacer()
                     liabilitiesTable
+                } else {
+                    // TODO: Fix heading rows not lining up due to liabilities table having one less row.
+                    HStack {
+                        assetsTable
+                        Spacer()
+                        liabilitiesTable
+                    }
                 }
+                
+                Text("Net Worth: \(Currency.formatAsInt(netWorth))")
+                    .font(.title)
+                Text("Short-Term Liquity: \(Currency.formatAsInt(shortTermLiquidity))")
             }
-            
-            Text("Net Worth: \(Currency.formatAsInt(netWorth))")
-                .font(.title)
-            Text("Short-Term Liquity: \(Currency.formatAsInt(shortTermLiquidity))")
         }
     }
 }
