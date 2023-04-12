@@ -12,13 +12,13 @@ typealias Liability = Asset
 
 /// A collection of liabilities where each asset consists of a description and a cash value.
 struct Liabilities {
-    /// Debts and expenses that are due within a year such as credit card debt, car loans, and provisions for known future expenses.
+    /// Debts and expenses that are due within a year such as credit card debt.
     let shortTermLiabilities: [Liability]
-    /// Debts and expenses that are due to be paid in more than a year, e.g., home loan.
+    /// Debts and expenses that are due to be paid in more than a year such as home loans.
     let longTermLiabilities: [Liability]
     
-    static let shortTermDescription = "Debts and expenses that are due within a year such as credit card debt, car loans, and provisions for known future expenses."
-    static let longTermDescrription = "Debts and expenses that are due to be paid in more than a year, e.g., home loan."
+    static let shortTermDescription = "Short-term liabilities are debts and expenses that are due within a year such as credit card debt."
+    static let longTermDescrription = "Long-term liabilities are debts and expenses that are due to be paid in more than a year such as home loans."
     
     /// The total value of all short-term liabilities.
     var shortTermTotal: Double {

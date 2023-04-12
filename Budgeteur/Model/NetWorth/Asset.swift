@@ -23,9 +23,9 @@ struct Assets {
     /// Personal belongings such as phone, musical instruments, jewelry.
     let personalItems: [Asset]
     
-    static let liquidAssetDescription = "Things that can be quickly converted into cash or are cash equivalent, e.g., cash, savings, stocks."
-    static let fixedAssetDescription = "Large and non-liquid things such as vehicles, houses."
-    static let personalItemDescription = "Personal belongings such as phone, musical instruments, jewelry."
+    static let liquidAssetDescription = "Liquid assets are things that can be quickly converted into cash or are cash equivalent, e.g., cash, savings, stocks."
+    static let fixedAssetDescription = "Large and fixed assets are non-liquid things that cannot be quickly converted into cash such as vehicles and houses."
+    static let personalItemDescription = "Personal items are personal belongings such as phone, musical instruments, jewelry."
     
     /// The total value of all liquid assets.
     var totalLiquid: Double {
