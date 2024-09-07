@@ -231,6 +231,15 @@
 		92B2A0D128F667FB00B81F0D /* PeriodPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodPicker.swift; sourceTree = "<group>"; };
 		92B2A0D328F66BCA00B81F0D /* Period.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Period.swift; sourceTree = "<group>"; };
 		92B2F312295A826000E3AA07 /* TransactionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionList.swift; sourceTree = "<group>"; };
+		92BBFB6E2C8C1BE6001C3E3D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		92BBFB702C8C1F1D001C3E3D /* record_expense.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = record_expense.png; sourceTree = "<group>"; };
+		92BBFB712C8C1F1E001C3E3D /* review_transactions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = review_transactions.png; sourceTree = "<group>"; };
+		92BBFB722C8C1F1E001C3E3D /* search_transactions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search_transactions.png; sourceTree = "<group>"; };
+		92BBFB732C8C1F1E001C3E3D /* record_recurring_expense.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = record_recurring_expense.png; sourceTree = "<group>"; };
+		92BBFB742C8C1F1E001C3E3D /* record_income.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = record_income.png; sourceTree = "<group>"; };
+		92BBFB752C8C1F1E001C3E3D /* review_transactions_by_category.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = review_transactions_by_category.png; sourceTree = "<group>"; };
+		92BBFB762C8C1F1E001C3E3D /* record_recurring_income.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = record_recurring_income.png; sourceTree = "<group>"; };
+		92BBFB772C8C2317001C3E3D /* review_recurring_transactions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = review_recurring_transactions.png; sourceTree = "<group>"; };
 		92BF917D298251260082EBBF /* Budgeteur.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Budgeteur.entitlements; sourceTree = "<group>"; };
 		92BF917E298251F80082EBBF /* Budget Overview WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Budget Overview WidgetExtension.entitlements"; sourceTree = "<group>"; };
 		92E0E93529138E0B00BC83E9 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -379,6 +388,8 @@
 		927B91CE28F220310013B404 = {
 			isa = PBXGroup;
 			children = (
+				92BBFB6F2C8C1E8E001C3E3D /* readme_assets */,
+				92BBFB6E2C8C1BE6001C3E3D /* README.md */,
 				925D2AFA2988FAB2006F7ABC /* BudgeteurWatch Watch App.entitlements */,
 				92E0E93729138F6100BC83E9 /* UserCategory+CoreDataClass.swift */,
 				92E0E93829138F6100BC83E9 /* UserCategory+CoreDataProperties.swift */,
@@ -513,6 +524,21 @@
 				923B7D2F28F92B15000E46BD /* RecurrencePeriodPicker.swift */,
 			);
 			path = Period;
+			sourceTree = "<group>";
+		};
+		92BBFB6F2C8C1E8E001C3E3D /* readme_assets */ = {
+			isa = PBXGroup;
+			children = (
+				92BBFB772C8C2317001C3E3D /* review_recurring_transactions.png */,
+				92BBFB702C8C1F1D001C3E3D /* record_expense.png */,
+				92BBFB742C8C1F1E001C3E3D /* record_income.png */,
+				92BBFB732C8C1F1E001C3E3D /* record_recurring_expense.png */,
+				92BBFB762C8C1F1E001C3E3D /* record_recurring_income.png */,
+				92BBFB712C8C1F1E001C3E3D /* review_transactions.png */,
+				92BBFB752C8C1F1E001C3E3D /* review_transactions_by_category.png */,
+				92BBFB722C8C1F1E001C3E3D /* search_transactions.png */,
+			);
+			path = readme_assets;
 			sourceTree = "<group>";
 		};
 		92F7B1C1295BDA2500D39216 /* Savings */ = {
